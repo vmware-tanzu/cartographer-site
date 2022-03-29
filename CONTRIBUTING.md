@@ -71,6 +71,8 @@ Be sure to include any related GitHub issue references in the commit message.  S
 [GFM syntax](https://guides.github.com/features/mastering-markdown/#GitHub-flavored-markdown) for referencing issues
 and commits.
 
+TODO: How do we reference issues from a different repo?
+
 ## Reporting Bugs and Creating Issues
 
 When opening a new issue, try to roughly follow the commit message format conventions above.
