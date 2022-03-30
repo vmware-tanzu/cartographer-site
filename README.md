@@ -1,4 +1,4 @@
-# Website for [Template]
+# Website for Cartographer.sh
 
 ## Prerequisites
 
