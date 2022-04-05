@@ -16,6 +16,11 @@ gen-crd-reference:
 dev-dependencies:
 	yarn install
 
+.PHONY: update-live-editor
+update-live-editor:
+	$(MAKE) -C live-editor build install
+
+
 .PHONY: lint
 lint: dev-dependencies
 	yarn lint
