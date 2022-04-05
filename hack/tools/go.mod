@@ -1,4 +1,4 @@
-module github.com/vmware-tanzu/cartographer/hack/tools
+module github.com/vmware-tanzu/cartographer-site/hack/tools
 
 go 1.18
 
