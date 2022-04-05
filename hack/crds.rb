@@ -18,9 +18,15 @@ require 'fileutils'
 require_relative 'crd_lib/config'
 require_relative 'crd_lib/spec'
 
-CONFIG_DIR = File.join(__dir__, "crds")
-CRD_DIR = File.join(__dir__, "..", "..", "config", "crd", "bases")
-OUT_DIR = File.join(__dir__, "..", "content", "docs", "development", "crds")
+CONFIG_DIR = File.expand_path(File.join(__dir__, "crds"))
+CRD_DIR = File.expand_path(File.join(__dir__, "..", "..", "cartographer", "config", "crd", "bases"))
+OUT_DIR = File.expand_path(File.join(__dir__, "..", "content", "docs", "development", "crds"))
+
+puts "Configured directories:"
+puts "  Configuration: #{CONFIG_DIR}"
+puts "    CRD Sources: #{CRD_DIR}"
+puts "    Destination: #{OUT_DIR}"
+puts
 
 def main
   FileUtils.mkdir_p OUT_DIR

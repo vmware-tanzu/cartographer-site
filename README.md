@@ -26,15 +26,28 @@ The new version should appear in the site and be the default.
 
 ## Generating CRD Documentation
 
-TODO: Out of date
-
-There is a tool, `hack/crd.rb` designed to autogenerate CRD documentation based off the content of our Go doc-comments
+There is a tool, `./hack/crd.rb` designed to autogenerate CRD documentation based off the content of our Go doc-comments
 in `/cartographer/pkg/apis`.
 
-To update CRD documentation:
+1. Check out cartographer locally, as a sibling of `cartographer-site`.
 
-1. Edit the doc-comments in the api, eg: "/cartographer/pkg/apis/v1alpha1/workload.go"
-2. Generate the new CRDs `make gen-manifests`
-3. generate the CRD documentation `cd site && make gen-crd-reference`
+2. Ensure cartographer crd's are generated:
+
+```shell
+cd /path/to/cartographer
+git co <revision you want to gen docs from>
+make gen-manifests
+```
+
+3. Generate the site CRD reference:
+
+```shell
+cd /path/to/cartographer-site
+make gen-crd-reference
+```
+
 4. review the changes to files in `/cartographer/site/content/docs/development/crds/*.yaml`
    1. Custom edits will be removed, so look for delta's that represent developer edits and roll those line's back
+
+
+**Note:** the files in `./hack/crds` contain configuration for which fields to replace or ignore.
