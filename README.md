@@ -49,5 +49,4 @@ make gen-crd-reference
 4. review the changes to files in `/cartographer/site/content/docs/development/crds/*.yaml`
    1. Custom edits will be removed, so look for delta's that represent developer edits and roll those line's back
 
-
 **Note:** the files in `./hack/crds` contain configuration for which fields to replace or ignore.
