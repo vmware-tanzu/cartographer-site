@@ -1,3 +1,5 @@
+ADDLICENSE ?= go run -modfile hack/tools/go.mod github.com/google/addlicense
+
 .PHONY: serve
 serve:
 	echo "Open docs at: http://localhost:1313"
@@ -20,7 +22,17 @@ dev-dependencies:
 update-live-editor:
 	$(MAKE) -C live-editor build install
 
-
 .PHONY: lint
 lint: dev-dependencies
 	yarn lint
+
+.PHONY: copyright
+copyright:
+	$(ADDLICENSE) \
+		-f ./hack/boilerplate.go.txt \
+		-ignore site/static/\*\* \
+		-ignore site/content/docs/\*/crds/\*.yaml \
+		-ignore site/content/docs/\*/tutorials/files/\*/\*.yaml \
+		-ignore site/themes/\*\* \
+		-ignore experimental/live-editor/node_modules/\*\* \
+		.
