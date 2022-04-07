@@ -1,29 +1,52 @@
-# cartographer-site
+# Website for Cartographer.sh
 
-## Overview
+## Prerequisites
 
-## Try it out
+- [Hugo](https://github.com/gohugoio/hugo)
+  - macOS: `brew install hugo`
+  - Windows: `choco install hugo-extended -confirm`
 
-### Prerequisites
+## Serve
 
-* Prereq 1
-* Prereq 2
-* Prereq 3
+```bash
+make serve
+```
 
-### Build & Run
+Visit [http://localhost:1313](http://localhost:1313)
 
-1. Step 1
-2. Step 2
-3. Step 3
+## Generate a Release
 
-## Documentation
+to create a release copy of `development` use
 
-## Contributing
+```bash
+make release version=v1.2.3
+```
 
-The cartographer-site project team welcomes contributions from the community. Before you start working with cartographer-site, please
-read our [Developer Certificate of Origin](https://cla.vmware.com/dco). All contributions to this repository must be
-signed as described on that page. Your signature certifies that you wrote the patch or have the right to pass it on
-as an open-source patch. For more detailed information, refer to [CONTRIBUTING.md](CONTRIBUTING.md).
+The new version should appear in the site and be the default.
 
-## License
+## Generating CRD Documentation
 
+There is a tool, `./hack/crd.rb` designed to autogenerate CRD documentation based off the content of our Go doc-comments
+in `/cartographer/pkg/apis`.
+
+1. Check out cartographer locally, as a sibling of `cartographer-site`.
+
+2. Ensure cartographer crd's are generated:
+
+```shell
+cd /path/to/cartographer
+git co <revision you want to gen docs from>
+make gen-manifests
+```
+
+3. Generate the site CRD reference:
+
+```shell
+cd /path/to/cartographer-site
+make gen-crd-reference
+```
+
+4. review the changes to files in `/cartographer/site/content/docs/development/crds/*.yaml`
+   1. Custom edits will be removed, so look for delta's that represent developer edits and roll those line's back
+
+**Note:** the files in `./hack/crds` contain configuration for which fields to replace or ignore.

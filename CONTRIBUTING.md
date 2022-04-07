@@ -1,9 +1,8 @@
 # Contributing to cartographer-site
 
-The cartographer-site project team welcomes contributions from the community. Before you start working with cartographer-site, please
-read our [Developer Certificate of Origin](https://cla.vmware.com/dco). All contributions to this repository must be
-signed as described on that page. Your signature certifies that you wrote the patch or have the right to pass it on
-as an open-source patch.
+The [Cartographer project](https://cartographer.sh) team welcomes contributions from the community. If you wish to
+contribute code and you have not signed our contributor license agreement (CLA), our bot will update the issue when you
+open a Pull Request. For any questions about the CLA process, please refer to our [FAQ](https://cla.vmware.com/faq).
 
 ## Contribution Flow
 
@@ -17,7 +16,7 @@ This is a rough outline of what a contributor's workflow looks like:
 
 Example:
 
-``` shell
+```shell
 git remote add upstream https://github.com/vmware-tanzu/cartographer-site.git
 git checkout -b my-new-feature main
 git commit -a
@@ -28,7 +27,7 @@ git push origin my-new-feature
 
 When your branch gets out of sync with the vmware-tanzu/main branch, use the following to update:
 
-``` shell
+```shell
 git checkout my-new-feature
 git fetch -a
 git pull --rebase upstream main
@@ -43,7 +42,7 @@ existing commits.
 If your pull request contains a single commit or your changes are related to the most recent commit, you can simply
 amend the commit.
 
-``` shell
+```shell
 git add .
 git commit --amend
 git push --force-with-lease origin my-new-feature
@@ -51,7 +50,7 @@ git push --force-with-lease origin my-new-feature
 
 If you need to squash changes into an earlier commit, you can use:
 
-``` shell
+```shell
 git add .
 git commit --fixup <commit>
 git rebase -i --autosquash main
@@ -67,9 +66,11 @@ notification when you git push.
 
 We follow the conventions on [How to Write a Git Commit Message](http://chris.beams.io/posts/git-commit/).
 
-Be sure to include any related GitHub issue references in the commit message.  See
-[GFM syntax](https://guides.github.com/features/mastering-markdown/#GitHub-flavored-markdown) for referencing issues
-and commits.
+Be sure to include any related GitHub issue references in the commit message. See
+[GFM syntax](https://guides.github.com/features/mastering-markdown/#GitHub-flavored-markdown) for referencing issues and
+commits.
+
+TODO: How do we reference issues from a different repo?
 
 ## Reporting Bugs and Creating Issues
 
