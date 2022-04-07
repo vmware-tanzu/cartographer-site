@@ -27,7 +27,7 @@ body {
     }
     @include breakpoint(medium) {
     }
-    &.docs {
+    &.wide-content {
         @include breakpoint(extra-large) {
             max-width: 80%;
         }

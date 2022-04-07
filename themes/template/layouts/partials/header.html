@@ -1,6 +1,6 @@
 {{ $latest := (cond (.Site.Params.docs_versioning) .Site.Params.docs_latest "") }}
 <header>
-	<div class="wrapper">
+	<div {{ if (eq .Page.Section "docs") }}class="wrapper wide-content"{{ else }}class="wrapper"{{ end }}>
 		<a href="{{ .Site.BaseURL }}"><img class="image" src="/img/cartographer-logo.svg" alt="Logo" /></a>
 		<ul class="desktop-links">
 			<li><a href="/" {{ if (eq .RelPermalink "/")  }}class="active"{{ end }}>Home</a></li>

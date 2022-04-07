@@ -1,5 +1,5 @@
 <footer>
-	<div class="wrapper footer-links">
+	<div {{ if (eq .Page.Section "docs") }}class="wrapper wide-content footer-links"{{ else }}class="wrapper footer-links"{{ end }}>
 		<div class="top-links">
 			<ul class="left-links">
 				<li><a href="{{ .Site.Params.twitter_url }}"><img src="/img/twitter.png" alt="Twitter logo" />Twitter</a></li>
