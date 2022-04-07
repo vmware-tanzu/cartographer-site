@@ -25,6 +25,8 @@ toc:
         url: /install
       - page: Templating
         url: /templating
+      - page: Stamping
+        url: /stamping
   - title: CR Reference
     subfolderitems:
       - page: GVK
@@ -63,6 +65,8 @@ toc:
     subfolderitems:
       - page: Architecture
         url: /runnable/architecture
+      - page: Stamping
+        url: /runnable/stamping
   - title: Documentation Style Guide
     subfolderitems:
       - page: Style Guide
