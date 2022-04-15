@@ -38,7 +38,16 @@ account. Then we will work as the app devs to create our workload object.
 
 ## Steps
 
+Cartographer's users sit in two roles: operators and devs. Operators have the traditional IT role responsibility to get
+code deployed. Devs have the responsibility of writing new code that will be deployed. It is certainly possible for one
+person to take on both roles, to be a DevOps engineer. At the same time, a goal of Cartographer is enable the work of
+one operator to serve the needs of many devs.
+
 ### App Operator Steps
+
+As an Operator, we will write a supply chain that goes from app image to kubernetes deployment. That supply chain will
+refer to a `template`, a Cartographer object that takes some inputs and creates an object definition that will be
+applied on the cluster.
 
 #### Templates
 
