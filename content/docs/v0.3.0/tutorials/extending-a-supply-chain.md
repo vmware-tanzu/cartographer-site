@@ -35,6 +35,10 @@ $ ./hack/setup.sh teardown
 
 ## Scenario
 
+So far we’ve created an application platform that works for developers who have already built an image from their source
+code. But today our developers have asked if building images can be taken off of their plate. We’ll create a supply
+chain that can start from source code and build an image and then deploy it.
+
 ### App Operator Steps
 
 #### Supply Chain
@@ -63,6 +67,7 @@ the image. For readability we’ll list the new resource before the current `dep
 reasonable name. So far our `.spec.resources` will look like this:
 
 <!-- prettier-ignore-start -->
+
 ```yaml
   resources:
     - name: build-image
@@ -74,6 +79,7 @@ reasonable name. So far our `.spec.resources` will look like this:
         kind: ClusterTemplate
         name: app-deploy
 ```
+
 <!-- prettier-ignore-end -->
 
 So far we’ve only seen the template kind ClusterTemplate. But now we want to template an object that will pass
@@ -93,6 +99,7 @@ chain. As we want to expose the location of an image to the supply chain, we’l
 give it a reasonable name. Our supply chain .spec.resources now looks like this:
 
 <!-- prettier-ignore-start -->
+
 ```yaml
   resources:
     - name: build-image
@@ -104,6 +111,7 @@ give it a reasonable name. Our supply chain .spec.resources now looks like this:
         kind: ClusterTemplate
         name: app-deploy
 ```
+
 <!-- prettier-ignore-end -->
 
 There’s one more addition we must make to the resources. While the build-image step will make information available for
@@ -112,6 +120,7 @@ images field to that step. We’ll refer to the resource providing an image and 
 app-deploy template can refer to that value:
 
 <!-- prettier-ignore-start -->
+
 ```yaml
   resources:
     - name: build-image
@@ -126,6 +135,7 @@ app-deploy template can refer to that value:
         - resource: build-image
           name: built-image
 ```
+
 <!-- prettier-ignore-end -->
 
 Our resources section is looking good. Before we move on to writing the templates, let’s take a moment to think about
@@ -148,10 +158,12 @@ metadata:
 The selector change in similarly straightforward:
 
 <!-- prettier-ignore-start -->
+
 ```yaml
   selector:
     workload-type: source-code
 ```
+
 <!-- prettier-ignore-end -->
 
 Before changing the template reference, let’s take a moment to think about why the deploy step needs a new reference. In
@@ -162,6 +174,7 @@ that the deploy step depends on values from the build-image step. This indicates
 differ. So we’ll need to write a new deploy template. We’ll refer to it in the supply chain:
 
 <!-- prettier-ignore-start -->
+
 ```yaml
     - name: deploy
       templateRef:
@@ -169,17 +182,20 @@ differ. So we’ll need to write a new deploy template. We’ll refer to it in t
         name: app-deploy-from-sc-image
       ...
 ```
+
 <!-- prettier-ignore-end -->
 
 Finally, we'll need a new service account for this supply chain, one that has permission to create the objects in both
 templates. We'll specify a name for that service account now and create it below (after completing our templates).
 
 <!-- prettier-ignore-start -->
+
 ```yaml
   serviceAccountRef:
     name: cartographer-from-source-sa
     namespace: default
 ```
+
 <!-- prettier-ignore-end -->
 
 We can see our final supply chain defined here:
@@ -226,17 +242,21 @@ spec:
 Now the template expects that value to come from a previous step in the supply chain. So we’ll simply replace
 
 <!-- prettier-ignore-start -->
+
 ```yaml
               image: $(workload.spec.image)$
 ```
+
 <!-- prettier-ignore-end -->
 
 with
 
 <!-- prettier-ignore-start -->
+
 ```yaml
               image: $(images.built-image.image)$
 ```
+
 <!-- prettier-ignore-end -->
 
 Let’s break down that syntax. In the supply chain we specified that we were providing an array of images to this
@@ -265,6 +285,7 @@ leverage params to provide a default image registry but allow devs to specify an
 Let’s look at the .spec.template field of our ClusterImageTemplate:
 
 <!-- prettier-ignore-start -->
+
 ```yaml
   template:
     apiVersion: kpack.io/v1alpha2
@@ -282,6 +303,7 @@ Let’s look at the .spec.template field of our ClusterImageTemplate:
           url: $(workload.spec.source.git.url)$
           revision: $(workload.spec.source.git.ref.branch)$
 ```
+
 <!-- prettier-ignore-end -->
 
 Though learners may not be as familiar with kpack Images as they are with the Deployment resource, there’s nothing novel
@@ -290,6 +312,7 @@ here from a Cartographer perspective.
 Since our template leverages 2 params, we’ll provide default values for them:
 
 <!-- prettier-ignore-start -->
+
 ```yaml
   params:
     - name: image-pull-sa-name
@@ -297,6 +320,7 @@ Since our template leverages 2 params, we’ll provide default values for them:
     - name: image_prefix
       default: 0.0.0.0:5000/example-basic-sc-
 ```
+
 <!-- prettier-ignore-end -->
 
 _For those using using dockerhub, gcr or other registry, substitute the appropriate default value for image_prefix. For
@@ -317,9 +341,11 @@ fully qualified built OCI image reference.” We can see this value is in the `.
 path that we put in the ClusterImageTemplate’s `.spec.imagePath`:
 
 <!-- prettier-ignore-start -->
+
 ```yaml
   imagePath: .status.latestImage
 ```
+
 <!-- prettier-ignore-end -->
 
 We now have our full object:
@@ -390,9 +416,11 @@ We have a new type of app now; it is no longer pre-built. Let’s change our wor
 supply chain's selector.
 
 <!-- prettier-ignore-start -->
+
 ```yaml
     workload-type: source-code
 ```
+
 <!-- prettier-ignore-end -->
 
 And as app devs, we're done! Let’s look at the complete workload:
@@ -444,12 +472,12 @@ status:
   buildCacheName: hello-again-cache
   buildCounter: 1
   conditions:
-  - lastTransitionTime: ...
-    status: "True"
-    type: Ready
-  - lastTransitionTime: ...
-    status: "True"
-    type: BuilderReady
+    - lastTransitionTime: ...
+      status: "True"
+      type: Ready
+    - lastTransitionTime: ...
+      status: "True"
+      type: BuilderReady
   latestBuildImageGeneration: 1
   latestBuildReason: CONFIG
   latestBuildRef: hello-again-build-1
@@ -474,18 +502,18 @@ spec:
     ...
     spec:
       containers:
-      - image: 0.0.0.0:5000/example-basic-sc-hello-again@sha256:abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz12
-        ...
+        - image: 0.0.0.0:5000/example-basic-sc-hello-again@sha256:abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz12
+          ...
       ...
 status:
   availableReplicas: 3
   conditions:
-  - status: "True"
-    type: Available
-    ...
-  - status: "True"
-    type: Progressing
-    ...
+    - status: "True"
+      type: Available
+      ...
+    - status: "True"
+      type: Progressing
+      ...
   ...
 ```
 
