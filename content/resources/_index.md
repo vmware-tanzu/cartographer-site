@@ -13,6 +13,7 @@ layout: common
 
 ## Presentations
 
+- DevOps Toronto Meetup - Apr 5th, 2022: "From orchestration to choreography" {{< yt id="6UBafjET504" start="14" >}}
 - CNCF Live webinar covering Supply Chain choreography with Cartographer {{< yt id="YowcLPRYh7o" start="5" >}}
 - Tanzu Tuesdays episode introducing choreography (including demos) {{< yt id="Qr-DO0E9R1Y" start="1129" >}}
 - Cartographer featured on Thank Goodness its Kubernetes (TGIK) {{< yt id="TJPGn0-hpPY" start="738" >}}
