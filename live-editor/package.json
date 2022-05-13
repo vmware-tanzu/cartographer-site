@@ -31,7 +31,7 @@
     "tailwindcss": "^3.0.24",
     "vite": "^2.9.9",
     "vscode-languageserver-textdocument": "^1.0.0",
-    "vscode-languageserver-types": "^3.17.0",
+    "vscode-languageserver-types": "^3.17.1",
     "yaml": "^2.0.1"
   },
   "dependencies": {
