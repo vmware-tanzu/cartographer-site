@@ -4,6 +4,22 @@ kind: ClusterDeploymentTemplate
 metadata: {}
 spec:
 
+  # HealthRule specifies rubric for determining the health of a
+  # resource stamped by this template
+  # +optional
+  healthRule:
+
+    # AlwaysHealthy being set indicates the resource should always
+    # be considered healthy
+    # +optional
+    alwaysHealthy: {}
+
+    # SingleConditionType names a single condition which, when
+    # True indicates the resource is healthy. When False it is
+    # unhealthy. Otherwise, healthiness is Unknown.
+    # +optional
+    singleConditionType: <string>
+
   # ObservedCompletion describe the criteria for determining that
   # the templated object completed configuration of environment.
   # These criteria assert completion when metadata.Generation and
