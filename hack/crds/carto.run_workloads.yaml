@@ -34,3 +34,21 @@ fields:
       resources:
         hideChildDescriptions: true
         maxDepth: 1
+  status:
+    fields:
+      conditions:
+        maxDepth: 0
+        hideChildDescriptions: true # Fixme this should include the array element desc!
+      deliveryRef:
+        maxDepth: 0
+      resources:
+        fields:
+          conditions:
+            maxDepth: 0
+            hideChildDescriptions: true
+          stampedRef:
+            maxDepth: 0
+          templateRef:
+            maxDepth: 0
+
+

@@ -22,4 +22,20 @@ fields:
     hideDescription: true
   spec:
     hideDescription: true
+  status:
+    fields:
+      conditions:
+        maxDepth: 0
+        hideChildDescriptions: true # Fixme this should include the array element desc!
+      deliveryRef:
+        maxDepth: 0
+      resources:
+        fields:
+          conditions:
+            maxDepth: 0
+            hideChildDescriptions: true
+          stampedRef:
+            maxDepth: 0
+          templateRef:
+            maxDepth: 0
 
