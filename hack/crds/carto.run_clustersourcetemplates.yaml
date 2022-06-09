@@ -24,3 +24,10 @@ fields:
     hideDescription: true
   spec:
     hideDescription: true
+    fields:
+      healthRule:
+        fields:
+          multiMatch:
+            fields:
+              unhealthy:
+                hideChildDescriptions: true
