@@ -20,6 +20,68 @@ spec:
     # +optional
     alwaysHealthy: {}
 
+    # MultiMatch specifies explicitly which conditions and/or
+    # fields should be used to determine healthiness.
+    # +optional
+    multiMatch:
+
+      # Healthy is a HealthMatchRule which stipulates
+      # requirements, ALL of which must be met for the resource to
+      # be considered healthy.
+      healthy:
+
+        # MatchConditions are the conditions and statuses to read.
+        # +optional
+        matchConditions:
+          - # Status is the status of the condition
+            status: <string>
+
+            # Type is the type of the condition
+            type: <string>
+
+        # MatchFields stipulates a FieldSelectorRequirement for
+        # this rule.
+        # +optional
+        matchFields:
+          - # Key is the JSON path in the workload to match
+            # against. e.g. for workload:
+            # "workload.spec.source.git.url", e.g. for
+            # deliverable: "deliverable.spec.source.git.url"
+            key: <string>
+
+            # MessagePath is specified in jsonpath format. It is
+            # evaluated against the resource to provide a message
+            # in the owner's resource condition if it is the first
+            # matching requirement that determine the current
+            # ResourcesHealthy condition status.
+            # +optional
+            messagePath: <string>
+
+            # Operator represents a key's relationship to a set of
+            # values. Valid operators are In, NotIn, Exists and
+            # DoesNotExist.
+            operator: <[In|NotIn|Exists|DoesNotExist]>
+
+            # Values is an array of string values. If the operator
+            # is In or NotIn, the values array must be non-empty.
+            # If the operator is Exists or DoesNotExist, the
+            # values array must be empty.
+            # +optional
+            values: [ <string> ]
+
+      # Unhealthy is a HealthMatchRule which stipulates
+      # requirements, ANY of which, when met, indicate that the
+      # resource should be considered unhealthy.
+      unhealthy:
+        matchConditions:
+          - status: <string>
+            type: <string>
+        matchFields:
+          - key: <string>
+            messagePath: <string>
+            operator: <[In|NotIn|Exists|DoesNotExist]>
+            values: [ <string> ]
+
     # SingleConditionType names a single condition which, when
     # True indicates the resource is healthy. When False it is
     # unhealthy. Otherwise, healthiness is Unknown.
