@@ -5,6 +5,8 @@
 - [Hugo](https://github.com/gohugoio/hugo)
   - macOS: `brew install hugo`
   - Windows: `choco install hugo-extended -confirm`
+- [Node](https://nodejs.org/en/)
+- [Yarn](https://classic.yarnpkg.com/lang/en/docs/install)
 
 ## Serve
 

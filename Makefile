@@ -1,5 +1,9 @@
 ADDLICENSE ?= go run -modfile hack/tools/go.mod github.com/google/addlicense
 
+ifeq ($(shell command -v yarn && echo yes),)
+    $(error "Yarn (and node) must be installed")
+endif
+
 .PHONY: serve
 serve:
 	echo "Open docs at: http://localhost:1313"
