@@ -1,6 +1,7 @@
 /* Grab styles with: hugo gen chromastyles --style=pygments */
 
 pre {
+    position: relative;
     code {
         display: block;
         padding: 15px;
@@ -12,6 +13,41 @@ pre {
         &.language-bash, &.language-console {
             border: none;
         }
+    }
+    button.copy {
+        position: absolute;
+        z-index: 2;
+        right: 0;
+        top: 0;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 14px;
+        letter-spacing: 0.5px;
+        width: 65px;
+        color: #232326;
+        background-color: #d0d0d0;
+        border: 1.25px solid #232326;
+        border-top-left-radius: 0;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 4px;
+        border-top: none;
+        border-right: none;
+        border-bottom-color: rgba(0, 0, 0, 0.125);
+        border-left-color: rgba(0, 0, 0, 0.125);
+        white-space: nowrap;
+        padding: 4px 4px 5px 4px;
+        margin: 0 0 0 1px;
+        cursor: pointer;
+        opacity: 0.6;
+      }
+
+    button.copy:hover,
+    button.copy:focus,
+    button.copy:active,
+    button.copy:active:hover {
+        color: #222225;
+        opacity: 0.8;
     }
 }
 
