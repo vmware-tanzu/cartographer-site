@@ -59,7 +59,7 @@ params:
   twitter_url: "https://twitter.com/OssCartographer"
   github_url: "https://github.com/vmware-tanzu/cartographer"
   slack_url: "https://slack.com/"
-  github_base_url: "https://github.com/vmware-tanzu/cartographer"
+  github_base_url: "https://github.com/vmware-tanzu/cartographer-site"
   use_advanced_docs: true
   docs_right_sidebar: true
   docs_search: false

@@ -25,7 +25,7 @@ git push origin my-new-feature
 
 ### Staying In Sync With Upstream
 
-When your branch gets out of sync with the vmware-tanzu/main branch, use the following to update:
+When your branch gets out of sync with the `vmware-tanzu/cartographer-site/main` branch, use the following to update:
 
 ```shell
 git checkout my-new-feature
