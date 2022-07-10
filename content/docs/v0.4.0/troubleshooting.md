@@ -24,6 +24,9 @@ status:
     - type: ResourcesSubmitted
       status: True
       reason: Ready
+    - type: ResourcesHealthy
+      status: True
+      reason: HealthyConditionRule
     - type: Ready
       status: True
       reason: Ready
@@ -36,8 +39,55 @@ Cartographer conditions follow the
 
 There is a top level condition of `Type: Ready` which can have a `Status` of `Unknown`, `True` or `False`.
 
-If your workload or deliverable has a `False` or a `Unknown` condition, inspect the conditions for cause. The
-`Type: Ready` condition's `Reason` will match that of the sub-condition causing the negative status.
+If your workload or deliverable's `Ready` condition has a `False` or a `Unknown` status, inspect the conditions for
+cause. The `Type: Ready` condition's `Reason` will match that of the sub-condition causing the negative status.
+
+### Sub-conditions
+
+Aside from the top level `Ready` condition, sub-conditions provide greater detail on where things may be going wrong.
+
+#### Sub-condition: SupplyChainReady / DeliveryReady
+
+This condition informs whether a viable blueprint (`SupplyChain`/`Delivery`) was selected for this owner
+(`Workload`/`Deliverable`). If this doesn't hold a `True` status, then the reason and message on this sub-condition will
+clearly explain why not.
+
+#### Sub-condition: ResourcesSubmitted
+
+This condition informs whether the resources defined by the blueprint were successfully stamped and submitted to the
+Kubernetes apiserver. Again, if this doesn't hold a `True` status, then the reason and message on this sub-condition
+will clearly explain why not.
+
+#### Sub-condition: ResourcesHealthy
+
+This condition is used to inform whether the resources submitted by Cartographer are in a healthy state. This
+condition's status is determined by evaluating the `healthRule` for the template used to stamp out each resource.
+
+If this condition's status is `False` then one or more resources may not be healthy. If this condition's status is
+`Unknown` then the healthy state of one or more resources cannot be determined. In such situations, consult the
+individual `ResourceHealthy` (note that this is singular) condition listed in the owner's (`Workload`/`Deliverable`)
+`resources`.
+
+Here's how the different `ResourceHealthy` condition statuses can come about, and what they mean:
+
+| Status  | Reason             | What it means                                                                                                                                                                                                                       |
+| ------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Unknown | NoResource         | Template author specified no rule, no resource has been realized yet                                                                                                                                                                |
+| True    | OutputsAvailable   | Template author specified no rule, resource created and generates valid outputs.                                                                                                                                                    |
+| Unknown | OutputNotAvailable | Template author specified no rule, resource realized but no output available.                                                                                                                                                       |
+| Unknown | NoStampedObject    | Template author specified no rule, resource realized but not successfully submitted yet.                                                                                                                                            |
+| True    | AlwaysHealthy      | Template author specified no rule in a ClusterTemplate and resource realized and submitted.                                                                                                                                         |
+| True    | AlwaysHealthy      | Template author specified AlwaysHealthy rule. Resource is always considered healthy.                                                                                                                                                |
+| Unknown | XCondition         | Template author specified SingleConditionType X, and condition X on the actual resource is not found. Message will contain this detail.                                                                                             |
+| Unknown | XCondition         | Template author specified SingleConditionType X, and condition X on the actual resource is found but does not have a status of `True` or `False`. Message is copied forward from the actual resource.                               |
+| False   | XCondition         | Template author specified SingleConditionType X, and condition X on the actual resource is False. Message is copied forward from the actual resource.                                                                               |
+| True    | XCondition         | Template author specified SingleConditionType X, and condition X on the actual resource is True. Message is copied forward from the actual resource.                                                                                |
+| False   | MatchedCondition   | Template author specified MultiMatch and a specified unhealthy matchConditions rule matched. Message contains the status and message of the matchCondition in question.                                                             |
+| False   | MatchedField       | Template author specified MultiMatch and a specified unhealthy matchFields rule matched. Message contains the field value, and the result of evaluating the messagePath of the matchField in question.                              |
+| True    | MatchedCondition   | Template author specified MultiMatch and all specified healthy rules matched. The first match was a matchConditions rule. Message contains the status and message of the matchCondition in question.                                |
+| True    | MatchedField       | Template author specified MultiMatch and all specified healthy rules matched. The first match was a matchFields rule. Message contains the field value, and the result of evaluating the messagePath of the matchField in question. |
+| Unknown | NoMatchesFulfilled | Template author specified MultiMatch but neither any unhealthy rules failed, nor all healthy rules passed.                                                                                                                          |
+| Unknown | Unknown            | Unexpected, should not occur with a valid Template.                                                                                                                                                                                 |
 
 ### Unknown vs. False
 
