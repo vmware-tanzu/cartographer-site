@@ -1,0 +1,50 @@
+---
+
+# ClusterSelector represents a mechanism to bind a Blueprint to an
+# OwnerObject
+# +optional
+apiVersion: carto.run/v2alpha1
+kind: ClusterSelector
+metadata: {}
+spec:
+
+  # APIVersion defines the versioned schema of this representation
+  # of an object. Servers should convert recognized schemas to the
+  # latest internal value, and may reject unrecognized values.
+  # More info:
+  # https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+  # +optional
+  apiVersion: <string>
+  blueprintRef:
+
+    # Name of the blueprint Only one of Name and Options can be
+    # specified.  // todo: options
+    # +optional
+    name: <string>
+
+  # Kind is a string value representing the REST resource this
+  # object represents. Servers may infer this from the endpoint
+  # the client submits requests to. Cannot be updated. In
+  # CamelCase. More info:
+  # https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+  # +optional
+  kind: <string>
+  paramMap:
+    - # DefaultValue makes this parameter optional if already
+      # optional, overrides the default value
+      # +optional
+      defaultValue: <string>
+      name: <string>
+
+      # OwnerPath defines where in the Owner object this parameter
+      # is sourced from Follow JSONPath Syntax
+      # +optional
+      ownerPath: <string>
+
+      # Value set's the value. You cannot map an ownerObject value
+      # at the same time Using this field lets you configure
+      # blueprints on a per "Mapping" basis. This is the best
+      # place for operator configuration to live. Todo: Validate
+      # this
+      # +optional
+      value: <string>

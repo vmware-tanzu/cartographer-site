@@ -1,0 +1,317 @@
+---
+
+# ClusterBlueprint represents a component within Cartographer
+# Todo: be less asinine
+# +optional
+apiVersion: carto.run/v2alpha1
+kind: ClusterBlueprint
+metadata: {}
+spec:
+
+  # Components are a list of sub-blueprints and templates this
+  # blueprint creates and maintains during the lifetime of the
+  # OwnerObject. This cannot be specified alongside Template
+  # +optional
+  components:
+    - # Component represents a subcomponent Note: There are no
+      # params specified at this level. See BlueprintSpec.Params
+      # +optional
+
+      # BlueprintRef identifies the template used to produce this
+      # resource
+      blueprintRef:
+
+        # Name of the blueprint Only one of Name and Options can
+        # be specified.  // todo: options
+        # +optional
+        name: <string>
+
+      # Name of the component. Used as a reference for inputs.
+      # Template components are identified by this name in the
+      # BlueprintStatus
+      name: <string>
+  outputTypeRef:
+
+    # Name of the ClusterOutputType that defines the output type
+    # of this blueprint.
+    name: <string>
+
+  # Params overrides for sub-blueprints and templates.
+  # +optional
+  params:
+    - # DefaultValue of the parameter. Causes the parameter to be
+      # optional If multiple children exist that specify
+      # DefaultValue, and Value is not set, this must be set.
+      # Otherwise a "ParametersReady:False, Reason:
+      # ParameterDefaultValueCollision" condition occurs.
+      # +optional
+      default: <any>
+
+      # Description of the parameter If a children exist, will
+      # hide child descriptions Otherwise, child descriptions are
+      # joined with newlines and that result is used
+      # +optional
+      description: <string>
+
+      # Name of the parameter. Template blueprints must specify
+      # params to use them Non-Template blueprints can modify
+      # template parameters by specifying parameters
+      name: <string>
+
+      # Value of the parameter. If specified, parent properties
+      # are ignored. If multiple children exist that specify
+      # Value, this must be set, otherwise a
+      # "ParametersReady:False, Reason: ParameterValueCollision"
+      # condition occurs.
+      # +optional
+      value: <any>
+
+  # ServiceAccountName refers to the Service account with
+  # permissions to create resources submitted by the supply chain.
+  # If not set, Cartographer will use serviceAccountName from
+  # supply chain. 
+  # If that is also not set, Cartographer will use the default
+  # service account in the workload's namespace.
+  # +optional
+  serviceAccountRef:
+
+    # Name of the service account being referred to
+    name: <string>
+
+    # Namespace of the service account being referred to if
+    # omitted, the Owner's namespace is used.
+    # +optional
+    namespace: <string>
+
+  # Todo: opinions about template.template? resource.template
+  # instead?
+  # +optional
+  template:
+
+    # HealthRule specifies rubric for determining the health of a
+    # resource stamped by this template
+    # +optional
+    healthRule:
+
+      # AlwaysHealthy being set indicates the resource should
+      # always be considered healthy
+      # +optional
+      alwaysHealthy: {}
+
+      # MultiMatch specifies explicitly which conditions and/or
+      # fields should be used to determine healthiness.
+      # +optional
+      multiMatch:
+
+        # Healthy is a HealthMatchRule which stipulates
+        # requirements, ALL of which must be met for the resource
+        # to be considered healthy.
+        healthy:
+
+          # MatchConditions are the conditions and statuses to
+          # read.
+          # +optional
+          matchConditions:
+            - # Status is the status of the condition
+              status: <string>
+
+              # Type is the type of the condition
+              type: <string>
+
+          # MatchFields stipulates a FieldSelectorRequirement for
+          # this rule.
+          # +optional
+          matchFields:
+            - # Key is the JSON path in the workload to match
+              # against. e.g. for workload:
+              # "workload.spec.source.git.url", e.g. for
+              # deliverable: "deliverable.spec.source.git.url"
+              key: <string>
+
+              # MessagePath is specified in jsonpath format. It is
+              # evaluated against the resource to provide a
+              # message in the owner's resource condition if it is
+              # the first matching requirement that determine the
+              # current ResourcesHealthy condition status.
+              # +optional
+              messagePath: <string>
+
+              # Operator represents a key's relationship to a set
+              # of values. Valid operators are In, NotIn, Exists
+              # and DoesNotExist.
+              operator: <[In|NotIn|Exists|DoesNotExist]>
+
+              # Values is an array of string values. If the
+              # operator is In or NotIn, the values array must be
+              # non-empty. If the operator is Exists or
+              # DoesNotExist, the values array must be empty.
+              # +optional
+              values: [ <string> ]
+
+        # Unhealthy is a HealthMatchRule which stipulates
+        # requirements, ANY of which, when met, indicate that the
+        # resource should be considered unhealthy.
+        unhealthy:
+
+          # MatchConditions are the conditions and statuses to
+          # read.
+          # +optional
+          matchConditions:
+            - # Status is the status of the condition
+              status: <string>
+
+              # Type is the type of the condition
+              type: <string>
+
+          # MatchFields stipulates a FieldSelectorRequirement for
+          # this rule.
+          # +optional
+          matchFields:
+            - # Key is the JSON path in the workload to match
+              # against. e.g. for workload:
+              # "workload.spec.source.git.url", e.g. for
+              # deliverable: "deliverable.spec.source.git.url"
+              key: <string>
+
+              # MessagePath is specified in jsonpath format. It is
+              # evaluated against the resource to provide a
+              # message in the owner's resource condition if it is
+              # the first matching requirement that determine the
+              # current ResourcesHealthy condition status.
+              # +optional
+              messagePath: <string>
+
+              # Operator represents a key's relationship to a set
+              # of values. Valid operators are In, NotIn, Exists
+              # and DoesNotExist.
+              operator: <[In|NotIn|Exists|DoesNotExist]>
+
+              # Values is an array of string values. If the
+              # operator is In or NotIn, the values array must be
+              # non-empty. If the operator is Exists or
+              # DoesNotExist, the values array must be empty.
+              # +optional
+              values: [ <string> ]
+
+      # SingleConditionType names a single condition which, when
+      # True indicates the resource is healthy. When False it is
+      # unhealthy. Otherwise, healthiness is Unknown.
+      # +optional
+      singleConditionType: <string>
+
+    # Template defines a resource template for a Kubernetes
+    # Resource or Custom Resource which is applied to the server
+    # each time the blueprint is applied. Templates support simple
+    # value interpolation using the $()$ marker format. For more
+    # information, see:
+    # https://cartographer.sh/docs/latest/templating/ You cannot
+    # define both Template and Ytt at the same time. You should
+    # not define the namespace for the resource - it will
+    # automatically be created in the owner namespace. If the
+    # namespace is specified and is not the owner namespace, the
+    # resource will fail to be created.
+    # +optional
+    template: {}
+
+    # Ytt defines a resource template written in `ytt` for a
+    # Kubernetes Resource or Custom Resource which is applied to
+    # the server each time the blueprint is applied. Templates
+    # support simple value interpolation using the $()$ marker
+    # format. For more information, see:
+    # https://cartographer.sh/docs/latest/templating/ You cannot
+    # define both Template and Ytt at the same time. You should
+    # not define the namespace for the resource - it will
+    # automatically be created in the owner namespace. If the
+    # namespace is specified and is not the owner namespace, the
+    # resource will fail to be created.
+    # +optional
+    ytt: <string>
+status:
+
+  # Calculated list of input params based on templates and
+  # overrides
+  # +optional
+  calculated:
+    - # CalculatedParam is one of the available parameters exposed
+      # by the template or sub-blueprints within this blueprint.
+      # ClusterSelectors further allow these parameters to be
+      # configured or mapped to OwnerResource fields.
+      # +optional
+
+      # Default value of the parameter. If set, can be overridden
+      # by the ClusterSelectorMapping
+      # +optional
+      default: <any>
+
+      # Description(s) of this parameter. if multiple children
+      # exist, then they are joined with newlines
+      # +optional
+      description: <string>
+
+      # Name of the parameter
+      name: <string>
+
+      # Value of the parameter. If set, cannot be overridden by
+      # the ClusterSelectorMapping Value is mutually exclusive
+      # with Default
+      # +optional
+      value: <any>
+  conditions:
+    - # Condition contains details for one aspect of the current
+      # state of this API Resource. --- This struct is intended
+      # for direct use as an array at the field path
+      # .status.conditions.  For example, type FooStatus struct{
+      # // Represents the observations of a foo's current state.
+      # // Known .status.conditions.type are: "Available",
+      # "Progressing", and "Degraded" // +patchMergeKey=type //
+      # +patchStrategy=merge // +listType=map // +listMapKey=type
+      # Conditions []metav1.Condition `json:"conditions,omitempty"
+      # patchStrategy:"merge" patchMergeKey:"type"
+      # protobuf:"bytes,1,rep,name=conditions"` 
+      # // other fields }
+      # +optional
+
+      # lastTransitionTime is the last time the condition
+      # transitioned from one status to another. This should be
+      # when the underlying condition changed.  If that is not
+      # known, then using the time when the API field changed is
+      # acceptable.
+      lastTransitionTime: <string>
+
+      # message is a human readable message indicating details
+      # about the transition. This may be an empty string.
+      message: <string>
+
+      # observedGeneration represents the .metadata.generation
+      # that the condition was set based upon. For instance, if
+      # .metadata.generation is currently 12, but the
+      # .status.conditions[x].observedGeneration is 9, the
+      # condition is out of date with respect to the current state
+      # of the instance.
+      # +optional
+      observedGeneration: <integer>
+
+      # reason contains a programmatic identifier indicating the
+      # reason for the condition's last transition. Producers of
+      # specific condition types may define expected values and
+      # meanings for this field, and whether the values are
+      # considered a guaranteed API. The value should be a
+      # CamelCase string. This field may not be empty.
+      reason: <string>
+
+      # status of the condition, one of True, False, Unknown.
+      status: <[True|False|Unknown]>
+
+      # type of condition in CamelCase or in
+      # foo.example.com/CamelCase. --- Many .condition.type values
+      # are consistent across resources like Available, but
+      # because arbitrary conditions can be useful (see
+      # .node.status.conditions), the ability to deconflict is
+      # important. The regex it matches is
+      # (dns1123SubdomainFmt/)?(qualifiedNameFmt)
+      type: <string>
+
+  # ObservedGeneration is the Generation of this resource's spec
+  # that reconciled the contents of this status.
+  # +optional
+  observedGeneration: <integer>

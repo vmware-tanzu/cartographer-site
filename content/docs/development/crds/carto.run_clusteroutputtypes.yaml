@@ -1,0 +1,18 @@
+---
+apiVersion: carto.run/v2alpha1
+kind: ClusterOutputType
+metadata: {}
+
+# Schema a JSON schema that is a valid representation of a type.
+# Although json schema is deep and complex, it's usually best to
+# keep to a simple type definition for consumers of your component
+schema:
+
+  # Properties of a complex kind
+  # +optional
+  properties:
+    name: <string>
+    schema: <any>
+
+  # Type is the kind of object expected
+  type: <[Object|String|Number|integer|array|boolean]>
