@@ -17,8 +17,7 @@ spec:
   apiVersion: <string>
   blueprintRef:
 
-    # Name of the blueprint Only one of Name and Options can be
-    # specified.  // todo: options
+    # Name of the blueprint
     # +optional
     name: <string>
 
@@ -48,3 +47,19 @@ spec:
       # this
       # +optional
       value: <string>
+
+  # ServiceAccountName refers to the Service account with
+  # permissions to create resources submitted by the supply chain.
+  # TODO: fixme docs. If that is also not set, Cartographer will
+  # use the default service account in the owner object's
+  # namespace.
+  # +optional
+  serviceAccountRef:
+
+    # Name of the service account being referred to
+    name: <string>
+
+    # Namespace of the service account being referred to if
+    # omitted, the Owner's namespace is used.
+    # +optional
+    namespace: <string>
