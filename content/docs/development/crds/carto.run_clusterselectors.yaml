@@ -8,26 +8,153 @@ kind: ClusterSelector
 metadata: {}
 spec:
 
-  # APIVersion defines the versioned schema of this representation
-  # of an object. Servers should convert recognized schemas to the
-  # latest internal value, and may reject unrecognized values.
-  # More info:
-  # https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+  # AdditionalStatusMappings provide a mechanism to add additional
+  # status objects per matched owner object. Note: We can perhaps
+  # implement this at a later date if OwnerStatusMapping proves to
+  # be insufficient for all use cases.
   # +optional
-  apiVersion: <string>
+  additionalStatusMappings:
+    - # AdditionalStatusMapping provides a mechanism to create
+      # other status objects as a result of
+      # +optional
+
+      # APIVersion defines the versioned schema of this
+      # representation of an object. Servers should convert
+      # recognized schemas to the latest internal value, and may
+      # reject unrecognized values. More info:
+      # https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+      # +optional
+      apiVersion: <string>
+
+      # TODO: we can always update .status, or we can let the
+      # template decide (make it a root template) if we only
+      # template .status, then the new objects
+      # metadata.name/namespace could either match the
+      # ownerObject's, or also have templating to generate them.
+      inline:
+
+        # Template defines a resource template for a Kubernetes
+        # Resource or Custom Resource which is applied to the
+        # server each time the blueprint is applied. Templates
+        # support simple value interpolation using the $()$ marker
+        # format. For more information, see:
+        # https://cartographer.sh/docs/latest/templating/ You
+        # cannot define both Template and Ytt at the same time.
+        # You should not define the namespace for the resource -
+        # it will automatically be created in the owner namespace.
+        # If the namespace is specified and is not the owner
+        # namespace, the resource will fail to be created.
+        # +optional
+        template: {}
+
+        # Ytt defines a resource template written in `ytt` for a
+        # Kubernetes Resource or Custom Resource which is applied
+        # to the server each time the blueprint is applied.
+        # Templates support simple value interpolation using the
+        # $()$ marker format. For more information, see:
+        # https://cartographer.sh/docs/latest/templating/ You
+        # cannot define both Template and Ytt at the same time.
+        # You should not define the namespace for the resource -
+        # it will automatically be created in the owner namespace.
+        # If the namespace is specified and is not the owner
+        # namespace, the resource will fail to be created.
+        # +optional
+        ytt: <string>
+
+      # Kind is a string value representing the REST resource this
+      # object represents. Servers may infer this from the
+      # endpoint the client submits requests to. Cannot be
+      # updated. In CamelCase. More info:
+      # https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+      # +optional
+      kind: <string>
+
+  # BlueprintRef selects a specific blueprint for the matched
+  # OwnerSelector
   blueprintRef:
 
     # Name of the blueprint
     # +optional
     name: <string>
 
-  # Kind is a string value representing the REST resource this
-  # object represents. Servers may infer this from the endpoint
-  # the client submits requests to. Cannot be updated. In
-  # CamelCase. More info:
-  # https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+  # OwnerSelector is the criteria used to match an Owner to the
+  # BlueprintRef todo: explain selection criteria, precedence and
+  # how version is only used for representation
+  ownerSelector:
+
+    # APIVersion defines the versioned schema of this
+    # representation of an object. Servers should convert
+    # recognized schemas to the latest internal value, and may
+    # reject unrecognized values. More info:
+    # https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+    # +optional
+    apiVersion: <string>
+
+    # Kind is a string value representing the REST resource this
+    # object represents. Servers may infer this from the endpoint
+    # the client submits requests to. Cannot be updated. In
+    # CamelCase. More info:
+    # https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+    # +optional
+    kind: <string>
+
+    # matchExpressions is a list of label selector requirements.
+    # The requirements are ANDed.
+    # +optional
+    matchExpressions:
+      - # A label selector requirement is a selector that contains
+        # values, a key, and an operator that relates the key and
+        # values.
+        # +optional
+
+        # key is the label key that the selector applies to.
+        key: <string>
+
+        # operator represents a key's relationship to a set of
+        # values. Valid operators are In, NotIn, Exists and
+        # DoesNotExist.
+        operator: <string>
+
+        # values is an array of string values. If the operator is
+        # In or NotIn, the values array must be non-empty. If the
+        # operator is Exists or DoesNotExist, the values array
+        # must be empty. This array is replaced during a strategic
+        # merge patch.
+        # +optional
+        values: [ <string> ]
+
+    # MatchFields is a list of field selector requirements. The
+    # requirements are ANDed.
+    # +optional
+    matchFields:
+      - # Key is the JSON path in the workload to match against.
+        # e.g. for workload: "workload.spec.source.git.url", e.g.
+        # for deliverable: "deliverable.spec.source.git.url"
+        key: <string>
+
+        # Operator represents a key's relationship to a set of
+        # values. Valid operators are In, NotIn, Exists and
+        # DoesNotExist.
+        operator: <[In|NotIn|Exists|DoesNotExist]>
+
+        # Values is an array of string values. If the operator is
+        # In or NotIn, the values array must be non-empty. If the
+        # operator is Exists or DoesNotExist, the values array
+        # must be empty.
+        # +optional
+        values: [ <string> ]
+
+    # matchLabels is a map of {key,value} pairs. A single
+    # {key,value} in the matchLabels map is equivalent to an
+    # element of matchExpressions, whose key field is "key", the
+    # operator is "In", and the values array contains only
+    # "value". The requirements are ANDed.
+    # +optional
+    matchLabels: {}
+
+  # ParamMap maps Blueprint parameters to the specific Owner
+  # specified in OwnerSelector's TypeMeta.
   # +optional
-  kind: <string>
   paramMap:
     - # DefaultValue makes this parameter optional if already
       # optional, overrides the default value
@@ -36,23 +163,22 @@ spec:
       name: <string>
 
       # OwnerPath defines where in the Owner object this parameter
-      # is sourced from Follow JSONPath Syntax
+      # is sourced from using JSONPath syntax.
       # +optional
       ownerPath: <string>
 
       # Value set's the value. You cannot map an ownerObject value
       # at the same time Using this field lets you configure
       # blueprints on a per "Mapping" basis. This is the best
-      # place for operator configuration to live. Todo: Validate
-      # this
+      # place for operator configuration to live.
       # +optional
       value: <string>
 
   # ServiceAccountName refers to the Service account with
-  # permissions to create resources submitted by the supply chain.
-  # TODO: fixme docs. If that is also not set, Cartographer will
-  # use the default service account in the owner object's
-  # namespace.
+  # permissions to create resources submitted by the
+  # ClusterBlueprint. TODO: fixme docs. If that is also not set,
+  # Cartographer will use the default service account in the owner
+  # object's namespace.
   # +optional
   serviceAccountRef:
 
@@ -63,3 +189,37 @@ spec:
     # omitted, the Owner's namespace is used.
     # +optional
     namespace: <string>
+
+  # StatusMapping represents the mechanism used to record the
+  # status of the Blueprint's imprint back to the Owner. If
+  # omitted, the Owner is not updated by Cartographer
+  # +optional
+  statusMapping:
+
+    # Template defines a resource template for a Kubernetes
+    # Resource or Custom Resource which is applied to the server
+    # each time the blueprint is applied. Templates support simple
+    # value interpolation using the $()$ marker format. For more
+    # information, see:
+    # https://cartographer.sh/docs/latest/templating/ You cannot
+    # define both Template and Ytt at the same time. You should
+    # not define the namespace for the resource - it will
+    # automatically be created in the owner namespace. If the
+    # namespace is specified and is not the owner namespace, the
+    # resource will fail to be created.
+    # +optional
+    template: {}
+
+    # Ytt defines a resource template written in `ytt` for a
+    # Kubernetes Resource or Custom Resource which is applied to
+    # the server each time the blueprint is applied. Templates
+    # support simple value interpolation using the $()$ marker
+    # format. For more information, see:
+    # https://cartographer.sh/docs/latest/templating/ You cannot
+    # define both Template and Ytt at the same time. You should
+    # not define the namespace for the resource - it will
+    # automatically be created in the owner namespace. If the
+    # namespace is specified and is not the owner namespace, the
+    # resource will fail to be created.
+    # +optional
+    ytt: <string>
