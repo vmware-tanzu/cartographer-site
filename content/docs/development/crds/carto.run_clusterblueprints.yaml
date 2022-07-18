@@ -16,127 +16,95 @@ spec:
   # exclusively.
   # +optional
   components:
-    items:
-      - # Component to a subcomponent Note: There are no params
-        # specified at this level. See BlueprintSpec.Params and
-        # TemplateSpec.Params
+    - # Component to a subcomponent Note: There are no params
+      # specified at this level. See BlueprintSpec.Params and
+      # TemplateSpec.Params
+      # +optional
+
+      # BlueprintRef identifies the template used to produce this
+      # resource Only one of BlueprintRef and Options can be
+      # specified.
+      blueprintRef:
+
+        # Name of the blueprint
         # +optional
+        name: <string>
 
-        # BlueprintRef identifies the template used to produce
-        # this resource Only one of BlueprintRef and Options can
-        # be specified.
-        blueprintRef:
+      # Name of the component. Used as a reference for inputs.
+      # Template components are identified by this name in the
+      # BlueprintStatus
+      name: <string>
 
-          # Name of the blueprint
-          # +optional
+      # Options is a list of template names and Selector. A
+      # template will be selected if the workload matches the
+      # specified selector. Only one template can be selected.
+      # Only one of BlueprintRef and Options can be specified.
+      # Minimum number of items in list is two.
+      # +optional
+      options:
+        - # Name of the template to apply
           name: <string>
 
-        # Name of the component. Used as a reference for inputs.
-        # Template components are identified by this name in the
-        # BlueprintStatus
-        name: <string>
+          # Selector is a criteria to match against  a workload or
+          # deliverable resource.
+          selector:
 
-        # Options is a list of template names and Selector. A
-        # template will be selected if the workload matches the
-        # specified selector. Only one template can be selected.
-        # Only one of BlueprintRef and Options can be specified.
-        # Minimum number of items in list is two.
-        # +optional
-        options:
-          - # Name of the template to apply
-            name: <string>
+            # matchExpressions is a list of label selector
+            # requirements. The requirements are ANDed.
+            # +optional
+            matchExpressions:
+              - # A label selector requirement is a selector that
+                # contains values, a key, and an operator that
+                # relates the key and values.
+                # +optional
 
-            # Selector is a criteria to match against  a workload
-            # or deliverable resource.
-            selector:
+                # key is the label key that the selector applies
+                # to.
+                key: <string>
 
-              # matchExpressions is a list of label selector
-              # requirements. The requirements are ANDed.
-              # +optional
-              matchExpressions:
-                - # A label selector requirement is a selector
-                  # that contains values, a key, and an operator
-                  # that relates the key and values.
-                  # +optional
+                # operator represents a key's relationship to a
+                # set of values. Valid operators are In, NotIn,
+                # Exists and DoesNotExist.
+                operator: <string>
 
-                  # key is the label key that the selector applies
-                  # to.
-                  key: <string>
+                # values is an array of string values. If the
+                # operator is In or NotIn, the values array must
+                # be non-empty. If the operator is Exists or
+                # DoesNotExist, the values array must be empty.
+                # This array is replaced during a strategic merge
+                # patch.
+                # +optional
+                values: [ <string> ]
 
-                  # operator represents a key's relationship to a
-                  # set of values. Valid operators are In, NotIn,
-                  # Exists and DoesNotExist.
-                  operator: <string>
+            # MatchFields is a list of field selector
+            # requirements. The requirements are ANDed.
+            # +optional
+            matchFields:
+              - # Key is the JSON path in the workload to match
+                # against. e.g. for workload:
+                # "workload.spec.source.git.url", e.g. for
+                # deliverable: "deliverable.spec.source.git.url"
+                key: <string>
 
-                  # values is an array of string values. If the
-                  # operator is In or NotIn, the values array must
-                  # be non-empty. If the operator is Exists or
-                  # DoesNotExist, the values array must be empty.
-                  # This array is replaced during a strategic
-                  # merge patch.
-                  # +optional
-                  values: [ <string> ]
+                # Operator represents a key's relationship to a
+                # set of values. Valid operators are In, NotIn,
+                # Exists and DoesNotExist.
+                operator: <[In|NotIn|Exists|DoesNotExist]>
 
-              # MatchFields is a list of field selector
-              # requirements. The requirements are ANDed.
-              # +optional
-              matchFields:
-                - # Key is the JSON path in the workload to match
-                  # against. e.g. for workload:
-                  # "workload.spec.source.git.url", e.g. for
-                  # deliverable: "deliverable.spec.source.git.url"
-                  key: <string>
+                # Values is an array of string values. If the
+                # operator is In or NotIn, the values array must
+                # be non-empty. If the operator is Exists or
+                # DoesNotExist, the values array must be empty.
+                # +optional
+                values: [ <string> ]
 
-                  # Operator represents a key's relationship to a
-                  # set of values. Valid operators are In, NotIn,
-                  # Exists and DoesNotExist.
-                  operator: <[In|NotIn|Exists|DoesNotExist]>
-
-                  # Values is an array of string values. If the
-                  # operator is In or NotIn, the values array must
-                  # be non-empty. If the operator is Exists or
-                  # DoesNotExist, the values array must be empty.
-                  # +optional
-                  values: [ <string> ]
-
-              # matchLabels is a map of {key,value} pairs. A
-              # single {key,value} in the matchLabels map is
-              # equivalent to an element of matchExpressions,
-              # whose key field is "key", the operator is "In",
-              # and the values array contains only "value". The
-              # requirements are ANDed.
-              # +optional
-              matchLabels: {}
-
-    # Params specifies overrides or remapping
-    # +optional
-    params:
-      - # DefaultValue of the parameter. Causes the parameter to
-        # be optional If multiple children exist that specify
-        # DefaultValue, and Value is not set, this must be set.
-        # Otherwise a "ParametersReady:False, Reason:
-        # ParameterDefaultValueCollision" condition occurs.
-        # +optional
-        default: <any>
-
-        # Description of the parameter If a children exist, will
-        # hide child descriptions Otherwise, child descriptions
-        # are joined with newlines and that result is used
-        # +optional
-        description: <string>
-
-        # Name of the parameter. Template blueprints must specify
-        # params to use them Non-Template blueprints can modify
-        # template parameters by specifying parameters
-        name: <string>
-
-        # Value of the parameter. If specified, parent properties
-        # are ignored. If multiple children exist that specify
-        # Value, this must be set, otherwise a
-        # "ParametersReady:False, Reason: ParameterValueCollision"
-        # condition occurs.
-        # +optional
-        value: <any>
+            # matchLabels is a map of {key,value} pairs. A single
+            # {key,value} in the matchLabels map is equivalent to
+            # an element of matchExpressions, whose key field is
+            # "key", the operator is "In", and the values array
+            # contains only "value". The requirements are ANDed.
+            # +optional
+            matchLabels: {}
 
   # Description of the blueprint If not set, this does not reflect
   # descriptions in child blueprints or templates
@@ -153,6 +121,30 @@ spec:
     # Name of the ClusterBlueprintType that defines the output
     # type of this blueprint.
     name: <string>
+
+  # Params specifies accepted parameters for the template. Any
+  # parameter consumed in the template MUST be specified as a
+  # Param
+  # +optional
+  params:
+    - # Default of the parameter. Causes the parameter to be
+      # optional
+      # +optional
+      default: <any>
+
+      # Description of the parameter
+      # +optional
+      description: <string>
+
+      # Name of the parameter. Blueprints must specify params used
+      # by the template or child components
+      name: <string>
+
+      # Value of the parameter. If specified, parent parameters
+      # are ignored. It's invalid to provide a value in a
+      # blueprint with a spec.template specified
+      # +optional
+      value: <any>
 
   # Template is a definition of a resource this component stamps
   # onto the cluster One of Components or Template can be
@@ -305,38 +297,6 @@ spec:
         # the value in the stamped resource. ResourcePath can
         # refer to a simple or complex type,
         resourcePath: <string>
-
-    # Params specifies accepted parameters for the template. Any
-    # parameter consumed in the template MUST be specified as a
-    # Param
-    # +optional
-    params:
-      - # DefaultValue of the parameter. Causes the parameter to
-        # be optional If multiple children exist that specify
-        # DefaultValue, and Value is not set, this must be set.
-        # Otherwise a "ParametersReady:False, Reason:
-        # ParameterDefaultValueCollision" condition occurs.
-        # +optional
-        default: <any>
-
-        # Description of the parameter If a children exist, will
-        # hide child descriptions Otherwise, child descriptions
-        # are joined with newlines and that result is used
-        # +optional
-        description: <string>
-
-        # Name of the parameter. Template blueprints must specify
-        # params to use them Non-Template blueprints can modify
-        # template parameters by specifying parameters
-        name: <string>
-
-        # Value of the parameter. If specified, parent properties
-        # are ignored. If multiple children exist that specify
-        # Value, this must be set, otherwise a
-        # "ParametersReady:False, Reason: ParameterValueCollision"
-        # condition occurs.
-        # +optional
-        value: <any>
 
     # Ytt defines a resource template written in `ytt` for a
     # Kubernetes Resource or Custom Resource which is applied to
