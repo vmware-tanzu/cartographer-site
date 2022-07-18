@@ -33,7 +33,7 @@ spec:
       # ownerObject's, or also have templating to generate them.
       inline:
 
-        # Template defines a resource template for a Kubernetes
+        # JSONPath defines a resource template for a Kubernetes
         # Resource or Custom Resource which is applied to the
         # server each time the blueprint is applied. Templates
         # support simple value interpolation using the $()$ marker
@@ -45,7 +45,7 @@ spec:
         # If the namespace is specified and is not the owner
         # namespace, the resource will fail to be created.
         # +optional
-        template: {}
+        jsonPath: {}
 
         # Ytt defines a resource template written in `ytt` for a
         # Kubernetes Resource or Custom Resource which is applied
@@ -156,16 +156,16 @@ spec:
   # specified in OwnerSelector's TypeMeta.
   # +optional
   paramMap:
-    - # DefaultValue makes this parameter optional if already
-      # optional, overrides the default value
+    - # Default makes this parameter optional if already optional,
+      # overrides the default value
       # +optional
-      defaultValue: <string>
+      default: <string>
       name: <string>
 
-      # OwnerPath defines where in the Owner object this parameter
-      # is sourced from using JSONPath syntax.
+      # Path defines where in the Owner object this parameter is
+      # sourced from using JSONPath syntax.
       # +optional
-      ownerPath: <string>
+      path: <string>
 
       # Value set's the value. You cannot map an ownerObject value
       # at the same time Using this field lets you configure
@@ -173,6 +173,10 @@ spec:
       # place for operator configuration to live.
       # +optional
       value: <string>
+
+  # TODO enum type
+  # +optional
+  priority: <string>
 
   # ServiceAccountName refers to the Service account with
   # permissions to create resources submitted by the
@@ -196,7 +200,7 @@ spec:
   # +optional
   statusMapping:
 
-    # Template defines a resource template for a Kubernetes
+    # JSONPath defines a resource template for a Kubernetes
     # Resource or Custom Resource which is applied to the server
     # each time the blueprint is applied. Templates support simple
     # value interpolation using the $()$ marker format. For more
@@ -208,7 +212,7 @@ spec:
     # namespace is specified and is not the owner namespace, the
     # resource will fail to be created.
     # +optional
-    template: {}
+    jsonPath: {}
 
     # Ytt defines a resource template written in `ytt` for a
     # Kubernetes Resource or Custom Resource which is applied to

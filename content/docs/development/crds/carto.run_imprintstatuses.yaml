@@ -1,8 +1,0 @@
----
-
-# ImprintStatus represents the overall status of the objects
-# maintained for an owner object.
-# +optional
-apiVersion: carto.run/v2alpha1
-kind: ImprintStatus
-metadata: {}

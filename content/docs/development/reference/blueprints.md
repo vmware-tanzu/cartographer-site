@@ -4,13 +4,9 @@
 
 {{< crd  carto.run_clusterblueprints.yaml >}}
 
-## ClusterOytputTypes
+## ClusterBlueprintTypes
 
-{{< crd  carto.run_clusteroutputtypes.yaml >}}
-
-## ImprintStatus
-
-{{< crd  carto.run_imprintstatuses.yaml >}}
+{{< crd  carto.run_clusterblueprinttypes.yaml >}}
 
 ## ClusterSelector
 
