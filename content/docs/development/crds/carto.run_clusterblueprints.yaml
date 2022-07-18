@@ -8,12 +8,11 @@ kind: ClusterBlueprint
 metadata: {}
 spec:
 
-  # Components are a list of child blueprints which this blueprint
-  # creates and maintains during the lifetime of the OwnerObject.
-  # If OutputTypeRef is specified, the last item in this list must
-  # emit that type. If it doesn't, the condition (todo: document
-  # condition here) One of Components or Template can be specified
-  # exclusively.
+  # Components are a list of child blueprints managed by this
+  # blueprint. If TypeRef is specified, the last item in this list
+  # must emit that type. One of Components or Template can be
+  # specified exclusively. The last Component in this list is
+  # assumed to be the Output for this blueprint.
   # +optional
   components:
     - # Component to a subcomponent Note: There are no params
@@ -29,6 +28,27 @@ spec:
         # Name of the blueprint
         # +optional
         name: <string>
+
+      # Inputs specifies the input mapping from other components
+      # and Blueprint.Inputs
+      # +optional
+      inputs:
+        - # Name of this input. It must match with an input in the
+          # child component.
+          name: <string>
+
+          # ValueFrom specifies which input to use.
+          valueFrom:
+
+            # Component specifies a sibling component's name as
+            # the input.
+            # +optional
+            component: <string>
+
+            # Input names a top level ClusterBlueprintSpec.Inputs
+            # as the input.
+            # +optional
+            input: <string>
 
       # Name of the component. Used as a reference for inputs.
       # Template components are identified by this name in the
@@ -106,21 +126,41 @@ spec:
             # +optional
             matchLabels: {}
 
+      # ParamRenames are a list of parameters that need to be
+      # renamed to satisfy the child blueprint Any params
+      # specified in Blueprint.Params are passed to the child,
+      # however if the name doesn't match, then use a param
+      # rename.
+      # +optional
+      paramRenames:
+
+        # From is the name of the parameter in the current
+        # blueprint
+        from: <string>
+
+        # To is the name of the parameter in the child component
+        to: <string>
+
   # Description of the blueprint If not set, this does not reflect
   # descriptions in child blueprints or templates
   # +optional
   description: <string>
 
-  # OutputTypeRef refers to an object describing the contract this
-  # blueprint can fulfill This is optional, however without an
-  # output, this Blueprint cannot be the cause of a reconciliation
-  # of sibling components in a parent blueprint.
+  # Inputs specifies the input types and names required by this
+  # blueprint 
+  # A Template may reference the inputs by name and then follow
+  # the input's schema, eg: $(inputs.my-source.url)$ 
+  # Note: If your compound blueprint does not expect any inputs,
+  # it can not be used as a component to a parent blueprint.
   # +optional
-  outputTypeRef:
+  inputs:
+    - # Name is used to reference this input in templates and
+      # component definitions
+      name: <string>
 
-    # Name of the ClusterBlueprintType that defines the output
-    # type of this blueprint.
-    name: <string>
+      # Ref is the name of the ClusterBlueprintType that must be
+      # provided
+      ref: <string>
 
   # Params specifies accepted parameters for the template. Any
   # parameter consumed in the template MUST be specified as a
@@ -149,8 +189,7 @@ spec:
   # Template is a definition of a resource this component stamps
   # onto the cluster One of Components or Template can be
   # specified exclusively. Todo: explain the problem with the
-  # absence of oneOf and semantic error checking Todo: opinions
-  # about template.template? resource.template instead?
+  # absence of oneOf and semantic error checking
   # +optional
   template:
 
@@ -280,17 +319,17 @@ spec:
     jsonPath: {}
 
     # An output mapping connects fields in the stamped resource
-    # with the structure of the OutputTypeRef specified for this
-    # Component. With only one entry in the mapping, it's possible
-    # to map a simple value onto a simple type, or a complex,
-    # value onto a complex type (a one to one mapping). When the
-    # resource's results do not match the exact shape of the
-    # OutputTypeRef, you can use multiple mappings to coerce the
-    # correct shape. Todo: examples in docs and a link.
+    # with the structure of the ClusterBlueprintType specified for
+    # this Component. With only one entry in the mapping, it's
+    # possible to map a simple value onto a simple type, or a
+    # complex, value onto a complex type (a one to one mapping).
+    # When the resource's results do not match the exact shape of
+    # the ClusterBlueprintType, you can use multiple mappings to
+    # coerce the correct shape. Todo: examples in docs and a link.
     # +optional
     outputMapping:
-      - # Path is a JSONPath that represents the field in the
-        # OutputType that is fulfilled by Path
+      - # Path is a JSONPath into the OutputType that receives the
+        # value at ResourcePath
         path: <string>
 
         # ResourcePath	is a JSONPath that represents where to find
@@ -311,6 +350,21 @@ spec:
     # resource will fail to be created.
     # +optional
     ytt: <string>
+
+  # TypeRef refers to an object describing the contract this
+  # blueprint can fulfill This is optional, however without an
+  # output, this Blueprint cannot be the cause of a reconciliation
+  # of sibling components in a parent blueprint. Templates can
+  # specify an output mapping via TemplateSpec.OutputMapping. The
+  # last component in Components must match the type of TypeRef,
+  # as this is the component that is used for this blueprint's
+  # output.
+  # +optional
+  typeRef:
+
+    # Name of the ClusterBlueprintType that defines the output
+    # type of this blueprint.
+    name: <string>
 status:
 
   # Calculated list of input params based on templates and
