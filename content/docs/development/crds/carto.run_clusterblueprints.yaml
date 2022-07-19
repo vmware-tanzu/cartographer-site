@@ -1,0 +1,470 @@
+---
+
+# ClusterBlueprint represents a component within Cartographe
+# +optional
+apiVersion: carto.run/v2alpha1
+kind: ClusterBlueprint
+metadata: {}
+spec:
+
+  # Components are a list of child blueprints managed by this
+  # blueprint. If TypeRef is specified, the last item in this list
+  # must emit that type. One of Components or Template can be
+  # specified exclusively. The last Component in this list is
+  # assumed to be the Output for this blueprint.
+  # +optional
+  components:
+    - # Component to a subcomponent Note: There are no params
+      # specified at this level. See BlueprintSpec.Params and
+      # TemplateSpec.Params
+      # +optional
+
+      # BlueprintRef identifies the template used to produce this
+      # resource Only one of BlueprintRef and Options can be
+      # specified.
+      blueprintRef:
+
+        # Name of the blueprint
+        # +optional
+        name: <string>
+
+      # Inputs specifies the input mapping from other components
+      # and Blueprint.Inputs
+      # +optional
+      inputs:
+        - # Name of this input. It must match with an input in the
+          # child component.
+          name: <string>
+
+          # ValueFrom specifies which input to use.
+          valueFrom:
+
+            # Component specifies a sibling component's name as
+            # the input.
+            # +optional
+            component: <string>
+
+            # Input names a top level ClusterBlueprintSpec.Inputs
+            # as the input.
+            # +optional
+            input: <string>
+
+      # Name of the component. Used as a reference for inputs.
+      # Template components are identified by this name in the
+      # BlueprintStatus
+      name: <string>
+
+      # Options is a list of template names and Selector. A
+      # template will be selected if the workload matches the
+      # specified selector. Only one template can be selected.
+      # Only one of BlueprintRef and Options can be specified.
+      # Minimum number of items in list is two.
+      # +optional
+      options:
+        - # Name of the template to apply
+          name: <string>
+
+          # Selector is a criteria to match against  a workload or
+          # deliverable resource.
+          selector:
+
+            # matchExpressions is a list of label selector
+            # requirements. The requirements are ANDed.
+            # +optional
+            matchExpressions:
+              - # A label selector requirement is a selector that
+                # contains values, a key, and an operator that
+                # relates the key and values.
+                # +optional
+
+                # key is the label key that the selector applies
+                # to.
+                key: <string>
+
+                # operator represents a key's relationship to a
+                # set of values. Valid operators are In, NotIn,
+                # Exists and DoesNotExist.
+                operator: <string>
+
+                # values is an array of string values. If the
+                # operator is In or NotIn, the values array must
+                # be non-empty. If the operator is Exists or
+                # DoesNotExist, the values array must be empty.
+                # This array is replaced during a strategic merge
+                # patch.
+                # +optional
+                values: [ <string> ]
+
+            # MatchParams is a list of param selector
+            # requirements. The requirements are ANDed.
+            # +optional
+            matchFields:
+              - # Name is the parameter's name A parameter with
+                # this name must be specified in
+                # BlueprintSpec.Params
+                name: <string>
+
+                # Operator represents a parameter's relationship
+                # to a set of values. Valid operators are In,
+                # NotIn, Exists and DoesNotExist.
+                operator: <[In|NotIn|Exists|DoesNotExist]>
+
+                # Values is an array of string values. If the
+                # operator is In or NotIn, the values array must
+                # be non-empty. If the operator is Exists or
+                # DoesNotExist, the values array must be empty.
+                # +optional
+                values: [ <string> ]
+
+            # matchLabels is a map of {key,value} pairs. A single
+            # {key,value} in the matchLabels map is equivalent to
+            # an element of matchExpressions, whose key field is
+            # "key", the operator is "In", and the values array
+            # contains only "value". The requirements are ANDed.
+            # +optional
+            matchLabels: {}
+
+      # ParamRenames are a list of parameters that need to be
+      # renamed to satisfy the child blueprint Any params
+      # specified in Blueprint.Params are passed to the child,
+      # however if the name doesn't match, then use a param
+      # rename.
+      # +optional
+      paramRenames:
+
+        # From is the name of the parameter in the current
+        # blueprint
+        from: <string>
+
+        # To is the name of the parameter in the child component
+        to: <string>
+
+  # Description of the blueprint If not set, this does not reflect
+  # descriptions in child blueprints or templates
+  # +optional
+  description: <string>
+
+  # Inputs specifies the input types and names required by this
+  # blueprint 
+  # A Template may reference the inputs by name and then follow
+  # the input's schema, eg: $(inputs.my-source.url)$ 
+  # Note: If your compound blueprint does not expect any inputs,
+  # it can not be used as a component to a parent blueprint.
+  # +optional
+  inputs:
+    - # Description allows authors to describe this input
+      # +optional
+      description: <string>
+
+      # Name is used to reference this input in templates and
+      # component definitions
+      name: <string>
+
+      # Ref is the name of the ClusterBlueprintType that must be
+      # provided
+      ref:
+
+        # Description allows authors to describe the output of
+        # their blueprint
+        # +optional
+        description: <string>
+
+        # Name of the ClusterBlueprintType that defines the output
+        # type of this blueprint.
+        name: <string>
+
+  # Params specifies accepted parameters for the template. Any
+  # parameter consumed in the template MUST be specified as a
+  # Param
+  # +optional
+  params:
+    - # Default of the parameter. Causes the parameter to be
+      # optional
+      # +optional
+      default: <any>
+
+      # Description of the parameter
+      # +optional
+      description: <string>
+
+      # Name of the parameter. Blueprints must specify params used
+      # by the template or child components
+      name: <string>
+
+      # Value of the parameter. If specified, parent parameters
+      # are ignored. It's invalid to provide a value in a
+      # blueprint with a spec.template specified
+      # +optional
+      value: <any>
+
+  # Template is a definition of a resource this component stamps
+  # onto the cluster One of Components or Template can be
+  # specified exclusively. Todo: explain the problem with the
+  # absence of oneOf and semantic error checking
+  # +optional
+  template:
+
+    # HealthRule specifies rubric for determining the health of a
+    # resource stamped by this template
+    # +optional
+    healthRule:
+
+      # AlwaysHealthy being set indicates the resource should
+      # always be considered healthy
+      # +optional
+      alwaysHealthy: {}
+
+      # MultiMatch specifies explicitly which conditions and/or
+      # fields should be used to determine healthiness.
+      # +optional
+      multiMatch:
+
+        # Healthy is a HealthMatchRule which stipulates
+        # requirements, ALL of which must be met for the resource
+        # to be considered healthy.
+        healthy:
+
+          # MatchConditions are the conditions and statuses to
+          # read.
+          # +optional
+          matchConditions:
+            - # Status is the status of the condition
+              status: <string>
+
+              # Type is the type of the condition
+              type: <string>
+
+          # MatchFields stipulates a FieldSelectorRequirement for
+          # this rule.
+          # +optional
+          matchFields:
+            - # MessagePath is specified in jsonpath format. It is
+              # evaluated against the resource to provide a
+              # message in the owner's resource condition if it is
+              # the first matching requirement that determine the
+              # current ResourcesHealthy condition status.
+              # +optional
+              messagePath: <string>
+
+              # Name is the parameter's name A parameter with this
+              # name must be specified in BlueprintSpec.Params
+              name: <string>
+
+              # Operator represents a parameter's relationship to
+              # a set of values. Valid operators are In, NotIn,
+              # Exists and DoesNotExist.
+              operator: <[In|NotIn|Exists|DoesNotExist]>
+
+              # Values is an array of string values. If the
+              # operator is In or NotIn, the values array must be
+              # non-empty. If the operator is Exists or
+              # DoesNotExist, the values array must be empty.
+              # +optional
+              values: [ <string> ]
+
+        # Unhealthy is a HealthMatchRule which stipulates
+        # requirements, ANY of which, when met, indicate that the
+        # resource should be considered unhealthy.
+        unhealthy:
+
+          # MatchConditions are the conditions and statuses to
+          # read.
+          # +optional
+          matchConditions:
+            - # Status is the status of the condition
+              status: <string>
+
+              # Type is the type of the condition
+              type: <string>
+
+          # MatchFields stipulates a FieldSelectorRequirement for
+          # this rule.
+          # +optional
+          matchFields:
+            - # MessagePath is specified in jsonpath format. It is
+              # evaluated against the resource to provide a
+              # message in the owner's resource condition if it is
+              # the first matching requirement that determine the
+              # current ResourcesHealthy condition status.
+              # +optional
+              messagePath: <string>
+
+              # Name is the parameter's name A parameter with this
+              # name must be specified in BlueprintSpec.Params
+              name: <string>
+
+              # Operator represents a parameter's relationship to
+              # a set of values. Valid operators are In, NotIn,
+              # Exists and DoesNotExist.
+              operator: <[In|NotIn|Exists|DoesNotExist]>
+
+              # Values is an array of string values. If the
+              # operator is In or NotIn, the values array must be
+              # non-empty. If the operator is Exists or
+              # DoesNotExist, the values array must be empty.
+              # +optional
+              values: [ <string> ]
+
+      # SingleConditionType names a single condition which, when
+      # True indicates the resource is healthy. When False it is
+      # unhealthy. Otherwise, healthiness is Unknown.
+      # +optional
+      singleConditionType: <string>
+
+    # JSONPath defines a resource template for a Kubernetes
+    # Resource or Custom Resource which is applied to the server
+    # each time the blueprint is applied. Templates support simple
+    # value interpolation using the $()$ marker format. For more
+    # information, see:
+    # https://cartographer.sh/docs/latest/templating/ You cannot
+    # define both Template and Ytt at the same time. You should
+    # not define the namespace for the resource - it will
+    # automatically be created in the owner namespace. If the
+    # namespace is specified and is not the owner namespace, the
+    # resource will fail to be created.
+    # +optional
+    jsonPath: {}
+
+    # An output mapping connects fields in the stamped resource
+    # with the structure of the ClusterBlueprintType specified for
+    # this Component. With only one entry in the mapping, it's
+    # possible to map a simple value onto a simple type, or a
+    # complex, value onto a complex type (a one to one mapping).
+    # When the resource's results do not match the exact shape of
+    # the ClusterBlueprintType, you can use multiple mappings to
+    # coerce the correct shape. Todo: examples in docs and a link.
+    # +optional
+    outputMapping:
+      - # Path is a JSONPath into the OutputType that receives the
+        # value at ResourcePath
+        path: <string>
+
+        # ResourcePath	is a JSONPath that represents where to find
+        # the value in the stamped resource. ResourcePath can
+        # refer to a simple or complex type,
+        resourcePath: <string>
+
+    # Ytt defines a resource template written in `ytt` for a
+    # Kubernetes Resource or Custom Resource which is applied to
+    # the server each time the blueprint is applied. Templates
+    # support simple value interpolation using the $()$ marker
+    # format. For more information, see:
+    # https://cartographer.sh/docs/latest/templating/ You cannot
+    # define both Template and Ytt at the same time. You should
+    # not define the namespace for the resource - it will
+    # automatically be created in the owner namespace. If the
+    # namespace is specified and is not the owner namespace, the
+    # resource will fail to be created.
+    # +optional
+    ytt: <string>
+
+  # TypeRef refers to an object describing the contract this
+  # blueprint can fulfill This is optional, however without an
+  # output, this Blueprint cannot be the cause of a reconciliation
+  # of sibling components in a parent blueprint. Templates can
+  # specify an output mapping via TemplateSpec.OutputMapping. The
+  # last component in Components must match the type of TypeRef,
+  # as this is the component that is used for this blueprint's
+  # output.
+  # +optional
+  typeRef:
+
+    # Description allows authors to describe the output of their
+    # blueprint
+    # +optional
+    description: <string>
+
+    # Name of the ClusterBlueprintType that defines the output
+    # type of this blueprint.
+    name: <string>
+status:
+
+  # Calculated list of input params based on templates and
+  # overrides
+  # +optional
+  calculated:
+    - # CalculatedParam is one of the available parameters exposed
+      # by the template or sub-blueprints within this blueprint.
+      # ClusterSelectors further allow these parameters to be
+      # configured or mapped to OwnerResource fields.
+      # +optional
+
+      # Default value of the parameter. If set, can be overridden
+      # by the ClusterSelectorMapping
+      # +optional
+      default: <any>
+
+      # Description(s) of this parameter. if multiple children
+      # exist, then they are joined with newlines if this
+      # parameter is optional, or required, the description will
+      # be prepended with "(optional)" or "(required)"
+      # +optional
+      description: <string>
+
+      # Name of the parameter
+      name: <string>
+
+      # Value of the parameter. If set, cannot be overridden by
+      # the ClusterSelectorMapping Value is mutually exclusive
+      # with Default
+      # +optional
+      value: <any>
+  conditions:
+    - # Condition contains details for one aspect of the current
+      # state of this API Resource. --- This struct is intended
+      # for direct use as an array at the field path
+      # .status.conditions.  For example, type FooStatus struct{
+      # // Represents the observations of a foo's current state.
+      # // Known .status.conditions.type are: "Available",
+      # "Progressing", and "Degraded" // +patchMergeKey=type //
+      # +patchStrategy=merge // +listType=map // +listMapKey=type
+      # Conditions []metav1.Condition `json:"conditions,omitempty"
+      # patchStrategy:"merge" patchMergeKey:"type"
+      # protobuf:"bytes,1,rep,name=conditions"` 
+      # // other fields }
+      # +optional
+
+      # lastTransitionTime is the last time the condition
+      # transitioned from one status to another. This should be
+      # when the underlying condition changed.  If that is not
+      # known, then using the time when the API field changed is
+      # acceptable.
+      lastTransitionTime: <string>
+
+      # message is a human readable message indicating details
+      # about the transition. This may be an empty string.
+      message: <string>
+
+      # observedGeneration represents the .metadata.generation
+      # that the condition was set based upon. For instance, if
+      # .metadata.generation is currently 12, but the
+      # .status.conditions[x].observedGeneration is 9, the
+      # condition is out of date with respect to the current state
+      # of the instance.
+      # +optional
+      observedGeneration: <integer>
+
+      # reason contains a programmatic identifier indicating the
+      # reason for the condition's last transition. Producers of
+      # specific condition types may define expected values and
+      # meanings for this field, and whether the values are
+      # considered a guaranteed API. The value should be a
+      # CamelCase string. This field may not be empty.
+      reason: <string>
+
+      # status of the condition, one of True, False, Unknown.
+      status: <[True|False|Unknown]>
+
+      # type of condition in CamelCase or in
+      # foo.example.com/CamelCase. --- Many .condition.type values
+      # are consistent across resources like Available, but
+      # because arbitrary conditions can be useful (see
+      # .node.status.conditions), the ability to deconflict is
+      # important. The regex it matches is
+      # (dns1123SubdomainFmt/)?(qualifiedNameFmt)
+      type: <string>
+
+  # ObservedGeneration is the Generation of this resource's spec
+  # that reconciled the contents of this status.
+  # +optional
+  observedGeneration: <integer>
