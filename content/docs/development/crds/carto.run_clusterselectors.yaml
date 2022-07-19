@@ -123,17 +123,16 @@ spec:
         # +optional
         values: [ <string> ]
 
-    # MatchFields is a list of field selector requirements. The
+    # MatchParams is a list of param selector requirements. The
     # requirements are ANDed.
     # +optional
     matchFields:
-      - # Key is the JSON path in the workload to match against.
-        # e.g. for workload: "workload.spec.source.git.url", e.g.
-        # for deliverable: "deliverable.spec.source.git.url"
-        key: <string>
+      - # Name is the parameter's name A parameter with this name
+        # must be specified in BlueprintSpec.Params
+        name: <string>
 
-        # Operator represents a key's relationship to a set of
-        # values. Valid operators are In, NotIn, Exists and
+        # Operator represents a parameter's relationship to a set
+        # of values. Valid operators are In, NotIn, Exists and
         # DoesNotExist.
         operator: <[In|NotIn|Exists|DoesNotExist]>
 
