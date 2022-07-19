@@ -162,7 +162,16 @@ spec:
 
       # Ref is the name of the ClusterBlueprintType that must be
       # provided
-      ref: <string>
+      ref:
+
+        # Description allows authors to describe the output of
+        # their blueprint
+        # +optional
+        description: <string>
+
+        # Name of the ClusterBlueprintType that defines the output
+        # type of this blueprint.
+        name: <string>
 
   # Params specifies accepted parameters for the template. Any
   # parameter consumed in the template MUST be specified as a
