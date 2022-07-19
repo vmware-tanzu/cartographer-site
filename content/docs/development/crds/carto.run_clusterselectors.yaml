@@ -174,10 +174,6 @@ spec:
       # +optional
       value: <string>
 
-  # TODO enum type
-  # +optional
-  priority: <string>
-
   # ServiceAccountName refers to the Service account with
   # permissions to create resources submitted by the
   # ClusterBlueprint. TODO: fixme docs. If that is also not set,

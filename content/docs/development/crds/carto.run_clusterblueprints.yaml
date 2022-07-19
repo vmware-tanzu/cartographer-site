@@ -154,7 +154,11 @@ spec:
   # it can not be used as a component to a parent blueprint.
   # +optional
   inputs:
-    - # Name is used to reference this input in templates and
+    - # Description allows authors to describe this input
+      # +optional
+      description: <string>
+
+      # Name is used to reference this input in templates and
       # component definitions
       name: <string>
 
@@ -361,6 +365,11 @@ spec:
   # output.
   # +optional
   typeRef:
+
+    # Description allows authors to describe the output of their
+    # blueprint
+    # +optional
+    description: <string>
 
     # Name of the ClusterBlueprintType that defines the output
     # type of this blueprint.
