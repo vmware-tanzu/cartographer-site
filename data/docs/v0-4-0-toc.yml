@@ -27,6 +27,8 @@ toc:
         url: /templating
       - page: Stamping
         url: /stamping
+      - page: Health Rules
+        url: /health-rules
   - title: CR Reference
     subfolderitems:
       - page: GVK
@@ -51,6 +53,8 @@ toc:
         url: /tutorials/runnable
       - page: Runnable in a Supply Chain
         url: /tutorials/runnable-in-a-supply-chain
+      - page: Determining Health
+        url: /tutorials/determining-health
   - title: Examples
     subfolderitems:
       - page: Multi-Cluster

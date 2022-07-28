@@ -1,0 +1,9 @@
+---
+apiVersion: carto.run/v1alpha1
+kind: Workload
+metadata:
+  name: typo
+  labels:
+    workload-type: pre-built
+spec:
+  image: docker.io/what-a-typo-this-image-definitely-does-not-exist/hello-world:latest
