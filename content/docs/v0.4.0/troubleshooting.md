@@ -75,8 +75,11 @@ Here's how the different `ResourceHealthy` condition statuses can come about, an
 | True    | OutputsAvailable   | Template author specified no rule, resource created and generates valid outputs.                                                                                                                                                    |
 | Unknown | OutputNotAvailable | Template author specified no rule, resource realized but no output available.                                                                                                                                                       |
 | Unknown | NoStampedObject    | Template author specified no rule, resource realized but not successfully submitted yet.                                                                                                                                            |
-| True    | AlwaysHealthy      | Template author specified no rule in a ClusterTemplate and resource realized and submitted.                                                                                                                                         |
-| True    | AlwaysHealthy      | Template author specified AlwaysHealthy rule. Resource is always considered healthy.                                                                                                                                                |
+| True    | AlwaysHealthy      | Template author specified no rule in a ClusterTemplate and resource realized and submitted.
+
+OR
+
+Template author specified AlwaysHealthy rule. Resource is always considered healthy.|
 | Unknown | XCondition         | Template author specified SingleConditionType X, and condition X on the actual resource is not found. Message will contain this detail.                                                                                             |
 | Unknown | XCondition         | Template author specified SingleConditionType X, and condition X on the actual resource is found but does not have a status of `True` or `False`. Message is copied forward from the actual resource.                               |
 | False   | XCondition         | Template author specified SingleConditionType X, and condition X on the actual resource is False. Message is copied forward from the actual resource.                                                                               |
