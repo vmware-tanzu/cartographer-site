@@ -81,7 +81,10 @@ OR
 
 Template author specified AlwaysHealthy rule. Resource is always considered healthy.|
 | Unknown | XCondition         | Template author specified SingleConditionType X, and condition X on the actual resource is not found. Message will contain this detail.                                                                                             |
-| Unknown | XCondition         | Template author specified SingleConditionType X, and condition X on the actual resource is found but does not have a status of `True` or `False`. Message is copied forward from the actual resource.                               |
+
+OR
+
+Template author specified SingleConditionType X, and condition X on the actual resource is found but does not have a status of `True` or `False`. Message is copied forward from the actual resource.                               |
 | False   | XCondition         | Template author specified SingleConditionType X, and condition X on the actual resource is False. Message is copied forward from the actual resource.                                                                               |
 | True    | XCondition         | Template author specified SingleConditionType X, and condition X on the actual resource is True. Message is copied forward from the actual resource.                                                                                |
 | False   | MatchedCondition   | Template author specified MultiMatch and a specified unhealthy matchConditions rule matched. Message contains the status and message of the matchCondition in question.                                                             |
