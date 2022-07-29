@@ -65,8 +65,7 @@ condition's status is determined by evaluating the `healthRule` for the template
 
 If this condition's status is `False` then one or more resources may not be healthy. If this condition's status is
 `Unknown` then the healthy state of one or more resources cannot be determined. In such situations, consult the
-individual `ResourceHealthy` (note that this is singular) condition listed in the owner's (`Workload`/`Deliverable`)
-`resources`.
+individual `Healthy` condition listed in the owner's `status.resources[*].conditions`
 
 Here's how the different `ResourceHealthy` condition statuses can come about, and what they mean:
 
