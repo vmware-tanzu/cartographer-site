@@ -1,10 +1,10 @@
 ---
 
-# ClusterSelector represents a mechanism to bind a Blueprint to an
+# ClusterBinding represents a mechanism to bind a Blueprint to an
 # OwnerObject
 # +optional
 apiVersion: carto.run/v2alpha1
-kind: ClusterSelector
+kind: ClusterBinding
 metadata: {}
 spec:
 

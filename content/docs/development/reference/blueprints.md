@@ -8,6 +8,6 @@
 
 {{< crd  carto.run_clusterblueprinttypes.yaml >}}
 
-## ClusterSelector
+## ClusterBinding
 
-{{< crd  carto.run_clusterselectors.yaml >}}
+{{< crd  carto.run_clusterbindings.yaml >}}

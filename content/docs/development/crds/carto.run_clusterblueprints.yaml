@@ -55,17 +55,17 @@ spec:
       name: <string>
 
       # Options is a list of template names and Selector. A
-      # template will be selected if the workload matches the
-      # specified selector. Only one template can be selected.
-      # Only one of BlueprintRef and Options can be specified.
-      # Minimum number of items in list is two.
+      # template will be selected if params match the specified
+      # selector. Only one template can be selected. Only one of
+      # BlueprintRef and Options can be specified. Minimum number
+      # of items in list is two.
       # +optional
       options:
         - # Name of the template to apply
           name: <string>
 
-          # Selector is a criteria to match against  a workload or
-          # deliverable resource.
+          # Selector is a criteria to match against the params
+          # list.
           selector:
 
             # matchExpressions is a list of label selector
