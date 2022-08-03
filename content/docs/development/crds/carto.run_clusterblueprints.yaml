@@ -173,6 +173,26 @@ spec:
         # type of this blueprint.
         name: <string>
 
+  # OutputTypeRef refers to an object describing the contract this
+  # blueprint can fulfill This is optional, however without an
+  # output, this Blueprint cannot be the cause of a reconciliation
+  # of sibling components in a parent blueprint. Templates can
+  # specify an output mapping via TemplateSpec.OutputMapping. The
+  # last component in Components must match the type of
+  # OutputTypeRef, as this is the component that is used for this
+  # blueprint's output.
+  # +optional
+  outputTypeRef:
+
+    # Description allows authors to describe the output of their
+    # blueprint
+    # +optional
+    description: <string>
+
+    # Name of the ClusterBlueprintType that defines the output
+    # type of this blueprint.
+    name: <string>
+
   # Params specifies accepted parameters for the template. Any
   # parameter consumed in the template MUST be specified as a
   # Param
@@ -357,26 +377,6 @@ spec:
     # resource will fail to be created.
     # +optional
     ytt: <string>
-
-  # OutputTypeRef refers to an object describing the contract this
-  # blueprint can fulfill This is optional, however without an
-  # output, this Blueprint cannot be the cause of a reconciliation
-  # of sibling components in a parent blueprint. Templates can
-  # specify an output mapping via TemplateSpec.OutputMapping. The
-  # last component in Components must match the type of
-  # OutputTypeRef, as this is the component that is used for this
-  # blueprint's output.
-  # +optional
-  typeRef:
-
-    # Description allows authors to describe the output of their
-    # blueprint
-    # +optional
-    description: <string>
-
-    # Name of the ClusterBlueprintType that defines the output
-    # type of this blueprint.
-    name: <string>
 status:
 
   # Calculated list of input params based on templates and
