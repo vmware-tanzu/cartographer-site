@@ -151,10 +151,10 @@ spec:
     # +optional
     matchLabels: {}
 
-  # ParamMap maps Blueprint parameters to the specific Owner
+  # Params maps Blueprint parameters to the specific Owner
   # specified in OwnerSelector's TypeMeta.
   # +optional
-  paramMap:
+  params:
     - # Default makes this parameter optional if already optional,
       # overrides the default value
       # +optional
