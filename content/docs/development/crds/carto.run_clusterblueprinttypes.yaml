@@ -31,3 +31,9 @@ spec:
   # Todo: explain the problem with the absence of schema here, and
   # semantic error checking
   schema: <any>
+
+  # Schemas represent named subschemas, great for using with
+  # openapi $ref syntax, especially in oneOf, anyOf, allOf etc
+  # expressions. See:
+  # https://swagger.io/docs/specification/data-models/oneof-anyof-allof-not/
+  schemas: {}

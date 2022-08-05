@@ -221,6 +221,12 @@ spec:
       # ClusterBlueprintType.
       schema: <any>
 
+      # Schemas represent named subschemas, great for using with
+      # openapi $ref syntax, especially in oneOf, anyOf, allOf etc
+      # expressions. See:
+      # https://swagger.io/docs/specification/data-models/oneof-anyof-allof-not/
+      schemas: {}
+
       # TypeRef is the name of the ClusterBlueprintType that can
       # be enforced for this parameter. TypeRef is optional, but
       # cannot be specified at the same time as Schema
