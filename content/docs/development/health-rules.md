@@ -93,7 +93,7 @@ of the health rules.
 
 For some controllers, two conditions must be met for the object to be healthy. For example in Deployments, users want
 both the `Available` and `Progressing` conditions to be true. For other resources, one condition indicates the object is
-healthy and another condition indicates that the object is unhealthy. Kapp's `App` resource behaves in this manner, if
+healthy and another condition indicates that the object is unhealthy. [Kapp's `App`](https://carvel.dev/kapp-controller/docs/v0.40.0/app-overview/) resource behaves in this manner, if
 the `ReconcileSucceeded` condition is true the object is healthy, while if the `ReconcileFailed` condition is true the
 object is unhealthy. Multimatch can address both of these use cases.
 
