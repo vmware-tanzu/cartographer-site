@@ -55,8 +55,8 @@ reaching production.
 
 At the Hello World Application Inc., we've observed that not all workloads are providing valid configuration, leading to
 supply chains that cannot stamp out k8s deployments. We want to make sure that in this case, the workload object
-reflects the problem. We will add health rules to the template that we created
-in ["Build Your First Supply Chain"](first-supply-chain.md).
+reflects the problem. We will add health rules to the template that we created in
+["Build Your First Supply Chain"](first-supply-chain.md).
 
 ## Steps
 
@@ -70,11 +70,11 @@ remember about kubernetes deployments:
 - A deployment status has conditions. [Read more on k8s conditions](https://maelvls.dev/kubernetes-conditions/).
 - The deployment condition "Available" reports whether the declared number of pod replicas are available on the cluster.
 - The deployment condition "Progressing" reports whether the managed replicasets are making progress in creating pods.
-- The progressing condition will change from True to False if the timeout set in the
-  deployment's `spec.progressDeadlineSeconds` field is exceeded.
+- The progressing condition will change from True to False if the timeout set in the deployment's
+  `spec.progressDeadlineSeconds` field is exceeded.
 
-For a more thorough review of Deployments, see
-the [kubernetes documentation](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/).
+For a more thorough review of Deployments, see the
+[kubernetes documentation](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/).
 
 We'll start by setting a progress deadline. We'll set a timeout of 30 seconds because this is a demo (we're not
 suggesting this is the appropriate value for the real world). In the `template` field of our cluster template we see our
@@ -114,11 +114,11 @@ True", "False", or "Unknown". Deployments have two conditions, progressing and a
 Let's consider how we'll want to represent each of these states:
 
 | Available | Progressing | Workload Reports Healthy as: | Reason                                                                                                |
-|-----------|-------------|------------------------------|-------------------------------------------------------------------------------------------------------|
-| True | True | True                         | Pods are all available and any updates necessary are progressing properly                             |
-| True | False | False                        | There are pods available, but the necessary updates (changes our workload expects) aren't progressing |
-| False | True | Unknown                      | The expected pods are not available, but work is progressing and may resolve                          |
-| False | False | False                        | The expected pods are not available, and necessary updates aren't progressing                         | 
+| --------- | ----------- | ---------------------------- | ----------------------------------------------------------------------------------------------------- |
+| True      | True        | True                         | Pods are all available and any updates necessary are progressing properly                             |
+| True      | False       | False                        | There are pods available, but the necessary updates (changes our workload expects) aren't progressing |
+| False     | True        | Unknown                      | The expected pods are not available, but work is progressing and may resolve                          |
+| False     | False       | False                        | The expected pods are not available, and necessary updates aren't progressing                         |
 
 From this we know that Workload should report the Deployment as Healthy when both available and progressing are true. It
 should report False whenever progressing is False. And report unknown otherwise. With this in mind, we're ready to write
@@ -127,9 +127,8 @@ our healthrule.
 Because health of a Deployment depends on more than one condition, we'll write a multimatch health rule. A multimatch
 rule requires that we define what constitutes both healthy and unhealthy. (Good thing we just determined that above!)
 For both healthy and unhealthy we'll specify a set of matchers. If _all_ the healthy matchers are satisfied, we'll
-report
-healthy == True. If _any_ of the unhealthy matchers are satisfied, we'll report healthy == False. Otherwise, we'll
-report healthy == Unknown.
+report healthy == True. If _any_ of the unhealthy matchers are satisfied, we'll report healthy == False. Otherwise,
+we'll report healthy == Unknown.
 
 ```yaml
 apiVersion: carto.run/v1alpha1
@@ -215,8 +214,8 @@ status:
 
 Look at that second condition! Healthy is true. Our matchers were satisfied. Great stuff.
 
-Next let's look at the top level conditions of the workload and concentrate on the condition with
-type `ResourcesHealthy`:
+Next let's look at the top level conditions of the workload and concentrate on the condition with type
+`ResourcesHealthy`:
 
 ```yaml
 status:
@@ -341,8 +340,8 @@ Congratulations, you’ve used a healthrule to make your supply chain more under
 - How to read the workload's `status.resources` `healthy` conditions
 - How to read the workload's `ResourcesHealthy` condition
 
-To learn more, read
-the [troubleshooting guide on ResourcesHealthy](../troubleshooting.md#sub-condition-resourceshealthy). It explores the
+To learn more, read the
+[troubleshooting guide on ResourcesHealthy](../troubleshooting.md#sub-condition-resourceshealthy). It explores the
 possible values you'll see and their meanings.
 
 Also check out the [reference page for the template CRDs](../reference/template.md)
