@@ -1,8 +1,20 @@
 # Health Rules
 
-Cartographer reports the health of each object stamped on the cluster. If no health rule is specified in the template
-that created the object, Cartographer will report that the object is healthy. By defining one of several types of health
-rules, a template can ensure that the proper status is returned to users.
+Cartographer reports the health of each object stamped on the cluster. If no health rule is specified in the template,
+Cartographer's health behavior will be rudimentary:
+
+- if the object is rejected by the API server (e.g. if you mistakenly try to template out a CinfogMap instead of
+  a ConfigMap) then the workload will report the resource's Healthy condition as "Unknown" for the reason
+  "OutputNotAvailable". The workload will report the resource's Ready condition as "False" for the reason
+  "TemplateRejectedByAPIServer".
+- if the object is created but the path that is meant to be read does not exist (e.g. you have a ClusterImageTemplate
+  where the imagePath mistakenly points to a non-existent field) then the workload will report the resource's Healthy
+  condition as "Unknown" for the reason "OutputNotAvailable". The workload will report the resource's Ready condition
+  as "Unknown" for the reason "MissingValueAtPath".
+
+Otherwise, the object's Healthy condition will be "True". By defining one of several types of health rules, a template
+author can better define the conditions that report healthy or unhealthy status. This will ensure that the proper status
+is returned to users.
 
 ## Always Healthy
 
