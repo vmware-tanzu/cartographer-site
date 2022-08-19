@@ -56,7 +56,7 @@ pattern of providing a condition set under `status.conditions`.
 
 With `singleConditionType` all you need to provide is the type of the condition to look up when evaluating healthiness.
 
-e.g., consider the `kpack/Image` object:
+e.g., consider the [`kpack/Image`](https://github.com/pivotal/kpack/blob/main/docs/image.md) object:
 
 ```yaml
 status:
