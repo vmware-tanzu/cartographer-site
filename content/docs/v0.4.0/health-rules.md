@@ -3,14 +3,14 @@
 Cartographer reports the health of each object stamped on the cluster. If no health rule is specified in the template,
 Cartographer's health behavior will be rudimentary:
 
-- if the object is rejected by the API server (e.g. if you mistakenly try to template out a CinfogMap instead of
-  a ConfigMap) then the workload will report the resource's Healthy condition as "Unknown" for the reason
+- if the object is rejected by the API server (e.g. if you mistakenly try to template out a CinfogMap instead of a
+  ConfigMap) then the workload will report the resource's Healthy condition as "Unknown" for the reason
   "OutputNotAvailable". The workload will report the resource's Ready condition as "False" for the reason
   "TemplateRejectedByAPIServer".
 - if the object is created but the path that is meant to be read does not exist (e.g. you have a ClusterImageTemplate
   where the imagePath mistakenly points to a non-existent field) then the workload will report the resource's Healthy
-  condition as "Unknown" for the reason "OutputNotAvailable". The workload will report the resource's Ready condition
-  as "Unknown" for the reason "MissingValueAtPath".
+  condition as "Unknown" for the reason "OutputNotAvailable". The workload will report the resource's Ready condition as
+  "Unknown" for the reason "MissingValueAtPath".
 
 Otherwise, the object's Healthy condition will be "True". By defining one of several types of health rules, a template
 author can better define the conditions that report healthy or unhealthy status. This will ensure that the proper status
@@ -29,7 +29,7 @@ apiVersion: carto.run/v1alpha1
 kind: Cluster[Config|Deployment|Image|Source]Template
 spec:
   healthRule:
-    alwaysHealthy: { }
+    alwaysHealthy: {}
 ```
 
 This leads to the following status on the [owner object](architecture.md/#owners):
@@ -70,10 +70,12 @@ status:
 Given that it makes use of the `status.conditions` pattern (and `Ready: True` indicates healthiness), we can
 leverage `singleConditionType`:
 
+<!-- prettier-ignore-start -->
 ```yaml
   healthRule:
     singleConditionType: Ready
 ```
+<!-- prettier-ignore-end -->
 
 Cartographer will then consider the named condition (in this case `Ready`) and evaluate healthiness as the status on
 that condition:
@@ -99,6 +101,7 @@ When specifying multiMath, users must define both what constitutes healthy and w
 specify multiple matchers. The matchers for healthy must all be met for an object to be healthy. If any of the matchers
 under unhealthy are met, the object is considered unhealthy.
 
+<!-- prettier-ignore-start -->
 ```yaml
   healthRule:
     multiMatch:
@@ -107,6 +110,7 @@ under unhealthy are met, the object is considered unhealthy.
       unhealthy: #! matchers here are ORed
         ...
 ```
+<!-- prettier-ignore-end -->
 
 There are two types of matchers available, matchConditions and matchFields.
 
@@ -117,6 +121,7 @@ field of the first condition will be replicated on the owner object.
 
 As an example, we can replicate the behavior of the single condition type that we observed above.
 
+<!-- prettier-ignore-start -->
 ```yaml
   healthRule:
     multiMatch:
@@ -129,6 +134,7 @@ As an example, we can replicate the behavior of the single condition type that w
             type: Ready
             status: False
 ```
+<!-- prettier-ignore-end -->
 
 ### Match Fields
 
@@ -138,6 +144,7 @@ explain the reason for failure.
 
 Using match fields we can again replicate the behavior of the single condition type that we observed above.
 
+<!-- prettier-ignore-start -->
 ```yaml
   healthRule:
     multiMatch:
@@ -154,6 +161,7 @@ Using match fields we can again replicate the behavior of the single condition t
             values: [ 'False' ]
             messagePath: 'status.conditions[?(@.type=="Ready")].message'
 ```
+<!-- prettier-ignore-end -->
 
 Along with the `In` operator, there is a `NotIn` operator that also leverages the `values` field. There are
 also `Exists` and `DoesNotExist` operators.
