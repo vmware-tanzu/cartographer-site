@@ -97,7 +97,7 @@ healthy and another condition indicates that the object is unhealthy. [Kapp's `A
 the `ReconcileSucceeded` condition is true the object is healthy, while if the `ReconcileFailed` condition is true the
 object is unhealthy. Multimatch can address both of these use cases.
 
-When specifying multiMath, users must define both what constitutes healthy and what indicates unhealthy. Users may
+When specifying multiMatch, users must define both what constitutes healthy and what indicates unhealthy. Users may
 specify multiple matchers. The matchers for healthy must all be met for an object to be healthy. If any of the matchers
 under unhealthy are met, the object is considered unhealthy.
 
