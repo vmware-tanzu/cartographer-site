@@ -93,8 +93,9 @@ of the health rules.
 
 For some controllers, two conditions must be met for the object to be healthy. For example in Deployments, users want
 both the `Available` and `Progressing` conditions to be true. For other resources, one condition indicates the object is
-healthy and another condition indicates that the object is unhealthy. [Kapp's `App`](https://carvel.dev/kapp-controller/docs/v0.40.0/app-overview/) resource behaves in this manner, if
-the `ReconcileSucceeded` condition is true the object is healthy, while if the `ReconcileFailed` condition is true the
+healthy and another condition indicates that the object is unhealthy.
+[Kapp's `App`](https://carvel.dev/kapp-controller/docs/v0.40.0/app-overview/) resource behaves in this manner, if the
+`ReconcileSucceeded` condition is true the object is healthy, while if the `ReconcileFailed` condition is true the
 object is unhealthy. Multimatch can address both of these use cases.
 
 When specifying multiMatch, users must define both what constitutes healthy and what indicates unhealthy. Users may
@@ -141,7 +142,7 @@ As an example, we can replicate the behavior of the single condition type that w
 
 Match fields allow users to inspect arbitrary fields on an object in order to determine health. This is useful for
 objects which do not use conditions. Match fields also allow users to specify arbitrary fields on the object for
-messagePath, which explains the reason for failure to an end user.
+`messagePath`, which explains the reason for failure to an end user.
 
 Using match fields we can again replicate the behavior of the single condition type that we observed above.
 
