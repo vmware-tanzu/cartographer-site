@@ -100,8 +100,7 @@ There are two types of matchers available, matchConditions and matchFields.
 
 ### Match Conditions
 
-MatchConditions are straightforward. Users specify the `type` of the condition on the object that should be inspected.
-Users also specify which `status` value is considered a match. When a matcher set is satisfied, the `message`
+MultiMatch's MatchConditions provide more nuance to SingleCondition. Users specify the `type` of the condition on the object that should be inspected as well as the `status` value which is considered a match. When a matcher set is satisfied, the `message`
 field of the first condition will be replicated on the owner object.
 
 As an example, we can replicate the behavior of the single condition type that we observed above.
