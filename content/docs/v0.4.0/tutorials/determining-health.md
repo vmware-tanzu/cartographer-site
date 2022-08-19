@@ -147,6 +147,7 @@ _Note: Health rules are available on all Carto templates (e.g. ClusterSourceTemp
 Let's begin with the healthy matchers. Two different conditions on a Deployment must be true for it to be healthy. We
 can write these as `matchConditions`. We just need to provide the conditions' `type` and `status`.
 
+<!-- prettier-ignore-start -->
 ```yaml
       healthy:
         matchConditions:
@@ -155,15 +156,18 @@ can write these as `matchConditions`. We just need to provide the conditions' `t
           - type: Progressing
             status: 'True'
 ```
+<!-- prettier-ignore-end -->
 
 And we can write the unhealthy matcher:
 
+<!-- prettier-ignore-start -->
 ```yaml
       unhealthy:
         matchConditions:
           - type: Progressing
             status: 'False'
 ```
+<!-- prettier-ignore-end -->
 
 Let's bring this all together and look at the template we'll apply to the cluster:
 
@@ -284,6 +288,7 @@ status:
 
 Let's check back in on the deployment status after 30 seconds:
 
+<!-- prettier-ignore-start -->
 ```yaml
   - message: Deployment does not have minimum availability.
     reason: MinimumReplicasUnavailable
@@ -294,6 +299,7 @@ Let's check back in on the deployment status after 30 seconds:
     status: "False"
     type: Progressing
 ```
+<!-- prettier-ignore-end -->
 
 We see that the Progressing condition has switched to `False`.
 
