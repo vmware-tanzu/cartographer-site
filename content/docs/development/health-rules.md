@@ -1,7 +1,10 @@
 # Health Rules
 
-Cartographer reports the health of each object stamped on the cluster. If no health rule is specified in the template,
-Cartographer's health behavior will be rudimentary:
+Cartographer reports the health of each object stamped on the cluster.
+
+## Specifying No Health Rule
+
+If no health rule is specified in the template, Cartographer's health behavior will be rudimentary:
 
 - if the object is rejected by the API server (e.g. if you mistakenly try to template out a CinfogMap instead of a
   ConfigMap) then the workload will report the resource's Healthy condition as "Unknown". The workload will report the
@@ -20,8 +23,8 @@ is returned to users.
 Some resources simply have no sense of "healthiness" and are meant to be considered always healthy. For instance, a
 ConfigMap would never be unhealthy as it always simply reflects the data values that were last submitted.
 
-Template authors may choose not specify a healthrule at all (i.e., rely on the default of being always healthy). But it
-is clearer to be explicit:
+Template authors may choose not specify a healthrule at all (i.e., rely on the
+[default behavior](#specifying-no-health-rule)). But it is clearer to be explicit:
 
 ```yaml
 apiVersion: carto.run/v1alpha1
