@@ -6,13 +6,13 @@ A `Runnable` object declares the intention of having immutable objects submitted
 via ClusterRunTemplate) whenever any of the inputs passed to it changes. i.e., it allows us to provide a mutable spec
 that drives the creation of immutable objects whenever that spec changes.
 
-{{< crd  carto.run_runnables.yaml >}}
+{{< crd carto.run_runnables.yaml >}}
 
 ## ClusterRunTemplate
 
 A `ClusterRunTemplate` defines how an immutable object should be stamped out based on data provided by a `Runnable`.
 
-{{< crd  carto.run_clusterruntemplates.yaml >}}
+{{< crd carto.run_clusterruntemplates.yaml >}}
 
 ClusterRunTemplate differs from supply chain templates in many aspects:
 
@@ -34,3 +34,24 @@ ClusterRunTemplate differs from supply chain templates in many aspects:
 Similarly to other templates, ClusterRunTemplate has a `template` field where data is taken (in this case, from Runnable
 and selected objects via `runnable.spec.selector`) and via `$()$` allows one to interpolate such data to form a final
 object.
+
+### Conditions
+
+As with all Cartographer resources, there is a "top-level" condition called "Ready". If the condition is
+`type: Ready, status: "True"` then:
+
+* The runnable is valid
+* The spec generation mentioned in `status.observedGeneration` has executed and resulted in a templated object with the
+  condition `type: Succeeded, status: True`
+
+If the `type: Ready` condition is `status: Unknown` then cartographer is reconciling the spec generation mentioned
+in `status.observedGeneration`.
+
+Finally, if the `type: Ready` condition is `status: False`, then the `reason` will
+contain the `type` of the most important sub-condition to refer to.
+
+#### `type: RunTemplateReady`
+
+
+
+#### `type: StampedObjectCondition`
