@@ -32,6 +32,7 @@
 			appId: '{{ .Site.Params.Docs_search_app_id }}',
 			indexName: '{{ .Site.Params.Docs_search_index_name }}',
 			container: '#doc-search',
+			algoliaOptions: {'facetFilters': ["version:{{ .CurrentSection.Params.version }}"]},
 			debug: false // Set debug to true if you want to inspect the dropdown
 		});
 	</script>
