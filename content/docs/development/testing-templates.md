@@ -177,7 +177,9 @@ The expected file may be specified in the following order of precedence:
 - To ignore the metadata.ignoreLabels field, in `info.yaml` specify `ignoreLabels: true`
 - To ignore other metadata fields, in `info.yaml` add the field name to `ignoreMetadataFields`
 
-### info.yaml Structure
+## info.yaml Structure
+
+Each folder of cartotests should contain an `info.yaml` file which can specify test metadata, behavior and inputs.
 
 ```yaml
 # Name of the test
