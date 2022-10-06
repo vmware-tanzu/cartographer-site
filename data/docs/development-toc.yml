@@ -31,6 +31,8 @@ toc:
         url: /health-rules
       - page: Events
         url: /events
+      - page: Testing Templates
+        url: /testing-templates
   - title: CR Reference
     subfolderitems:
       - page: GVK
