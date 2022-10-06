@@ -224,3 +224,127 @@ FAIL
 ```
 
 The `regular-template` test now passes while the other child folders of deliverable still fail.
+
+## Reference
+
+There are 7 types of information a cartotest may be configured with
+
+- [Template](#template): The template under test
+- [Workload](#workload): The workload that will pair with the supply chain/template
+- [Supply Chain Inputs](#supply-chain-inputs): The sources/images/configs assumed to have been created earlier in a supply chain
+- [Blueprint Params](#blueprint-params): The params specified in the supply chain
+- [YTT Preprocessing File](#ytt-preprocessing-file): A file of ytt data values. Applied to the template before processing with Cartographer.
+- [Expected](#expected): The expected object that will be created by Cartographer
+- [Ignored Metadata Fields](#ignored-metadata-fields): Fields of the metadata that of the expected object that should not be tested.
+
+### Template
+The template file may be specified in the following order of precedence:
+1. File named in the `.template` field of `info.yaml`
+2. File named `template.yaml`
+3. The template file inherited from parent directory
+
+### Workload
+The workload file may be specified in the following order of precedence:
+1. File named in the `.workload` field of `info.yaml`
+2. File named `workload.yaml`
+3. The workload file inherited from parent directory
+
+### Supply Chain Inputs
+The inputs may be specified in the `supplyChainInputs` field of `info.yaml`.
+Otherwise, they are inherited from the parent directory
+
+### Blueprint Params
+The inputs may be specified in the `blueprintParams` field of `info.yaml`.
+Otherwise, they are inherited from the parent directory
+
+### YTT Preprocessing File
+The workload file may be specified in the `.ytt` field of `info.yaml`
+Otherwise, they are inherited from the parent directory
+
+### Expected
+The expected file may be specified in the following order of precedence:
+1. File named in the `.expected` field of `info.yaml`
+2. File named `expected.yaml`
+3. The expected file inherited from parent directory
+
+### Ignored Metadata Fields
+- To ignore the entire metadata field:
+  In `info.yaml` specify `ignoreMetadata: true`
+- To ignore the metadata.ignoreOwnerRefs field:
+  In `info.yaml` specify `ignoreOwnerRefs: true`
+- To ignore the metadata.ignoreLabels field:
+  In `info.yaml` specify `ignoreLabels: true`
+- To ignore other metadata fields:
+  In `info.yaml` add the field name to `ignoreMetadataFields`
+
+### info.yaml Structure
+
+```yaml
+# Name of the test
+name: <string>
+
+# Description of the test
+description: <string>
+
+# Path to the template file
+template: <string>
+
+# Path to the workload file
+workload: <string>
+
+# Path to the expected file
+expected: <string>
+
+# Path to the ytt preprocessing file
+ytt: <string>
+
+# Input values as if output from earlier steps of a supply chain
+supplyChainInputs:
+  sources:
+    # string value should be the same as the name value
+    <string>:
+      name: <string>
+      url: <string>
+      revision: <string>
+  images:
+    # string value should be the same as the name value
+    <string>:
+      name: <string>
+      image: <string>
+  configs:
+    # string value should be the same as the name value
+    <string>:
+      name: <string>
+      config: <string>
+
+# Parameters specified in a supply chain
+blueprintParams:
+  - # Name of the parameter.
+    # Should match a template parameter name.
+    name: <string>
+
+    # Value of the parameter.
+    # If specified, workload properties are ignored.
+    # +optional
+    value: <any>
+
+    # DefaultValue of the parameter.
+    # Causes the parameter to be optional; If the workload does not specify
+    # this parameter, this value is used.
+    default: <any>
+
+# If true, only this and other focused tests will run
+focus: <bool>
+
+# If true, test comparison will ignore all fields of metadata
+ignoreMetadata: <bool>
+
+# If true, test comparison will ignore all fields of metadata.ownerRefs
+ignoreOwnerRefs: <bool>
+
+# If true, test comparison will ignore all fields of metadata.labels
+ignoreLabels: <bool>
+
+# Test comparison will ignore all named fields of metadata
+ignoreMetadataFields: [ <string> ]
+```
