@@ -118,11 +118,11 @@ git checkout ./tests/templates/kpack/workload.yaml
 
 ## Reference
 
-There are 7 types of information with which a cartotest may be configured. Those with an asterix (*) are required.
+There are 7 types of information with which a cartotest may be configured. Those with an asterix (\*) are required.
 
-- [Template *](#template): The template under test
-- [Workload *](#workload): The workload that will pair with the supply chain/template
-- [Expected *](#expected): The expected object that will be created by Cartographer
+- [Template \*](#template): The template under test
+- [Workload \*](#workload): The workload that will pair with the supply chain/template
+- [Expected \*](#expected): The expected object that will be created by Cartographer
 - [Supply Chain Inputs](#supply-chain-inputs): The sources/images/configs assumed to have been created earlier in a
   supply chain
 - [Blueprint Params](#blueprint-params): The params specified in the supply chain
