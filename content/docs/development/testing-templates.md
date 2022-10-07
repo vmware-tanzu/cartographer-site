@@ -118,16 +118,16 @@ git checkout ./tests/templates/kpack/workload.yaml
 
 ## Reference
 
-There are 7 types of information a cartotest may be configured with
+There are 7 types of information with which a cartotest may be configured. Those with an asterix (*) are required.
 
-- [Template](#template): The template under test
-- [Workload](#workload): The workload that will pair with the supply chain/template
+- [Template *](#template): The template under test
+- [Workload *](#workload): The workload that will pair with the supply chain/template
+- [Expected *](#expected): The expected object that will be created by Cartographer
 - [Supply Chain Inputs](#supply-chain-inputs): The sources/images/configs assumed to have been created earlier in a
   supply chain
 - [Blueprint Params](#blueprint-params): The params specified in the supply chain
 - [YTT Preprocessing File](#ytt-preprocessing-file): A file of ytt data values. Applied to the template before
   processing with Cartographer.
-- [Expected](#expected): The expected object that will be created by Cartographer
 - [Ignored Metadata Fields](#ignored-metadata-fields): Fields of the metadata that of the expected object that should
   not be tested.
 
@@ -147,6 +147,14 @@ The workload file may be specified in the following order of precedence:
 2. File named `workload.yaml`
 3. The workload file inherited from parent directory
 
+### Expected
+
+The expected file may be specified in the following order of precedence:
+
+1. File named in the `.expected` field of `info.yaml`
+2. File named `expected.yaml`
+3. The expected file inherited from parent directory
+
 ### Supply Chain Inputs
 
 The inputs may be specified in the `supplyChainInputs` field of `info.yaml`. Otherwise, they are inherited from the
@@ -161,14 +169,6 @@ directory.
 
 The workload file may be specified in the `.ytt` field of `info.yaml` Otherwise, they are inherited from the parent
 directory.
-
-### Expected
-
-The expected file may be specified in the following order of precedence:
-
-1. File named in the `.expected` field of `info.yaml`
-2. File named `expected.yaml`
-3. The expected file inherited from parent directory
 
 ### Ignored Metadata Fields
 
