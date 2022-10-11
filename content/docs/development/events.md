@@ -39,8 +39,8 @@ Events:
   Normal  ResourceHealthyStatusChanged  2m22s (x2 over 2m24s)  Workload  [deployer] found healthy status of [apps.kappctrl.k14s.io/testing-sc] changed to [True]
 ```
 
-Here's another example, showing events on a `Runnable`. Note the `StampedObjectRemoved` events showing when older stamped runnable
-objects are garbage collected.
+Here's another example, showing events on a `Runnable`. Note the `StampedObjectRemoved` events showing when older
+stamped runnable objects are garbage collected.
 
 ```
 Events:
