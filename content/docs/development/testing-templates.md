@@ -157,13 +157,13 @@ The expected file may be specified in the following order of precedence:
 
 ### Supply Chain Inputs
 
-The inputs may be specified in the `supplyChainInputs` field of `info.yaml`. Otherwise, they are inherited from the
+The inputs may be specified in the `.supplyChainInputs` field of `info.yaml`. Otherwise, they are inherited from the
 parent directory.
 
 ### Blueprint Params
 
-The inputs may be specified in the `blueprintParams` field of `info.yaml`. Otherwise, they are inherited from the parent
-directory.
+The inputs may be specified in the `.blueprintParams` field of `info.yaml`. Otherwise, they are inherited from the
+parent directory.
 
 ### YTT Preprocessing File
 
