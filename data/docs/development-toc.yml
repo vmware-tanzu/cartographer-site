@@ -29,6 +29,8 @@ toc:
         url: /stamping
       - page: Health Rules
         url: /health-rules
+      - page: Events
+        url: /events
   - title: CR Reference
     subfolderitems:
       - page: GVK
