@@ -19,6 +19,11 @@ Install the cartotest CLI:
 go install ./cmd/cartotest
 ```
 
+#### Dependency
+
+Users may define templates that use [ytt](https://carvel.dev/ytt/). Testing such templates requires
+[installing ytt](https://carvel.dev/ytt/docs/latest/install/).
+
 ### Run
 
 Run the example template tests:
