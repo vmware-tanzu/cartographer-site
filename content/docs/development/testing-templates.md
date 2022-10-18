@@ -29,7 +29,7 @@ Users may define templates that use [ytt](https://carvel.dev/ytt/). Testing such
 Run the example template tests:
 
 ```shell
-cartotest --directory ./tests/templates/
+cartotest templates --directory ./tests/templates/
 ```
 
 You should see
@@ -65,7 +65,7 @@ yq '.metadata.name = "another-identifier"' ./tests/templates/kpack/workload.yaml
 Run cartotests again:
 
 ```shell
-cartotest --directory ./tests/templates/
+cartotest templates --directory ./tests/templates/
 ```
 
 ```console
@@ -79,7 +79,7 @@ FAIL
 Let's get some more detail about the tests by running cartotest in verbose mode:
 
 ```shell
-cartotest --directory ./tests/templates/ -v
+cartotest templates --directory ./tests/templates/ -v
 ```
 
 ```console
@@ -87,7 +87,7 @@ DEBU[0000] populate info failed, did not find tests/templates/info.yaml
 
 PASS: tests/templates/deliverable/regular-template
 PASS: tests/templates/deliverable/ytt-preprocess
-PASS: tests/templates/deliverable/ytt-template
+PASS: tests/templates/deliverable/ytt-template YTT Template Test
 FAIL: tests/templates/kpack
 Name: image-template
 Description: template requiring 'source' input
@@ -266,7 +266,7 @@ few tests at a time. We'll use the cartographer template tests and focus on just
 
 ```shell
 yq '.focus = true' ./tests/templates/kpack/info.yaml -i
-cartotest --directory ./tests/templates/
+cartotest templates --directory ./tests/templates/
 ```
 
 ```console
@@ -309,7 +309,7 @@ leaf directories are treated as ready to test. We can observe this behavior by c
 ```shell
 mkdir tests/templates/deliverable/regular-template/some-dir
 mkdir tests/templates/deliverable/regular-template/another-dir
-cartotest --directory ./tests/templates/
+cartotest templates --directory ./tests/templates/
 ```
 
 ```console
@@ -326,7 +326,8 @@ The child (leaf) directories are tested and not the parent.
 Let's set these back:
 
 ```shell
-git checkout .
+rm -rf tests/templates/deliverable/regular-template/some-dir
+rm -rf tests/templates/deliverable/regular-template/another-dir
 ```
 
 To observe inheritance of test state we can alter `tests/templates/deliverable/common-expectation.yaml` and run the
@@ -334,7 +335,7 @@ tests.
 
 ```shell
 yq '.spec.source.git.url = "https://github.com/ossu/computer-science/"' ./tests/templates/deliverable/common-expectation.yaml -i
-cartotest --directory ./tests/templates/
+cartotest templates --directory ./tests/templates/
 ```
 
 ```console
@@ -354,7 +355,7 @@ If another filename is used, it must be declared in the `info.yaml` field `expec
 ```shell
 cp ./tests/templates/deliverable/common-expectation.yaml ./tests/templates/deliverable/regular-template/expected.yaml
 yq '.spec.source.git.url = "https://github.com/vmware-tanzu/cartographer/"' ./tests/templates/deliverable/regular-template/expected.yaml -i
-cartotest --directory ./tests/templates/deliverable
+cartotest templates --directory ./tests/templates
 ```
 
 ```console
@@ -366,3 +367,10 @@ FAIL
 ```
 
 The `regular-template` test now passes while the other child folders of deliverable still fail.
+
+Let's clean up our directory:
+
+```shell
+git checkout .
+rm tests/templates/deliverable/regular-template/expected.yaml
+```
