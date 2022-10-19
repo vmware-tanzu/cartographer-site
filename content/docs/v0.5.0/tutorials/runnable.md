@@ -10,7 +10,7 @@ Tekton, and how that will provide us easy updating behavior of our testing objec
 
 For this tutorial you will need a kubernetes cluster with Cartographer and Tekton installed. You can find
 [Cartographer's installation instructions here](https://github.com/vmware-tanzu/cartographer#installation) and
-[Tekton's installation instructions are here](https://github.com/pivotal/kpack/blob/main/docs/install.md).
+[Tekton's installation instructions are here](https://github.com/tektoncd/pipeline/releases).
 
 Alternatively, you may choose to use the
 [./hack/setup.sh](https://github.com/vmware-tanzu/cartographer/blob/main/hack/setup.sh) script to install a kind cluster
