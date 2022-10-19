@@ -4,9 +4,6 @@ kind: ClusterSupplyChain
 metadata:
   name: source-code-supply-chain
 spec:
-  selector:
-    workload-type: source-code
-
   resources:
     - name: build-image
       templateRef:
@@ -23,3 +20,6 @@ spec:
   serviceAccountRef:
     name: cartographer-from-source-sa
     namespace: default
+
+  selector:
+    workload-type: source-code
