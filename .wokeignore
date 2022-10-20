@@ -1,0 +1,32 @@
+go.mod
+go.sum
+hack/tools/go.mod
+hack/tools/go.sum
+
+## ignored in git
+node_modules
+resources
+.hugo_build.lock
+public
+.idea
+*.DS_Store
+
+## compiled with deps
+themes/template/static/live-editor
+themes/template/static/img
+
+## upstream dependency - hopefully something that can be converted into a package install
+live-editor/src/monaco-yaml/
+
+## cannot use marker in markdown
+themes/template/static/fonts/README.md
+style-guide.md
+content/docs/*/troubleshooting.md
+CONTRIBUTING.md
+
+## cannot use marker in generated js
+live-editor/hack/schema.js
+live-editor/src/lib/monaco/schema.js
+
+## needs fixing in upstream (cartographer)
+content/docs/*/crds/

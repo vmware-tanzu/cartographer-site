@@ -22,7 +22,7 @@
     "baseUrl": ".",
     /**
      * Typecheck JS in `.svelte` and `.js` files by default.
-     * Disable this if you'd like to use dynamic types.
+     * Set to false if you'd like to use dynamic types.
      */
     "checkJs": true
   },

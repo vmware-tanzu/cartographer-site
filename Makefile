@@ -8,6 +8,7 @@ endif
 .PHONY: serve
 serve:
 	echo "Open docs at: http://localhost:1313"
+	# wokeignore:rule=disable
 	hugo server --disableFastRender
 
 .PHONY: release
