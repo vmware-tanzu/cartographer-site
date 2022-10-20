@@ -130,12 +130,12 @@ As an example, we can replicate the behavior of the single condition type that w
   healthRule:
     multiMatch:
       healthy:
-        - matchConditions:
-            type: Ready
+        matchConditions:
+          - type: Ready
             status: True
       unhealthy:
-        - matchConditions:
-            type: Ready
+        matchConditions:
+          - type: Ready
             status: False
 ```
 <!-- prettier-ignore-end -->
@@ -153,14 +153,14 @@ Using match fields we can again replicate the behavior of the single condition t
   healthRule:
     multiMatch:
       healthy:
-        - matchFields:
-            key: 'status.conditions[?(@.type=="Ready")].status'
+        matchFields:
+          - key: 'status.conditions[?(@.type=="Ready")].status'
             operator: 'In'
             values: [ 'True' ]
             messagePath: 'status.conditions[?(@.type=="Ready")].message'
       unhealthy:
-        - matchFields:
-            key: 'status.conditions[?(@.type=="Ready")].status'
+        matchFields:
+          - key: 'status.conditions[?(@.type=="Ready")].status'
             operator: 'In'
             values: [ 'False' ]
             messagePath: 'status.conditions[?(@.type=="Ready")].message'
