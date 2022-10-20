@@ -1,4 +1,5 @@
 ADDLICENSE ?= go run -modfile hack/tools/go.mod github.com/google/addlicense
+WOKE ?= go run -modfile hack/tools/go.mod github.com/get-woke/woke
 
 ifeq ($(shell command -v yarn && echo yes),)
     $(error "Yarn (and node) must be installed")
@@ -40,3 +41,7 @@ copyright:
 		-ignore themes/\*\* \
 		-ignore live-editor/node_modules/\*\* \
 		.
+
+.PHONY: woke
+woke:
+	$(WOKE) -c https://via.vmw.com/its-woke-rules
