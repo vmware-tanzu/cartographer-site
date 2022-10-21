@@ -22,6 +22,7 @@ live-editor/src/monaco-yaml/
 themes/template/static/fonts/README.md
 style-guide.md
 content/docs/*/troubleshooting.md
+content/docs/*/tutorials/runnable.md
 CONTRIBUTING.md
 
 ## cannot use marker in generated js

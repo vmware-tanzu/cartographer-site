@@ -360,7 +360,7 @@ spec:
     name: md-linting-pipelinerun
   inputs:
     repository: https://github.com/kelseyhightower/nocode # <=== new repo
-    revision: main # <=== new revision
+    revision: master # <=== new revision
   serviceAccountName: pipeline-run-management-sa
 ```
 
