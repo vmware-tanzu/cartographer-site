@@ -24,13 +24,13 @@ working in that role, no user guarantees are made about the script._
 Command to run from the Cartographer directory:
 
 ```shell
-$ ./hack/setup.sh cluster cartographer-latest example-dependencies
+./hack/setup.sh cluster cartographer-latest example-dependencies
 ```
 
 If you later wish to tear down this generated cluster, run
 
 ```shell
-$ ./hack/setup.sh teardown
+./hack/setup.sh teardown
 ```
 
 ## Scenario
@@ -406,7 +406,7 @@ And as app devs, we're done! Let’s look at the complete workload:
 Looking at the workload, we can see that it resolves to a healthy state:
 
 ```shell
-$ kubectl get -o yaml workload hello-again
+kubectl get -o yaml workload hello-again
 ```
 
 ```yaml
@@ -430,7 +430,7 @@ status:
 All the objects that we templated out exist.
 
 ```shell
-$ kubectl get -o yaml image.kpack.io hello-again
+kubectl get -o yaml image.kpack.io hello-again
 ```
 
 ```yaml
@@ -459,7 +459,7 @@ status:
 ```
 
 ```shell
-$ kubectl get -o yaml deployment hello-again-deployment
+kubectl get -o yaml deployment hello-again-deployment
 ```
 
 ```yaml
