@@ -189,7 +189,7 @@ create a replicaset, which will create pods). What is different in this tutorial
 Let's observe the workload after giving a moment for the deployment's pods to come up.
 
 ```shell
-$ kubectl get -o yaml workload hello
+Remove $ in front of CLI commands get -o yaml workload hello
 ```
 
 First let's consider the `status.resources` field:
@@ -243,7 +243,7 @@ We'll see what feedback we get in the workload status.
 First, we'll check the workload just after deploying, inspecting the `status.resources`:
 
 ```shell
-$ kubectl get -o yaml workload typo
+kubectl get -o yaml workload typo
 ```
 
 ```yaml
@@ -265,7 +265,7 @@ From our discussion above, we know that the deployment will never reach a health
 it will continue to report that it is progressing but the expected pods are not available. We can observe this directly:
 
 ```shell
-$ kubectl get -o yaml deployment typo-deployment
+kubectl get -o yaml deployment typo-deployment
 ```
 
 ```yaml
