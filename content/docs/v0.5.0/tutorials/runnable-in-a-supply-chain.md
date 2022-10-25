@@ -22,13 +22,13 @@ end-to-end testing and while we rely on it working in that role, no user guarant
 Command to run from the Cartographer directory:
 
 ```shell
-$ ./hack/setup.sh cluster cartographer-latest example-dependencies
+./hack/setup.sh cluster cartographer-latest example-dependencies
 ```
 
 If you later wish to tear down this generated cluster, run
 
 ```shell
-$ ./hack/setup.sh teardown
+./hack/setup.sh teardown
 ```
 
 ## Scenario
@@ -364,7 +364,7 @@ Using [kubectl tree](https://github.com/ahmetb/kubectl-tree) we can see our work
 turn is parent to a pipeline-run.
 
 ```shell
-$ kubectl tree workload hello-again
+kubectl tree workload hello-again
 ```
 
 ```console
