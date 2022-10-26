@@ -68,7 +68,7 @@ reasonable name. So far our `.spec.resources` will look like this:
     - name: build-image
       templateRef:
         kind: ???
-        Name: ???
+        name: ???
     - name: deploy
       templateRef:
         kind: ClusterTemplate
