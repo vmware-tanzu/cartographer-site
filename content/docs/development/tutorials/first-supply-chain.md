@@ -20,13 +20,13 @@ user guarantees are made about the script._
 Command to run from the Cartographer directory:
 
 ```shell
-$ ./hack/setup.sh cluster cartographer-latest
+./hack/setup.sh cluster cartographer-latest
 ```
 
 If you later wish to tear down this generated cluster, run
 
 ```shell
-$ ./hack/setup.sh teardown
+./hack/setup.sh teardown
 ```
 
 ## Scenario
@@ -271,7 +271,7 @@ Let's submit all of these items to the cluster!
 The workload quickly resolves. We can examine the workload object:
 
 ```shell
-$ kubectl get -o yaml workload hello
+kubectl get -o yaml workload hello
 ```
 
 ```yaml
@@ -356,7 +356,7 @@ specified in the supply chain object) and a reference to the object that was sta
 ### Stamped Object
 
 ```shell
-$ kubectl get -o yaml deployment hello-deployment
+kubectl get -o yaml deployment hello-deployment
 ```
 
 ```yaml
@@ -407,7 +407,7 @@ relationships. If you use a tool like [kubectl tree](https://github.com/ahmetb/k
 and the children of those objects.
 
 ```shell
-$ kubectl tree workload hello
+kubectl tree workload hello
 ```
 
 ```console
@@ -444,7 +444,7 @@ object (template, supply chain, workload).
 As a final step let’s create a quick port-forward and see our deployment serve traffic:
 
 ```shell
-$ kubectl port-forward deployment/hello-deployment 3000:80
+kubectl port-forward deployment/hello-deployment 3000:80
 ```
 
 Now we visit the site! [http://localhost:3000/](http://localhost:3000/)
@@ -470,8 +470,8 @@ We can follow the same steps to observe the workload and the created objects. An
 that this app serves traffic on its 8000 port):
 
 ```shell
-$ kubectl port-forward deployment/whale-hello-there-deployment 3000:8000
-$ curl localhost:3000
+kubectl port-forward deployment/whale-hello-there-deployment 3000:8000
+curl localhost:3000
 ```
 
 ```html
