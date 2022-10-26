@@ -18,13 +18,13 @@ user guarantees are made about the script._
 Command to run from the Cartographer directory:
 
 ```shell
-$ ./hack/setup.sh cluster cartographer-latest
+./hack/setup.sh cluster cartographer-latest
 ```
 
 If you later wish to tear down this generated cluster, run
 
 ```shell
-$ ./hack/setup.sh teardown
+./hack/setup.sh teardown
 ```
 
 ## Scenario
