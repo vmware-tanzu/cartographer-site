@@ -73,6 +73,27 @@ templateRef:
 The selector specifies the requirements which must match against the Owner (workload|deliverable) for the option to be
 chosen. See [selectors](#selectors).
 
+If you want the ability to skip a resource, you can use options with pass through. For example:
+
+```yaml
+sources:
+  - resource: source-provider
+    name: my-source
+templateRef:
+  kind: ClusterSourceTemplate
+  options:
+    - name: test
+      selector:
+        matchExpressions:
+          - { key: has-tests, operator: Exists }
+    - passThrough: my-source
+      selector:
+        matchExpressions:
+          - { key: has-tests, operator: DoesNotExist }
+```
+
+Where `my-source` refers to the input to passed as an output. No template is evaluated.
+
 ### Templates
 
 Templates create or update resources (i.e. kubectl apply).
