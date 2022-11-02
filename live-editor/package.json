@@ -16,7 +16,7 @@
     "autoprefixer": "^10.4.13",
     "js-base64": "^3.7.2",
     "jsonc-parser": "^3.2.0",
-    "mermaid": "^9.1.7",
+    "mermaid": "^9.2.0",
     "monaco-editor": "^0.34.1",
     "monaco-yaml": "file:./src/monaco-yaml",
     "pako": "^2.0.4",
