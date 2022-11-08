@@ -19,7 +19,7 @@
     "mermaid": "^9.2.0",
     "monaco-editor": "^0.34.1",
     "monaco-yaml": "file:./src/monaco-yaml",
-    "pako": "^2.0.4",
+    "pako": "^2.1.0",
     "path-browserify": "^1.0.0",
     "postcss": "^8.4.18",
     "postcss-load-config": "^4.0.1",
