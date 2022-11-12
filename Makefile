@@ -1,4 +1,5 @@
 ADDLICENSE ?= go run -modfile hack/tools/go.mod github.com/google/addlicense
+WOKE ?= go run -modfile hack/tools/go.mod github.com/get-woke/woke
 
 ifeq ($(shell command -v yarn && echo yes),)
     $(error "Yarn (and node) must be installed")
@@ -7,6 +8,7 @@ endif
 .PHONY: serve
 serve:
 	echo "Open docs at: http://localhost:1313"
+	# wokeignore:rule=disable
 	hugo server --disableFastRender
 
 .PHONY: release
@@ -40,3 +42,7 @@ copyright:
 		-ignore themes/\*\* \
 		-ignore live-editor/node_modules/\*\* \
 		.
+
+.PHONY: woke
+woke:
+	$(WOKE) -c https://via.vmw.com/its-woke-rules

@@ -18,6 +18,11 @@ description: 'Run linting and copyright checks'
 runs:
   using: "composite"
   steps:
+    - name: check sensitive terms
+      shell: bash
+      run: |
+        make woke
+
     - name: check copyright header
       shell: bash
       run: |

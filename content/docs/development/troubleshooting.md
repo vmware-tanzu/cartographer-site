@@ -31,7 +31,7 @@ status:
 
 ## Common status conditions
 
-Cartographer conditions follow the
+Cartographer conditions follow the``
 [Kubernetes API conventions](https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#typical-status-properties)
 
 There is a top level condition of `Type: Ready` which can have a `Status` of `Unknown`, `True` or `False`.
