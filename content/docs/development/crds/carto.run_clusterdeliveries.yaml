@@ -104,8 +104,15 @@ spec:
         # Name and Options can be specified.
         # +optional
         options:
-          - # Name of the template to apply
+          - # Name of the template to apply Name or PassThrough
+            # must be specified
+            # +optional
             name: <string>
+
+            # PassThrough the input Name or PassThrough must be
+            # specified
+            # +optional
+            passThrough: <string>
 
             # Selector is a criteria to match against  a workload
             # or deliverable resource.
