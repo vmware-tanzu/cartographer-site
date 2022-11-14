@@ -189,7 +189,7 @@ create a replicaset, which will create pods). What is different in this tutorial
 Let's observe the workload after giving a moment for the deployment's pods to come up.
 
 ```shell
-Remove $ in front of CLI commands get -o yaml workload hello
+kubectl get -o yaml workload hello
 ```
 
 First let's consider the `status.resources` field:
