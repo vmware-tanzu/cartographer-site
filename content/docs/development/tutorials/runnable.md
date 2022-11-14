@@ -20,13 +20,13 @@ role, no user guarantees are made about the script._
 Command to run from the Cartographer directory:
 
 ```shell
-$ ./hack/setup.sh cluster cartographer-latest example-dependencies
+./hack/setup.sh cluster cartographer-latest example-dependencies
 ```
 
 If you later wish to tear down this generated cluster, run
 
 ```shell
-$ ./hack/setup.sh teardown
+./hack/setup.sh teardown
 ```
 
 ## Scenario
@@ -52,8 +52,8 @@ pipeline:
 We would apply this pipeline to the cluster, along with the tasks. Those tasks are in the TektonCD Catalog:
 
 ```shell
-$ kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.3/git-clone.yaml
-$ kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/markdown-lint/0.1/markdown-lint.yaml
+kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.3/git-clone.yaml
+kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/markdown-lint/0.1/markdown-lint.yaml
 ```
 
 Finally, we need to create a pipeline-run object. This object provides the param and workspace values defined at the top
@@ -91,7 +91,7 @@ those outcomes; the run happens once.
 To see this in action, let’s apply the above pipeline-run. If we watch the object, we’ll soon see that it succeeds.
 
 ```shell
-$ watch 'kubectl get -o yaml pipelinerun linter-pipeline-run | yq .status.conditions'
+watch 'kubectl get -o yaml pipelinerun linter-pipeline-run | yq .status.conditions'
 ```
 
 Eventually yields the result:
@@ -244,7 +244,7 @@ Great! Let’s deploy these objects.
 Let’s observe the pipeline-run objects in the cluster:
 
 ```shell
-$ kubectl get pipelineruns
+kubectl get pipelineruns
 ```
 
 We can see that a new pipelinerun has been created with the `linter-pipeline-run-` prefix:
@@ -257,7 +257,7 @@ linter-pipeline-run-123az   True        Succeeded   2m48s       2m35s
 Examining the created object it’s a non-trivial 300 lines:
 
 ```shell
-$ kubectl get -o yaml pipelineruns linter-pipeline-run-123az
+kubectl get -o yaml pipelineruns linter-pipeline-run-123az
 ```
 
 In the metadata we can see familiar labels indicating Carto objects used to create this templated object. We can also
@@ -331,7 +331,7 @@ To learn more about Tekton’s behavior, readers will want to refer to [Tekton d
 Now we examine the Cartographer Runnable object. We expect it to expose values from our successful object.
 
 ```shell
-$ kubectl get -o yaml runnable linter
+kubectl get -o yaml runnable linter
 ```
 
 ```yaml
