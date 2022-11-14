@@ -11,7 +11,7 @@ testing.
 For this tutorial you will need a kubernetes cluster with Cartographer, kpack and Tekton installed. You can find
 [Cartographer's installation instructions here](https://github.com/vmware-tanzu/cartographer#installation), kpack's
 [here](https://github.com/pivotal/kpack/blob/main/docs/install.md) and Tekton's
-[here](https://github.com/tektoncd/pipeline/releases).
+[here](https://github.com/tektoncd/pipeline/blob/main/docs/install.md).
 
 You will also need an image registry for which you have read and write permission.
 
