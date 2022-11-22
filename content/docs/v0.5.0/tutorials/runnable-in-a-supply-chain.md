@@ -63,7 +63,7 @@ steps we took in the [Build Your First Supply Chain](first-supply-chain.md) tuto
 Let’s begin by thinking through what template we need and where it will go in our supply chain. Our goal is to ensure
 that the only repos that are built and deployed are those that pass linting. So we’ll need our new step to be the first
 step in a supply chain. This step will receive the location of a source code and if the source code passes linting it
-will pass that location inforation to the next step in the supply chain. Do you remember what template is meant to
+will pass that location information to the next step in the supply chain. Do you remember what template is meant to
 expose information about the location of source code? That’s right, the ClusterSourceTemplate.
 
 Let’s define our supply chain now. We’ll start with the supply chain we created in the Extending a Supply Chain
