@@ -10,7 +10,7 @@ spec:
   healthRule:
 
     # AlwaysHealthy being set indicates the resource should always
-    # be considered healthy
+    # be considered healthy once it exists.
     # +optional
     alwaysHealthy: {}
 
@@ -91,6 +91,13 @@ spec:
   # .status.artifact.image_digest
   imagePath: <string>
 
+  # Lifecycle specifies whether template modifications should
+  # result in originally created objects being updated (`mutable`)
+  # or in new objects created alongside original objects
+  # (`immutable` or `tekton`).
+  # +optional
+  lifecycle: <[mutable|immutable|tekton]>
+
   # Additional parameters. See:
   # https://cartographer.sh/docs/latest/architecture/#parameter-hierarchy
   # +optional
@@ -103,6 +110,22 @@ spec:
       # Name of a parameter the template accepts from the
       # Blueprint or Owner.
       name: <string>
+
+  # RetentionPolicy specifies how many successful and failed runs
+  # should be retained if the template lifecycle is
+  # immutable/tekton. Runs older than this (ordered by creation
+  # time) will be deleted. Setting higher values will increase
+  # memory footprint. If unspecified on immutable/tekton, default
+  # behavior will == {maxFailedRuns: 10, maxSuccessfulRuns: 10}
+  # +optional
+  retentionPolicy:
+
+    # MaxFailedRuns is the number of failed runs to retain.
+    maxFailedRuns: <integer>
+
+    # MaxSuccessfulRuns is the number of successful runs to
+    # retain.
+    maxSuccessfulRuns: <integer>
 
   # Template defines a resource template for a Kubernetes Resource
   # or Custom Resource which is applied to the server each time
