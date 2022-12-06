@@ -148,8 +148,8 @@ spec:
 
 Most fields are fine. The name field is not. Why not? When our inputs change, we’re not going to update the templated
 object, instead we’re going to create an entirely new object. And of course that new object can’t have the same
-hardcoded name. To handle this, every object templated in a ClusterRunTemplate specifies a `generateName` rather than a
-`name`. We can use `linter-pipeline-run-` and kubernetes will handle putting a unique suffix on the name of each
+hardcoded name. To handle this, every object templated with `lifecycle: tekton` should specify a `generateName` rather
+than a `name`. We can use `linter-pipeline-run-` and kubernetes will handle putting a unique suffix on the name of each
 pipeline-run.
 
 <!-- prettier-ignore-start -->
