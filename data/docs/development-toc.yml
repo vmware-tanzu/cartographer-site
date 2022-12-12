@@ -29,6 +29,8 @@ toc:
         url: /stamping
       - page: Health Rules
         url: /health-rules
+      - page: Lifecycle
+        url: /lifecycle
       - page: Events
         url: /events
       - page: Testing Templates
