@@ -1487,10 +1487,10 @@ svelte-simple-modal@^1.4.5:
   resolved "https://registry.yarnpkg.com/svelte-simple-modal/-/svelte-simple-modal-1.4.5.tgz#a99373e923e5e6a93c86af22b82b4a4d45b2b14d"
   integrity sha512-KJMQaU6GD/WnIfURIKwS4R4aB6s2DDG6NiYRJkUFRVbKPRvqcohb7Z5KFLyA5UsqdPvkEdFZ0UxqjNw7Lfqgtg==
 
-svelte@^3.54.0:
-  version "3.54.0"
-  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.54.0.tgz#b4bcd865bd9e927f9f7b76563288ef5f4d72867a"
-  integrity sha512-tdrgeJU0hob0ZWAMoKXkhcxXA7dpTg6lZGxUeko5YqvPdJBiyRspGsCwV27kIrbrqPP2WUoSV9ca0gnLlw8YzQ==
+svelte@^3.55.0:
+  version "3.55.0"
+  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.55.0.tgz#29cb958750a23e751309a6535ccd811fcabc9038"
+  integrity sha512-uGu2FVMlOuey4JoKHKrpZFkoYyj0VLjJdz47zX5+gVK5odxHM40RVhar9/iK2YFRVxvfg9FkhfVlR0sjeIrOiA==
 
 tailwindcss@^3.2.4:
   version "3.2.4"
