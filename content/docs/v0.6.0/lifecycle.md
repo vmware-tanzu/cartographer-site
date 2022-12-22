@@ -25,6 +25,13 @@ and created in the workload's namespace. If the values passed to the template ch
 template changes the name or GVK (group, version, kind) of object being created, the new object will be created and the
 previous object deleted.
 
+{{< figure src="../img/mutable-stamp.svg" alt="Mutable Template Stamping" width="400px" >}}
+
+The outputs from an object stamped from a mutable template are continuously read and passed on as inputs to later
+resources in the supply chain.
+
+{{< figure src="../img/mutable-read.svg" alt="Mutable Template Reading" width="400px" >}}
+
 ## Immutable Lifecycle
 
 Some Kubernetes objects are not meant to be updated. See Jobs for an example:
@@ -44,10 +51,16 @@ spec:
 When inputs to the template change and the definition of the object that would be stamped is altered, a new object will
 be created on the cluster. The previous object will continue to exist.
 
+{{< figure src="../img/immutable-stamp.svg" alt="Immutable Template Stamping" width="400px" >}}
+
 Immutable objects are only read when their health rule is fulfilled. Implications: When no immutable objects have
 previously existed and a new object is created, no values from it will be propagated down the supply chain until that
 object fulfills its health rules. When multiple immutable objects exist, the most recently created healthy object will
 have its values propagated down the supply chain.
+
+{{< figure src="../img/immutable-read-1.svg" alt="Immutable Template Reading Before Healthy" width="400px" >}}
+
+{{< figure src="../img/immutable-read-2.svg" alt="Immutable Template Reading After Healthy" width="400px" >}}
 
 To learn about specifying health rules, see [here](./health-rules.md). A tutorial on health rules exists
 [here](./tutorials/determining-health.md).
