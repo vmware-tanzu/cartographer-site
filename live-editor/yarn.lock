@@ -1204,10 +1204,10 @@ svelte-preprocess@^4.10.7:
     sorcery "^0.10.0"
     strip-indent "^3.0.0"
 
-svelte-simple-modal@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/svelte-simple-modal/-/svelte-simple-modal-1.5.0.tgz#38840c721fdd805d1a3c98ecff376e1842cf4b8f"
-  integrity sha512-EtKOlwDos6zR2YD2hDF4poY8+MAHbsoJW62c6hk2XPXUV5extY2L621J9jlDKq7nVDeuaMtBO9aYtyXVXA21vA==
+svelte-simple-modal@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/svelte-simple-modal/-/svelte-simple-modal-1.5.1.tgz#67a05d84aa8cbfec8ff989b6e9ae82b1af136f24"
+  integrity sha512-7egAfG4i9EOStO45TO9NFjKktTRvN/OG6Iljsm33JPAqG85ukPe5pNRFHOqlhnMkMdHPRW50AXhcrGi0Yc8yrA==
 
 svelte@^3.55.1:
   version "3.55.1"
