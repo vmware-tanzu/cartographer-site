@@ -17,7 +17,7 @@
     "js-base64": "^3.7.5",
     "jsonc-parser": "^3.2.0",
     "mermaid": "^9.4.0",
-    "monaco-editor": "^0.35.0",
+    "monaco-editor": "^0.36.0",
     "monaco-yaml": "file:./src/monaco-yaml",
     "pako": "^2.1.0",
     "path-browserify": "^1.0.0",
