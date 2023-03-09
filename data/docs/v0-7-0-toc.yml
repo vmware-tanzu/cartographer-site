@@ -59,6 +59,8 @@ toc:
         url: /tutorials/lifecycle
       - page: Determining Health
         url: /tutorials/determining-health
+      - page: Performance Tuning
+        url: /tutorials/performance-tuning
   - title: Examples
     subfolderitems:
       - page: Multi-Cluster
