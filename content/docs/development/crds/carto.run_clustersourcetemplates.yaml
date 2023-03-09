@@ -5,7 +5,8 @@ metadata: {}
 spec:
 
   # HealthRule specifies rubric for determining the health of a
-  # resource stamped by this template
+  # resource stamped by this template. See:
+  # https://cartographer.sh/docs/latest/health-rules/
   # +optional
   healthRule:
 
@@ -85,7 +86,8 @@ spec:
   # Lifecycle specifies whether template modifications should
   # result in originally created objects being updated (`mutable`)
   # or in new objects created alongside original objects
-  # (`immutable` or `tekton`).
+  # (`immutable` or `tekton`). See:
+  # https://cartographer.sh/docs/latest/lifecycle/
   # +optional
   lifecycle: <[mutable|immutable|tekton]>
 
