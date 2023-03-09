@@ -1,0 +1,13 @@
+---
+apiVersion: carto.run/v1alpha1
+kind: Workload
+metadata:
+  name: hello-again
+  labels:
+    workload-type: source-code
+spec:
+  source:
+    git:
+      ref:
+        branch: master                               # <=== new revision
+      url: https://github.com/kelseyhightower/nocode # <=== new repo
