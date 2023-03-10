@@ -1,0 +1,155 @@
+---
+apiVersion: carto.run/v1alpha1
+kind: ClusterConfigTemplate
+metadata: {}
+spec:
+
+  # ConfigPath is a path into the templated object's data that
+  # contains valid yaml. This is typically the information that
+  # will configure the components of the deployable image.
+  # ConfigPath is specified in jsonpath format, eg: .data
+  configPath: <string>
+
+  # HealthRule specifies rubric for determining the health of a
+  # resource stamped by this template. See:
+  # https://cartographer.sh/docs/latest/health-rules/
+  # +optional
+  healthRule:
+
+    # AlwaysHealthy being set indicates the resource should always
+    # be considered healthy once it exists.
+    # +optional
+    alwaysHealthy: {}
+
+    # MultiMatch specifies explicitly which conditions and/or
+    # fields should be used to determine healthiness.
+    # +optional
+    multiMatch:
+
+      # Healthy is a HealthMatchRule which stipulates
+      # requirements, ALL of which must be met for the resource to
+      # be considered healthy.
+      healthy:
+
+        # MatchConditions are the conditions and statuses to read.
+        # +optional
+        matchConditions:
+          - # Status is the status of the condition
+            status: <string>
+
+            # Type is the type of the condition
+            type: <string>
+
+        # MatchFields stipulates a FieldSelectorRequirement for
+        # this rule.
+        # +optional
+        matchFields:
+          - # Key is the JSON path in the workload to match
+            # against. e.g. for workload:
+            # "workload.spec.source.git.url", e.g. for
+            # deliverable: "deliverable.spec.source.git.url"
+            key: <string>
+
+            # MessagePath is specified in jsonpath format. It is
+            # evaluated against the resource to provide a message
+            # in the owner's resource condition if it is the first
+            # matching requirement that determine the current
+            # ResourcesHealthy condition status.
+            # +optional
+            messagePath: <string>
+
+            # Operator represents a key's relationship to a set of
+            # values. Valid operators are In, NotIn, Exists and
+            # DoesNotExist.
+            operator: <[In|NotIn|Exists|DoesNotExist]>
+
+            # Values is an array of string values. If the operator
+            # is In or NotIn, the values array must be non-empty.
+            # If the operator is Exists or DoesNotExist, the
+            # values array must be empty.
+            # +optional
+            values: [ <string> ]
+
+      # Unhealthy is a HealthMatchRule which stipulates
+      # requirements, ANY of which, when met, indicate that the
+      # resource should be considered unhealthy.
+      unhealthy:
+        matchConditions:
+          - status: <string>
+            type: <string>
+        matchFields:
+          - key: <string>
+            messagePath: <string>
+            operator: <[In|NotIn|Exists|DoesNotExist]>
+            values: [ <string> ]
+
+    # SingleConditionType names a single condition which, when
+    # True indicates the resource is healthy. When False it is
+    # unhealthy. Otherwise, healthiness is Unknown.
+    # +optional
+    singleConditionType: <string>
+
+  # Lifecycle specifies whether template modifications should
+  # result in originally created objects being updated (`mutable`)
+  # or in new objects created alongside original objects
+  # (`immutable` or `tekton`). See:
+  # https://cartographer.sh/docs/latest/lifecycle/
+  # +optional
+  lifecycle: <[mutable|immutable|tekton]>
+
+  # Additional parameters. See:
+  # https://cartographer.sh/docs/latest/architecture/#parameter-hierarchy
+  # +optional
+  params:
+    - # DefaultValue of the parameter. Causes the parameter to be
+      # optional; If the Owner or Template does not specify this
+      # parameter, this value is used.
+      default: <any>
+
+      # Name of a parameter the template accepts from the
+      # Blueprint or Owner.
+      name: <string>
+
+  # RetentionPolicy specifies how many successful and failed runs
+  # should be retained if the template lifecycle is
+  # immutable/tekton. Runs older than this (ordered by creation
+  # time) will be deleted. Setting higher values will increase
+  # memory footprint. If unspecified on immutable/tekton, default
+  # behavior will == {maxFailedRuns: 10, maxSuccessfulRuns: 10}
+  # +optional
+  retentionPolicy:
+
+    # MaxFailedRuns is the number of failed runs to retain.
+    maxFailedRuns: <integer>
+
+    # MaxSuccessfulRuns is the number of successful runs to
+    # retain.
+    maxSuccessfulRuns: <integer>
+
+  # Template defines a resource template for a Kubernetes Resource
+  # or Custom Resource which is applied to the server each time
+  # the blueprint is applied. Templates support simple value
+  # interpolation using the $()$ marker format. For more
+  # information, see:
+  # https://cartographer.sh/docs/latest/templating/ You cannot
+  # define both Template and Ytt at the same time. You should not
+  # define the namespace for the resource - it will automatically
+  # be created in the owner namespace. If the namespace is
+  # specified and is not the owner namespace, the resource will
+  # fail to be created.
+  # +optional
+  template: {}
+
+  # Ytt defines a resource template written in `ytt` for a
+  # Kubernetes Resource or Custom Resource which is applied to the
+  # server each time the blueprint is applied. Templates support
+  # simple value interpolation using the $()$ marker format. For
+  # more information, see:
+  # https://cartographer.sh/docs/latest/templating/ You cannot
+  # define both Template and Ytt at the same time. You should not
+  # define the namespace for the resource - it will automatically
+  # be created in the owner namespace. If the namespace is
+  # specified and is not the owner namespace, the resource will
+  # fail to be created.
+  # +optional
+  ytt: <string>

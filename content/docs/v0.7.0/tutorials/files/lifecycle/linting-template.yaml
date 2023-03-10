@@ -1,0 +1,31 @@
+---
+apiVersion: carto.run/v1alpha1
+kind: ClusterSourceTemplate
+metadata:
+  name: source-linter
+spec:
+  template:
+    apiVersion: tekton.dev/v1beta1
+    kind: PipelineRun
+    metadata:
+      generateName: linter-pipeline-run-
+    spec:
+      pipelineRef:
+        name: linter-pipeline
+      params:
+        - name: repository
+          value: $(workload.spec.source.git.url)$
+        - name: revision
+          value: $(workload.spec.source.git.ref.branch)$
+      workspaces:
+        - name: shared-workspace
+          volumeClaimTemplate:
+            spec:
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 256Mi
+  urlPath: .status.pipelineSpec.tasks[0].params[0].value
+  revisionPath: .status.pipelineSpec.tasks[0].params[1].value
+  lifecycle: tekton
