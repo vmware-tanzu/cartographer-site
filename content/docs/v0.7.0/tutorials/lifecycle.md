@@ -324,8 +324,8 @@ Examining the created object it’s a non-trivial 300 lines:
 $ kubectl get -o yaml pipelineruns linter-pipeline-run-123az
 ```
 
-In the metadata we can see familiar labels indicating Carto objects used to create this templated object. We can also
-see that the object is owned by the runnable.
+In the metadata we can see familiar labels indicating Carto objects were used to create this templated object. We can
+also see that the object is owned by the workload.
 
 ```yaml
 apiVersion: tekton.dev/v1beta1
