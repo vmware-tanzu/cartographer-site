@@ -9,7 +9,7 @@ require (
 	github.com/google/addlicense v1.1.1
 	github.com/maxbrunsfeld/counterfeiter/v6 v6.6.1
 	github.com/onsi/ginkgo v1.16.5
-	sigs.k8s.io/controller-tools v0.11.3
+	sigs.k8s.io/controller-tools v0.11.4
 )
 
 require (
