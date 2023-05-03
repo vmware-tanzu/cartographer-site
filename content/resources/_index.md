@@ -18,14 +18,19 @@ layout: common
 
 ## Presentations
 
-- ϟ Enlightning: "Getting Your Code to Production with Cartographer" {{< youtube-enhanced id="RKP3xvWphFg" start="806" >}}
+- ϟ Enlightning: "Getting Your Code to Production with Cartographer"
+  {{< youtube-enhanced id="RKP3xvWphFg" start="806" >}}
 - Kubecon EU: "West Side CD: The Deployment Ballet Goes On" {{< youtube-enhanced id="m0FjctG5uxU" start="0" >}}
-- CloudNativeFM Webcast: "Get from Code to Prod in k8s using Cartographer" {{< youtube-enhanced id="RJCbQ1zQSBs" start="33" >}}
+- CloudNativeFM Webcast: "Get from Code to Prod in k8s using Cartographer"
+  {{< youtube-enhanced id="RJCbQ1zQSBs" start="33" >}}
 - Tanzu Meetup Hispano (spanish): "De orquestacion a coreografia, modernizando la cadena de suministro de software"
   {{< youtube-enhanced id="wKqrW2ckmuo" start="5505" >}}
-- DevOps Toronto Meetup - Apr 5th, 2022: "From orchestration to choreography" {{< youtube-enhanced id="6UBafjET504" start="14" >}}
-- CNCF Live webinar covering Supply Chain choreography with Cartographer {{< youtube-enhanced id="YowcLPRYh7o" start="5" >}}
-- Tanzu Tuesdays episode introducing choreography (including demos) {{< youtube-enhanced id="Qr-DO0E9R1Y" start="1129" >}}
+- DevOps Toronto Meetup - Apr 5th, 2022: "From orchestration to choreography"
+  {{< youtube-enhanced id="6UBafjET504" start="14" >}}
+- CNCF Live webinar covering Supply Chain choreography with Cartographer
+  {{< youtube-enhanced id="YowcLPRYh7o" start="5" >}}
+- Tanzu Tuesdays episode introducing choreography (including demos)
+  {{< youtube-enhanced id="Qr-DO0E9R1Y" start="1129" >}}
 - Cartographer featured on Thank Goodness its Kubernetes (TGIK) {{< youtube-enhanced id="TJPGn0-hpPY" start="738" >}}
 - Tanzu Code (live coding) episode on Cartographer {{< youtube-enhanced id="694soIproYE" start="5010" >}}
 
