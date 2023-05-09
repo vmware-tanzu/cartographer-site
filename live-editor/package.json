@@ -24,7 +24,7 @@
     "postcss": "^8.4.23",
     "postcss-load-config": "^4.0.1",
     "prettier": "2.8.8",
-    "svelte": "^3.59.0",
+    "svelte": "^3.59.1",
     "svelte-copy-to-clipboard": "^0.2.5",
     "svelte-preprocess": "^5.0.3",
     "svelte-simple-modal": "^1.5.2",
