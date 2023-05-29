@@ -32,7 +32,7 @@
     "vite": "^2.9.14",
     "vscode-languageserver-textdocument": "^1.0.8",
     "vscode-languageserver-types": "^3.17.3",
-    "yaml": "^2.3.0"
+    "yaml": "^2.3.1"
   },
   "dependencies": {
     "upper-case-first": "^2.0.2"
