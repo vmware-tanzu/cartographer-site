@@ -70,13 +70,13 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@openapi-contrib/openapi-schema-to-json-schema@^4.0.4":
-  version "4.0.4"
-  resolved "https://registry.yarnpkg.com/@openapi-contrib/openapi-schema-to-json-schema/-/openapi-schema-to-json-schema-4.0.4.tgz#ca5736f2f29823e9b429a523768e4926a55fe5c6"
-  integrity sha512-8rh6+uzfqCu4XQoe28pA2jNAnvs0mRyrg8gsUGawb8dDYuhKP8KZt5k/s8yQvpEQX1WtYQxwMT4X6LH5N1MRxA==
+"@openapi-contrib/openapi-schema-to-json-schema@^4.0.5":
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/@openapi-contrib/openapi-schema-to-json-schema/-/openapi-schema-to-json-schema-4.0.5.tgz#5dba02a42fecb14d2030c8d7f41af91e8c442272"
+  integrity sha512-E6s9hfQx125CfGXW5896s0ZtUEecTS69KvqkNDPxKomeZ/Y2rNsG90yO8K47uchXqKw5RhD/rCNcOJ2VODfQiw==
   dependencies:
-    "@types/json-schema" "^7.0.11"
-    "@types/node" "^18.15.11"
+    "@types/json-schema" "^7.0.12"
+    "@types/node" "^20.2.5"
     fast-deep-equal "^3.1.3"
     openapi-typescript "^5.4.1"
 
@@ -100,15 +100,15 @@
     magic-string "^0.26.2"
     svelte-hmr "^0.14.12"
 
-"@types/json-schema@^7.0.11", "@types/json-schema@^7.0.12":
+"@types/json-schema@^7.0.12":
   version "7.0.12"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.12.tgz#d70faba7039d5fca54c83c7dbab41051d2b6f6cb"
   integrity sha512-Hr5Jfhc9eYOQNPYO5WLDq/n4jqijdHNlDXjuAQkkt+mWdQR+XJToOHrsD4cPaMXpn6KO7y2+wM8AZEs8VpBLVA==
 
-"@types/node@^18.15.11":
-  version "18.16.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.16.0.tgz#4668bc392bb6938637b47e98b1f2ed5426f33316"
-  integrity sha512-BsAaKhB+7X+H4GnSjGhJG9Qi8Tw+inU9nJDwmD5CgOmBLEI6ArdhikpLX7DjbjDRDTbqZzU2LSQNZg8WGPiSZQ==
+"@types/node@^20.2.5":
+  version "20.2.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.2.5.tgz#26d295f3570323b2837d322180dfbf1ba156fefb"
+  integrity sha512-JJulVEQXmiY9Px5axXHeYGLSjhkZEnD+MDPDGbCbIAbMslkKwmygtZFy1X6s/075Yo94sf8GuSlFfPzysQrWZQ==
 
 "@types/pug@^2.0.6":
   version "2.0.6"
