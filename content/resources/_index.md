@@ -32,7 +32,7 @@ layout: common
 - Tanzu Tuesdays episode introducing choreography (including demos)
   {{< youtube-enhanced id="Qr-DO0E9R1Y" start="1129" >}}
 - Cartographer featured on Thank Goodness its Kubernetes (TGIK) {{< youtube-enhanced id="TJPGn0-hpPY" start="738" >}}
-- Tanzu Code (live coding) episode on Cartographer {{< youtube-enhanced id="694soIproYE" start="5010" >}}
+- Tanzu Code Test (live coding) episode on Cartographer {{< youtube-enhanced id="694soIproYE" start="5010" >}}
 
 ## Community Meetings Playlist
 
