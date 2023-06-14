@@ -1,5 +1,16 @@
 # Testing Templates
 
+When creating supply chains and templates, it can be useful to test that the expected objects will be stamped by
+Cartographer. To enable fast feedback, Cartographer has cartotest which can be used as a go testing framework or as a
+cli test tool.
+
+The approach of cartotest is to specify a template-workload pair under test. A supply chain may be supplied or mocked;
+outputs from earlier steps in the supply chain may also be mocked. The object stamped is then compared to the provided
+'expected' object. CompareOptions can be used to simplify the comparison (e.g. ignoring metadata fields of the stamped
+object).
+
+# Cartotest CLI
+
 `cartotest` is a CLI tool to assert that your Cartographer templates behave as you expect.
 
 ## Quick Start
@@ -29,7 +40,7 @@ Users may define templates that use [ytt](https://carvel.dev/ytt/). Testing such
 Run the example template tests:
 
 ```shell
-cartotest templates --directory ./tests/templates/
+cartotest ./tests/templates/
 ```
 
 You should see
@@ -38,21 +49,224 @@ You should see
 PASS: tests/templates/deliverable/regular-template
 PASS: tests/templates/deliverable/ytt-preprocess
 PASS: tests/templates/deliverable/ytt-template
+PASS: tests/templates/deployment
 PASS: tests/templates/kpack
 PASS
 ```
 
 Great, a passing test!
 
-### Failing Tests
+## Creating A Test
 
-Now let's make a test fail.
+Cartotest must be supplied with a set of `given` files and an `expected` file. An `info.yaml` file can point to these
+files, as well as add further configuration of the test.
 
-The folder ./tests/templates/kpack tests the `template.yaml` file. The `expected.yaml` file is what we are asserting
-should be created by Cartographer. There are two files that are used as inputs to the template. These are
-`workload.yaml` and `info.yaml`.
+### Givens
 
-Let's alter the workload so that what is stamped out by Cartographer will be different from `expected.yaml`.
+A [template](#template) yaml file and a [workload](#workload) yaml file must be specified for every test.
+
+A supply chain may be specified, either as
+
+- an actual [supply chain](#supply-chain) yaml file with necessary extra information in `info.yaml`; or as
+- a set of [mocked supply chain](#mock-supply-chain) values specified entirely in `info.yaml`.
+
+### Expected
+
+An [expected](#expected) yaml file. This is the object you expect to be stamped out by Cartographer.
+
+### CompareOptions
+
+A [set of options](#compare-options) to alter the comparison. Specified in `info.yaml`.
+
+## info.yaml Structure
+
+Each folder in the directory under test should contain an `info.yaml` file which can specify test metadata, file
+locations and test behavior.
+
+```yaml
+# metadata about the test
+metadata:
+  # Name of the test
+  name: <string>
+  # Description of the test
+  description: <string>
+
+# the inputs to the test
+given:
+  # Path to the workload file
+  workload: <string>
+  template:
+    # Path to the template file
+    path: <string>
+    # Path to the ytt preprocessing file
+    yttPath: <string>
+  # Collection of values that the supplychain would supply for the test in question
+  mockSupplyChain:
+    # Input values as if output from earlier steps of a supply chain
+    blueprintInputs:
+      sources:
+        # string value should be the same as the name value
+        <string>:
+          name: <string>
+          url: <string>
+          revision: <string>
+      images:
+        # string value should be the same as the name value
+        <string>:
+          name: <string>
+          image: <string>
+      configs:
+        # string value should be the same as the name value
+        <string>:
+          name: <string>
+          config: <string>
+    # Parameters specified in a supply chain
+    blueprintParams:
+      - # Name of the parameter.
+        # Should match a template parameter name.
+        name: <string>
+        # Value of the parameter.
+        # If specified, workload properties are ignored.
+        # +optional
+        value: <any>
+        # DefaultValue of the parameter.
+        # Causes the parameter to be optional; If the workload does not specify
+        # this parameter, this value is used.
+        default: <any>
+
+  # An actual supplychain along with additional values that must be mocked
+  supplyChain:
+    # List of one or more filepaths
+    # paths may be to individual supplychains, or to a directory containing only supplychains
+    paths: [ ]<string>
+    # Path to a ytt preprocessing file
+    yttPath: <string>
+    # name of the resource/stage in the supply chain that should select the template under test
+    targetResourceName: <string>
+    # values as if output from earlier stages of a supply chain
+    previousOutputs:
+      # name of a resource
+      <SOME-RESOURCE-NAME>:
+        image: <string>
+        config: <string>
+        source:
+          url: <string>
+
+# Path to the expected file
+expected: <string>
+
+# If true, only this and other focused tests will run
+focus: <bool>
+
+# Options for altering the comparison of the expected and stamped objects
+compareOptions:
+  # If true, test comparison will ignore all fields of metadata
+  ignoreMetadata: <bool>
+  # If true, test comparison will ignore all fields of metadata.ownerRefs
+  ignoreOwnerRefs: <bool>
+  # If true, test comparison will ignore all fields of metadata.labels
+  ignoreLabels: <bool>
+  # Test comparison will ignore all named fields of metadata
+  ignoreMetadataFields: [ ]<string>
+  # List of provided compare functions which should be applied
+  namedCMPOptionFuncs:
+    # Valid options:
+    - ConvertNumbersToFloatsDuringComparison
+```
+
+## Reference/Inheritance
+
+### Template
+
+`Required`
+
+The template file may be specified in the following order of precedence:
+
+1. File named in the `.given.template.path` field of `info.yaml`
+2. File named `template.yaml`
+3. The template file inherited from parent directory
+
+The template may be preprocessed with ytt. In that case, the data values file should be specified in the
+`.given.template.yttPath` field of `info.yaml`
+
+### Workload
+
+`Required`
+
+The workload file may be specified in the following order of precedence:
+
+1. File named in the `.given.workload` field of `info.yaml`
+2. File named `workload.yaml`
+3. The workload file inherited from parent directory
+
+### Expected
+
+`Required`
+
+The expected file may be specified in the following order of precedence:
+
+1. File named in the `.expected` field of `info.yaml`
+2. File named `expected.yaml`
+3. The expected file inherited from parent directory
+
+### Supply Chains
+
+`Optional`
+
+One or more supply chains may be specified. The supply chains may be specified in the following order of precedence.
+These methods are exclusive, not cumulative (i.e. if supply chains are found from method 1, method 2 will not contribute
+to the supply chain).
+
+1. Files named in the `.given.supplyChain.paths` list of `info.yaml`. Paths may be to directories of files that are
+   all supply chains.
+2. Files with the prefix `supply-chain` and the extension `.yaml`
+3. The supply chain files inherited from parent directory
+
+If one or more supply chains are specified, a named resource must also be specified. This is the stage in the supply
+chain which points to the target template. This can be specified in `info.yaml` field `.given.supplyChain.yttPath`
+
+The supply chain may be preprocessed with ytt. In that case, the data values file should be specified in the
+`.given.supplyChain.yttPath` field of `info.yaml`.
+
+Outputs from the other resources in the supply chain may be specified in the `.given.supplyChain.previousOutputs` field
+of `info.yaml`. See the [info.yaml structure](#infoyaml-structure) for the shape of these values.
+
+Supply Chains are mutually exclusive with [mock supply chains](#mock-supply-chain). Both may not be supplied at once.
+
+### Mock Supply Chain
+
+`Optional`
+
+The inputs may be specified in the `.given.mockSupplyChain` field of `info.yaml`. Otherwise, they are inherited from the
+parent directory.
+
+Mocked Supply Chains may specify a set of `inputs` (values as if previous resources in the supply chain have run) and/or
+a set of `params`. See the [info.yaml structure](#infoyaml-structure) for the shape of these values.
+
+Mock Supply Chains are mutually exclusive with [supply chains](#supply-chain). Both may not be supplied at once.
+
+### Compare Options
+
+`Optional`
+
+There are several ways to exclude metadata fields from the comparison of stamped and expected objects:
+
+- To ignore the entire metadata field, in `info.yaml` specify `compareOptions.ignoreMetadata: true`
+- To ignore the metadata.ignoreOwnerRefs field, in `info.yaml` specify `compareOptions.ignoreOwnerRefs: true`
+- To ignore the metadata.ignoreLabels field, in `info.yaml` specify `compareOptions.ignoreLabels: true`
+- To ignore other metadata fields, in `info.yaml` add the field name to the list `compareOptions.ignoreMetadataFields`
+
+Comparison of objects can fail on type assertion (i.e. an expected field interpreted as the int 3 and the stamped
+object with the same field as the float 3). There is a named function to coerce all numbers to the type float64. To
+apply this function, in `info.yaml` add the name `ConvertNumbersToFloatsDuringComparison` to the list
+`compareOptions.namedCMPOptionFuncs`.
+
+## How-Tos
+
+### Interpreting Failing Tests
+
+Let's make a test fail. Alter the workload so that what is stamped out by Cartographer will be different
+from `expected.yaml`:
 
 _The example edit uses mikefarah/yq for which you can find installation instructions
 [here](https://github.com/mikefarah/yq#install). Alternatively you can manually change the `metadata.name` field of
@@ -65,7 +279,7 @@ yq '.metadata.name = "another-identifier"' ./tests/templates/kpack/workload.yaml
 Run cartotests again:
 
 ```shell
-cartotest templates --directory ./tests/templates/
+cartotest ./tests/templates/
 ```
 
 ```console
@@ -76,10 +290,10 @@ FAIL: tests/templates/kpack
 FAIL
 ```
 
-Let's get some more detail about the tests by running cartotest in verbose mode:
+We can get detail about the tests by running cartotest in verbose mode:
 
 ```shell
-cartotest templates --directory ./tests/templates/ -v
+cartotest ./tests/templates/ -v
 ```
 
 ```console
@@ -115,148 +329,11 @@ changing the name of the workload has changed the output of Cartographer from th
 `spec.tag` field was expected to be a join of `some-default-prefix-` and `my-workload-name` but was instead a join of
 `some-default-prefix-` and `another-identifier`.
 
-Let's set the workload back to its original state:
+Let's cleanup and set the workload back to its original state:
 
 ```shell
 git checkout ./tests/templates/kpack/workload.yaml
 ```
-
-## Reference
-
-There are 7 types of information with which a cartotest may be configured. Those with an asterix (\*) are required.
-
-- [Template \*](#template): The template under test
-- [Workload \*](#workload): The workload that will pair with the supply chain/template
-- [Expected \*](#expected): The expected object that will be created by Cartographer
-- [Supply Chain Inputs](#supply-chain-inputs): The sources/images/configs assumed to have been created earlier in a
-  supply chain
-- [Blueprint Params](#blueprint-params): The params specified in the supply chain
-- [YTT Preprocessing File](#ytt-preprocessing-file): A file of ytt data values. Applied to the template before
-  processing with Cartographer.
-- [Ignored Metadata Fields](#ignored-metadata-fields): Fields of the metadata that of the expected object that should
-  not be tested.
-
-### Template
-
-The template file may be specified in the following order of precedence:
-
-1. File named in the `.template` field of `info.yaml`
-2. File named `template.yaml`
-3. The template file inherited from parent directory
-
-### Workload
-
-The workload file may be specified in the following order of precedence:
-
-1. File named in the `.workload` field of `info.yaml`
-2. File named `workload.yaml`
-3. The workload file inherited from parent directory
-
-### Expected
-
-The expected file may be specified in the following order of precedence:
-
-1. File named in the `.expected` field of `info.yaml`
-2. File named `expected.yaml`
-3. The expected file inherited from parent directory
-
-### Supply Chain Inputs
-
-The inputs may be specified in the `.supplyChainInputs` field of `info.yaml`. Otherwise, they are inherited from the
-parent directory.
-
-### Blueprint Params
-
-The inputs may be specified in the `.blueprintParams` field of `info.yaml`. Otherwise, they are inherited from the
-parent directory.
-
-### YTT Preprocessing File
-
-The workload file may be specified in the `.ytt` field of `info.yaml` Otherwise, they are inherited from the parent
-directory.
-
-### Ignored Metadata Fields
-
-- To ignore the entire metadata field, in `info.yaml` specify `ignoreMetadata: true`
-- To ignore the metadata.ignoreOwnerRefs field, in `info.yaml` specify `ignoreOwnerRefs: true`
-- To ignore the metadata.ignoreLabels field, in `info.yaml` specify `ignoreLabels: true`
-- To ignore other metadata fields, in `info.yaml` add the field name to `ignoreMetadataFields`
-
-## info.yaml Structure
-
-Each folder of cartotests should contain an `info.yaml` file which can specify test metadata, behavior and inputs.
-
-```yaml
-# Name of the test
-name: <string>
-
-# Description of the test
-description: <string>
-
-# Path to the template file
-template: <string>
-
-# Path to the workload file
-workload: <string>
-
-# Path to the expected file
-expected: <string>
-
-# Path to the ytt preprocessing file
-ytt: <string>
-
-# Input values as if output from earlier steps of a supply chain
-supplyChainInputs:
-  sources:
-    # string value should be the same as the name value
-    <string>:
-      name: <string>
-      url: <string>
-      revision: <string>
-  images:
-    # string value should be the same as the name value
-    <string>:
-      name: <string>
-      image: <string>
-  configs:
-    # string value should be the same as the name value
-    <string>:
-      name: <string>
-      config: <string>
-
-# Parameters specified in a supply chain
-blueprintParams:
-  - # Name of the parameter.
-    # Should match a template parameter name.
-    name: <string>
-
-    # Value of the parameter.
-    # If specified, workload properties are ignored.
-    # +optional
-    value: <any>
-
-    # DefaultValue of the parameter.
-    # Causes the parameter to be optional; If the workload does not specify
-    # this parameter, this value is used.
-    default: <any>
-
-# If true, only this and other focused tests will run
-focus: <bool>
-
-# If true, test comparison will ignore all fields of metadata
-ignoreMetadata: <bool>
-
-# If true, test comparison will ignore all fields of metadata.ownerRefs
-ignoreOwnerRefs: <bool>
-
-# If true, test comparison will ignore all fields of metadata.labels
-ignoreLabels: <bool>
-
-# Test comparison will ignore all named fields of metadata
-ignoreMetadataFields: [<string>]
-```
-
-## How-Tos
 
 ### How to Focus Tests
 
@@ -266,7 +343,7 @@ few tests at a time. We'll use the cartographer template tests and focus on just
 
 ```shell
 yq '.focus = true' ./tests/templates/kpack/info.yaml -i
-cartotest templates --directory ./tests/templates/
+cartotest ./tests/templates/
 ```
 
 ```console
@@ -309,7 +386,7 @@ leaf directories are treated as ready to test. We can observe this behavior by c
 ```shell
 mkdir tests/templates/deliverable/regular-template/some-dir
 mkdir tests/templates/deliverable/regular-template/another-dir
-cartotest templates --directory ./tests/templates/
+cartotest ./tests/templates/
 ```
 
 ```console
@@ -335,7 +412,7 @@ tests.
 
 ```shell
 yq '.spec.source.git.url = "https://github.com/ossu/computer-science/"' ./tests/templates/deliverable/common-expectation.yaml -i
-cartotest templates --directory ./tests/templates/
+cartotest ./tests/templates/
 ```
 
 ```console
