@@ -206,8 +206,8 @@ One or more supply chains may be specified. The supply chains may be specified i
 These methods are exclusive, not cumulative (i.e. if supply chains are found from method 1, method 2 will not contribute
 to the supply chain).
 
-1. Files named in the `.given.supplyChain.paths` list of `info.yaml`. Paths may be to directories of files that are
-   all supply chains.
+1. Files named in the `.given.supplyChain.paths` list of `info.yaml`. Paths may be to directories of files that are all
+   supply chains.
 2. Files with the prefix `supply-chain` and the extension `.yaml`
 3. The supply chain files inherited from parent directory
 
@@ -245,17 +245,17 @@ There are several ways to exclude metadata fields from the comparison of stamped
 - To ignore the metadata.ignoreLabels field, in `info.yaml` specify `compareOptions.ignoreLabels: true`
 - To ignore other metadata fields, in `info.yaml` add the field name to the list `compareOptions.ignoreMetadataFields`
 
-Comparison of objects can fail on type assertion (i.e. an expected field interpreted as the int 3 and the stamped
-object with the same field as the float 3). There is a named function to coerce all numbers to the type float64. To
-apply this function, in `info.yaml` add the name `ConvertNumbersToFloatsDuringComparison` to the list
+Comparison of objects can fail on type assertion (i.e. an expected field interpreted as the int 3 and the stamped object
+with the same field as the float 3). There is a named function to coerce all numbers to the type float64. To apply this
+function, in `info.yaml` add the name `ConvertNumbersToFloatsDuringComparison` to the list
 `compareOptions.namedCMPOptionFuncs`.
 
 ## How-Tos
 
 ### Interpreting Failing Tests
 
-Let's make a test fail. Alter the workload so that what is stamped out by Cartographer will be different
-from `expected.yaml`:
+Let's make a test fail. Alter the workload so that what is stamped out by Cartographer will be different from
+`expected.yaml`:
 
 _The example edit uses mikefarah/yq for which you can find installation instructions
 [here](https://github.com/mikefarah/yq#install). Alternatively you can manually change the `metadata.name` field of

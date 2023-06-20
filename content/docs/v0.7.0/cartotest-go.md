@@ -79,18 +79,16 @@ provision as a go object or as a yaml file.
 
 #### Template Interface
 
-Template is one of the fields in [Given](#given).
-There are two implementations of the template interface:
+Template is one of the fields in [Given](#given). There are two implementations of the template interface:
 
-- TemplateFile, which specifies the filepath of a yaml file of a Cartographer Template. It may also specify
-  the [YttFiles and YttValues fields](#ytt-templating). Example: # TODO: point to example
+- TemplateFile, which specifies the filepath of a yaml file of a Cartographer Template. It may also specify the
+  [YttFiles and YttValues fields](#ytt-templating). Example: # TODO: point to example
 - TemplateObject, which provides a go instance of one of the cartographer template classes. Example: # TODO: point to
   example
 
 #### Workload Interface
 
-Workload is one of the fields in [Given](#given).
-There are two implementations of the workload interface:
+Workload is one of the fields in [Given](#given). There are two implementations of the workload interface:
 
 - WorkloadFile, which specifies the filepath of a yaml file of a Cartographer Workload. Example: # TODO: point to
   example
@@ -98,8 +96,7 @@ There are two implementations of the workload interface:
 
 #### SupplyChain Interface
 
-SupplyChain is one of the fields in [Given](#given).
-There are two implementations of the supply-chain interface:
+SupplyChain is one of the fields in [Given](#given). There are two implementations of the supply-chain interface:
 
 - [SupplyChainFileSet](#supplychainfileset)
 - [MockSupplyChain](#mocksupplychain)
@@ -134,27 +131,26 @@ MockSupplyChains allow mocking out the two types of values that a supply chain s
 of previous resources/stages. Each of these can be specified by pointing to a yaml file, or by creating a go object.
 
 - Inputs
-    - SupplyChainInputsObject: Define an inputs object. See example #TODO
-    - SupplyChainInputsFile: Provide the path of a yaml file defining
-      inputs. [See example](https://github.com/vmware-tanzu/cartographer/blob/d5a9e41294a6a04b8a03298a2d96610b6d2f0343/tests/templates/kpack/inputs-file-not-used-by-cli-tests.yaml)
+  - SupplyChainInputsObject: Define an inputs object. See example #TODO
+  - SupplyChainInputsFile: Provide the path of a yaml file defining inputs.
+    [See example](https://github.com/vmware-tanzu/cartographer/blob/d5a9e41294a6a04b8a03298a2d96610b6d2f0343/tests/templates/kpack/inputs-file-not-used-by-cli-tests.yaml)
 - Params
-    - SupplyChainParamsFile: Provide the path of a yaml file defining
-      params. [See example](https://github.com/vmware-tanzu/cartographer/blob/d5a9e41294a6a04b8a03298a2d96610b6d2f0343/tests/templates/deliverable/regular-template/params-file-not-used-by-cli-tests.yaml)
-    - SupplyChainParamsObject: Provide a params object. To simplify this process, Cartotest provides the
-      [BuildSupplyChainStringParams](# TODO) function. [Example usage](https://github.com/vmware-tanzu/cartographer/blob/d5a9e41294a6a04b8a03298a2d96610b6d2f0343/tests/templates/template_test.go#L34-L43)
+  - SupplyChainParamsFile: Provide the path of a yaml file defining params.
+    [See example](https://github.com/vmware-tanzu/cartographer/blob/d5a9e41294a6a04b8a03298a2d96610b6d2f0343/tests/templates/deliverable/regular-template/params-file-not-used-by-cli-tests.yaml)
+  - SupplyChainParamsObject: Provide a params object. To simplify this process, Cartotest provides the
+    [BuildSupplyChainStringParams](# TODO) function.
+    [Example usage](https://github.com/vmware-tanzu/cartographer/blob/d5a9e41294a6a04b8a03298a2d96610b6d2f0343/tests/templates/template_test.go#L34-L43)
 
 ##### Inputs vs Outputs
 
 It is important to note that inputs and outputs are slightly different:
 
 - [SupplyChainFileSet](#supplychainfileset) PreviousOutputs: provide the name of the previous resource that created the
-  output. The supply
-  chain spec will rename this input. Read more about that in
-  the [tutorials](tutorials/extending-a-supply-chain.md#supply-chain).
+  output. The supply chain spec will rename this input. Read more about that in the
+  [tutorials](tutorials/extending-a-supply-chain.md#supply-chain).
 - [MockSupplyChain](#mocksupplychain) Inputs: As we are mocking out the supply chain, we need not specify the previous
-  resource's name.
-  Instead we specify the name of the input as it is referred to in the template. Read more in
-  the [templating documentation](templating.md#inputs)
+  resource's name. Instead we specify the name of the input as it is referred to in the template. Read more in the
+  [templating documentation](templating.md#inputs)
 
 ### Expect
 
