@@ -45,4 +45,5 @@ copyright:
 
 .PHONY: woke
 woke:
-	$(WOKE) -c https://via.vmw.com/its-woke-rules --exit-1-on-failure
+	#$(WOKE) -c https://via.vmw.com/its-woke-rules # Short URL currently offline
+	$(WOKE) -c https://vmw-its-woke-client-rules-resources-prod.s3.us-west-2.amazonaws.com/public/its-woke-rules.yaml --exit-1-on-failure

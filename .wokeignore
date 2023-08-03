@@ -16,13 +16,16 @@ themes/template/static/live-editor
 themes/template/static/img
 
 ## upstream dependency - hopefully something that can be converted into a package install
-live-editor/src/monaco-yaml/
+live-editor/node_modules/tailwindcss/types/generated/default-theme.d.ts
+live-editor/node_modules/tailwindcss/types/config.d.ts
+live-editor/src/monaco-yaml
 
 ## cannot use marker in markdown
 themes/template/static/fonts/README.md
 style-guide.md
 content/docs/*/troubleshooting.md
 content/docs/*/tutorials/runnable.md
+content/docs/*/tutorials/performance-tuning.md
 CONTRIBUTING.md
 
 ## cannot use marker in generated js
@@ -31,3 +34,6 @@ live-editor/src/lib/monaco/schema.js
 
 ## needs fixing in upstream (cartographer)
 content/docs/*/crds/
+
+## needs fixing in upstream (3rd party samples)
+content/docs/*/tutorials/files/lifecycle/second-workload.yaml
