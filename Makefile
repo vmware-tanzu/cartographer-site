@@ -45,4 +45,4 @@ copyright:
 
 .PHONY: woke
 woke:
-	$(WOKE) -c https://via.vmw.com/its-woke-rules
+	$(WOKE) -c https://via.vmw.com/its-woke-rules --exit-1-on-failure
