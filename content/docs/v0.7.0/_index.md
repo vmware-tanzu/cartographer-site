@@ -35,10 +35,12 @@ Contrary to many other Kubernetes native workflow tools that already exist in th
 any of the objects themselves. Instead, it monitors the execution of each resource and templates the following resource
 in the supply chain after a given resource has completed execution and updated its status.
 
-The supply chain may also be extended to include integrations to existing CI/CD pipelines by using the Runnable CRD
-(which is part of Cartographer). The Runnable CRD acts as a wrapper for CRDs that are immutable (meaning that instead of
-updating an object, a new object would be created). There are a number of CI/CD CRDs that follow this pattern, including
-Tekton. The Runnable CRD provides a declarative way for pipelines to be run inside of Cartographer.
+Cartographer assumes that objects are managed by a controller that implements a control loop; objects are
+created with a desired state and a controller moves the cluster closer to the desired state. For most Kubernetes objects
+this includes the ability to update the desired state, to update the spec of an object, and have the controller move the
+cluster toward the new desired state. Cartographer manages resources that do not follow this pattern by implementing an
+[immutable pattern](lifecycle); rather than updating an object a new object will be created. This enables the inclusion
+of a number of CI/CD Kubernetes resources including Tekton.
 
 While the supply chain is operator facing, Cartographer also provides an abstraction for developers called
 [workloads](reference/workload#workload). Workloads allow developers to create application specifications such as the

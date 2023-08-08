@@ -1,5 +1,10 @@
 # Runnable Custom Resources
 
+## Prefer Lifecycle Templates
+
+**Note**: For most all use cases, users should use [lifecycle templates](../lifecycle.md) rather than Runnables. The
+only use case where Runnable would be preferred is if users need to leverage Runnable's selector (which is unusual).
+
 ## Runnable
 
 A `Runnable` object declares the intention of having immutable objects submitted to Kubernetes according to a template (
