@@ -18,12 +18,12 @@ code in production has passed through every step of an approved workflow.
 
 ## Cartographer Design and Philosophy
 
-Cartographer allows users to define every step that an application must go through to reach production.
-Users achieve this with the Supply Chain abstraction, see [Spec Reference](reference/workload#clustersupplychain).
+Cartographer allows users to define every step that an application must go through to reach production. Users achieve
+this with the Supply Chain abstraction, see [Spec Reference](reference/workload#clustersupplychain).
 
-The supply chain consists of resources that are specified via Templates. A template acts as a wrapper for a
-Kubernetes resource, allowing Cartographer to integrate each well known tool into a cohesive whole. There are
-four types of templates:
+The supply chain consists of resources that are specified via Templates. A template acts as a wrapper for a Kubernetes
+resource, allowing Cartographer to integrate each well known tool into a cohesive whole. There are four types of
+templates:
 
 - [Source Template](reference/template#clustersourcetemplate)
 - [Image Template](reference/template#clusterimagetemplate)
@@ -38,13 +38,13 @@ control loop. Cartographer monitors the outcome of this work and captures the ou
 outputs in the following templates in the supply chain. In this manner, a declarative chain of Kubernetes resources is
 created.
 
-The simplest explanation of Kubernetes' control loops is that an object is created with a desired state and a
-controller moves the cluster closer to the desired state. For most Kubernetes objects, this pattern this includes the
-ability of an actor to update the desired state (to update the spec of an object), and have the controller move the
-cluster toward the new desired state. But not all Kubernetes resources are updatable; this class of immutable resources
-includes resources of the CI/CD tool Tekton. Cartographer enables coordination of these resources with its
-[immutable pattern](lifecycle): rather than updating an object and monitoring for its new outputs, Cartographer creates
-a new immutable object and reads the outputs of the new object.
+The simplest explanation of Kubernetes' control loops is that an object is created with a desired state and a controller
+moves the cluster closer to the desired state. For most Kubernetes objects, this pattern this includes the ability of an
+actor to update the desired state (to update the spec of an object), and have the controller move the cluster toward the
+new desired state. But not all Kubernetes resources are updatable; this class of immutable resources includes resources
+of the CI/CD tool Tekton. Cartographer enables coordination of these resources with its [immutable pattern](lifecycle):
+rather than updating an object and monitoring for its new outputs, Cartographer creates a new immutable object and reads
+the outputs of the new object.
 
 While the supply chain is operator facing, Cartographer also provides an abstraction for developers called
 [workloads](reference/workload#workload). Workloads allow developers to create application specifications such as the
