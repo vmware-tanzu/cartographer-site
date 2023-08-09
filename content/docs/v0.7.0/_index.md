@@ -8,23 +8,22 @@ cascade:
 
 Cartographer is a
 [Supply Chain Choreographer](https://tanzu.vmware.com/developer/guides/ci-cd/supply-chain-choreography/) for Kubernetes.
-It allows App Operators to create pre-approved paths to production by integrating Kubernetes resources with the elements
-of their existing toolchains (e.g. Jenkins).
+It enables App Operators to create supply chains, pre-approved paths that standardize how multiple app teams deliver
+applications to end users. Cartographer enables this within the Kubernetes ecosystem, allowing supply chains to be
+composed of resources from an organization's existing toolchains (e.g. Jenkins).
 
-**Each** pre-approved supply chain creates a paved road to production; orchestrating supply chain resources - test,
-build, scan, and deploy - allowing developers to be able to focus on delivering value to their users while also
-providing App Operators with the peace of mind that all code in production has passed through all of the steps of an
-approved workflow.
+**Each** pre-approved supply chain creates a paved road to production, orchestrating test, build, scan, deploy.
+Developers are freed to focus on delivering value to their users while App Operators retain the peace of mind that all
+code in production has passed through every step of an approved workflow.
 
 ## Cartographer Design and Philosophy
 
-Cartographer allows users to define all of the steps that an application must go through to create an image and
-Kubernetes configuration. Users achieve this with the Supply Chain abstraction, see
-[Spec Reference](reference/workload#clustersupplychain).
+Cartographer allows users to define every step that an application must go through to reach production. Users achieve
+this with the Supply Chain abstraction, see [Spec Reference](reference/workload#clustersupplychain).
 
-The supply chain consists of resources that are specified via Templates. Each template acts as a wrapper for existing
-Kubernetes resources and allows them to be used with Cartographer. There are currently four different types of templates
-that can be use in a Cartographer supply chain:
+The supply chain consists of resources that are specified via Templates. A template acts as a wrapper for a Kubernetes
+resource, allowing Cartographer to integrate each well known tool into a cohesive whole. There are four types of
+templates:
 
 - [Source Template](reference/template#clustersourcetemplate)
 - [Image Template](reference/template#clusterimagetemplate)
@@ -32,13 +31,20 @@ that can be use in a Cartographer supply chain:
 - [Generic Template](reference/template#clustertemplate)
 
 Contrary to many other Kubernetes native workflow tools that already exist in the market, Cartographer does not “run”
-any of the objects themselves. Instead, it monitors the execution of each resource and templates the following resource
-in the supply chain after a given resource has completed execution and updated its status.
+any of the objects themselves. Instead, it leverages
+[the controller pattern](https://kubernetes.io/docs/concepts/architecture/controller/) at the heart of Kubernetes.
+Cartographer creates an object on the cluster and the controller responsible for that resource type carries out its
+control loop. Cartographer monitors the outcome of this work and captures the outputs. Cartographer then applies these
+outputs in the following templates in the supply chain. In this manner, a declarative chain of Kubernetes resources is
+created.
 
-The supply chain may also be extended to include integrations to existing CI/CD pipelines by using the Runnable CRD
-(which is part of Cartographer). The Runnable CRD acts as a wrapper for CRDs that are immutable (meaning that instead of
-updating an object, a new object would be created). There are a number of CI/CD CRDs that follow this pattern, including
-Tekton. The Runnable CRD provides a declarative way for pipelines to be run inside of Cartographer.
+The simplest explanation of Kubernetes' control loops is that an object is created with a desired state and a controller
+moves the cluster closer to the desired state. For most Kubernetes objects, this pattern this includes the ability of an
+actor to update the desired state (to update the spec of an object), and have the controller move the cluster toward the
+new desired state. But not all Kubernetes resources are updatable; this class of immutable resources includes resources
+of the CI/CD tool Tekton. Cartographer enables coordination of these resources with its [immutable pattern](lifecycle):
+rather than updating an object and monitoring for its new outputs, Cartographer creates a new immutable object and reads
+the outputs of the new object.
 
 While the supply chain is operator facing, Cartographer also provides an abstraction for developers called
 [workloads](reference/workload#workload). Workloads allow developers to create application specifications such as the

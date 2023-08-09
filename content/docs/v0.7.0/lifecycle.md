@@ -104,3 +104,8 @@ spec:
 ```
 
 Users can override the healthRule by specifying it explicitly.
+
+## Tutorial Walkthrough
+
+Our tutorials include [a walkthrough of a use case for Tekton Lifecycle](tutorials/lifecycle.md). Follow along, create
+k8s objects, observe the state of your cluster, and become a lifecycle expert.

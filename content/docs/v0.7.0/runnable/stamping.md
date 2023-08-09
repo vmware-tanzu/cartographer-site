@@ -40,3 +40,8 @@ The following labels are defined on objects created by a ClusterRunTemplate and 
 
 - carto.run/runnable-name : The name of the runnable which produced this stamped object.
 - carto.run/run-template-name : The name of the ClusterRunTemplate which produced this stamped object.
+
+## Prefer Lifecycle Templates
+
+**Note**: For most all use cases, users should use [lifecycle templates](../lifecycle.md) rather than Runnables. The
+only use case where Runnable would be preferred is if users need to leverage Runnable's selector (which is unusual).

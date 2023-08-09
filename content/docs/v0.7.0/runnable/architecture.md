@@ -3,12 +3,15 @@
 ## Overview
 
 Runnable is a component of Cartographer. The `Runnable` CRD provides an intermediate layer to update immutable
-resources. For example, Tekton does not allow updating TaskRuns and PipelineRuns, so we'll update Runnable to test new
-commits.
+resources. For example, Tekton does not allow updating TaskRuns and PipelineRuns, so Cartographer can update a Runnable
+object which then creates a new immutable TaskRun/PipelineRun.
+
+## Prefer Lifecycle Templates
+
+**Note**: For most all use cases, users should use [lifecycle templates](../lifecycle.md) rather than Runnables. The
+only use case where Runnable would be preferred is if users need to leverage Runnable's selector (which is unusual).
 
 ## Concepts
-
-[comment]: <> (### Edge vs level-driven triggers) [comment]: <> (TODO)
 
 ### ClusterRunTemplate
 
