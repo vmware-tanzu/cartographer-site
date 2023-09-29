@@ -21,7 +21,7 @@
     "monaco-yaml": "file:./src/monaco-yaml",
     "pako": "^2.1.0",
     "path-browserify": "^1.0.0",
-    "postcss": "^8.4.30",
+    "postcss": "^8.4.31",
     "postcss-load-config": "^4.0.1",
     "prettier": "2.8.8",
     "svelte": "^3.59.2",
