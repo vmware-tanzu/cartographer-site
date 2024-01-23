@@ -1,6 +1,8 @@
 module github.com/vmware-tanzu/cartographer-site/hack/tools
 
-go 1.18
+go 1.21.0
+
+toolchain go1.21.5
 
 require (
 	github.com/daixiang0/gci v0.12.1

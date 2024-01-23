@@ -1,3 +1,5 @@
 module github.com/vmware-tanzu/cartographer-site
 
-go 1.18
+go 1.21.0
+
+toolchain go1.21.5
