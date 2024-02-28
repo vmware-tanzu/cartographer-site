@@ -5,7 +5,7 @@ go 1.21.0
 toolchain go1.21.5
 
 require (
-	github.com/daixiang0/gci v0.12.3
+	github.com/daixiang0/gci v0.13.0
 	github.com/get-woke/woke v0.19.0
 	github.com/golangci/golangci-lint v1.56.2
 	github.com/google/addlicense v1.1.1
