@@ -1,14 +1,14 @@
 module github.com/vmware-tanzu/cartographer-site/hack/tools
 
 go 1.21.0
-toolchain go1.22.5
+toolchain go1.23.2
 
 require (
 	github.com/daixiang0/gci v0.13.5
 	github.com/get-woke/woke v0.19.0
 	github.com/golangci/golangci-lint v1.61.0
 	github.com/google/addlicense v1.1.1
-	github.com/maxbrunsfeld/counterfeiter/v6 v6.9.0
+	github.com/maxbrunsfeld/counterfeiter/v6 v6.10.0
 	github.com/onsi/ginkgo v1.16.5
 	sigs.k8s.io/controller-tools v0.16.4
 )
