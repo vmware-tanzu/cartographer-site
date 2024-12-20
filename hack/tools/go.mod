@@ -8,7 +8,7 @@ require (
 	github.com/get-woke/woke v0.19.0
 	github.com/golangci/golangci-lint v1.62.2
 	github.com/google/addlicense v1.1.1
-	github.com/maxbrunsfeld/counterfeiter/v6 v6.11.0
+	github.com/maxbrunsfeld/counterfeiter/v6 v6.11.2
 	github.com/onsi/ginkgo v1.16.5
 	sigs.k8s.io/controller-tools v0.16.5
 )
