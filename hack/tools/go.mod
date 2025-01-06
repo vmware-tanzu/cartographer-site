@@ -6,7 +6,7 @@ toolchain go1.23.2
 require (
 	github.com/daixiang0/gci v0.13.5
 	github.com/get-woke/woke v0.19.0
-	github.com/golangci/golangci-lint v1.63.3
+	github.com/golangci/golangci-lint v1.63.4
 	github.com/google/addlicense v1.1.1
 	github.com/maxbrunsfeld/counterfeiter/v6 v6.11.2
 	github.com/onsi/ginkgo v1.16.5
