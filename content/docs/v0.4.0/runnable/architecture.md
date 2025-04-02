@@ -8,8 +8,6 @@ commits.
 
 ## Concepts
 
-[comment]: <> (### Edge vs level-driven triggers) [comment]: <> (TODO)
-
 ### ClusterRunTemplate
 
 With the addition of Runnable, there is a new template, `ClusterRunTemplate`. A `ClusterRunTemplate` will _always_
