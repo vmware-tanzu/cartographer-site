@@ -62,9 +62,10 @@ params:
   github_base_url: "https://github.com/vmware-tanzu/cartographer-site"
   use_advanced_docs: true
   docs_right_sidebar: true
-  docs_search: false
-  docs_search_index_name: index_name
-  docs_search_api_key: api_key
+  docs_search: true
+  docs_search_index_name: cartographer
+  docs_search_api_key: 317b964ff8aeac73a046144087278c2f
+  docs_search_app_id: NHZFDXXGYL
   docs_versioning: true
   docs_latest: v0.7.0
   docs_versions:
