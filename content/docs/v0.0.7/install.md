@@ -14,7 +14,7 @@ tl;dr _(having [cert-manager] already installed)_:
 
 ```bash
 kubectl create namespace cartographer-system
-kubectl apply -f https://github.com/vmware-tanzu/cartographer/releases/v0.0.7/download/cartographer.yaml
+kubectl apply -f https://github.com/vmware-tanzu/cartographer/releases/download/v0.0.7/cartographer.yaml
 ```
 
 ## Pre-requisites
