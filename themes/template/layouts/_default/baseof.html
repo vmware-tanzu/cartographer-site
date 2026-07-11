@@ -10,6 +10,7 @@
 	{{ $options := (dict "targetPath" "css/style.css" "outputStyle" "compressed" "enableSourceMap" true "includePaths" (slice "node_modules/myscss")) }}
 	{{ $style := resources.Get "scss/site.scss" | resources.ToCSS $options }}
 	<link rel="stylesheet" href="{{ $style.Permalink }}" integrity="{{ $style.Data.Integrity }}" media="screen">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"/></pre></li>
 	<link rel="icon" type="image/png" href="/img/cartographer-logo-favicon.svg">
 	<script src="{{ "js/main.js" | relURL }}" type="text/javascript"></script>
 	{{ with .OutputFormats.Get "RSS" -}}
@@ -24,16 +25,18 @@
 	{{ end }}
 	{{ partial "footer" . }}
     {{ if .Site.Params.docs_search }}
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
-    <script type="text/javascript"> docsearch({
-        apiKey: '{{ .Site.Params.Docs_search_api_key }}',
-        indexName: '{{ .Site.Params.Docs_search_index_name }}',
-        inputSelector: '.docsearch-input',
-        algoliaOptions: {'facetFilters': ["version:{{ .CurrentSection.Params.version }}"]},
-        debug: false // Set debug to true if you want to inspect the dropdown
-      });
-    </script>
-    {{ end }}
+	<script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
+	<script type="text/javascript">
+		docsearch({
+			apiKey: '{{ .Site.Params.Docs_search_api_key }}',
+			appId: '{{ .Site.Params.Docs_search_app_id }}',
+			indexName: '{{ .Site.Params.Docs_search_index_name }}',
+			container: '#doc-search',
+			algoliaOptions: {'facetFilters': ["version:{{ .CurrentSection.Params.version }}"]},
+			debug: false // Set debug to true if you want to inspect the dropdown
+		});
+	</script>
+	{{ end }}
 	<script type="text/javascript"> addCopyButtons(navigator.clipboard);</script>
 </body>
 </html>
