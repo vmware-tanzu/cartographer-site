@@ -128,8 +128,8 @@ There are 7 types of information with which a cartotest may be configured. Those
 - [Template \*](#template): The template under test
 - [Workload \*](#workload): The workload that will pair with the supply chain/template
 - [Expected \*](#expected): The expected object that will be created by Cartographer
-- [Supply Chain Inputs](#supply-chain-inputs): The sources/images/configs assumed to have been created earlier in a
-  supply chain
+- [Blueprint Inputs](#blueprint-inputs): The sources/images/configs assumed to have been created earlier in a supply
+  chain
 - [Blueprint Params](#blueprint-params): The params specified in the supply chain
 - [YTT Preprocessing File](#ytt-preprocessing-file): A file of ytt data values. Applied to the template before
   processing with Cartographer.
@@ -160,9 +160,9 @@ The expected file may be specified in the following order of precedence:
 2. File named `expected.yaml`
 3. The expected file inherited from parent directory
 
-### Supply Chain Inputs
+### Blueprint Inputs
 
-The inputs may be specified in the `.supplyChainInputs` field of `info.yaml`. Otherwise, they are inherited from the
+The inputs may be specified in the `.blueprintInputs` field of `info.yaml`. Otherwise, they are inherited from the
 parent directory.
 
 ### Blueprint Params
@@ -206,7 +206,7 @@ expected: <string>
 ytt: <string>
 
 # Input values as if output from earlier steps of a supply chain
-supplyChainInputs:
+blueprintInputs:
   sources:
     # string value should be the same as the name value
     <string>:
